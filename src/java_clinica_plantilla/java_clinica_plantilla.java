@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package java_clinica_plantilla;
-
+import splash.splash;
 /**
  *
  * @author Eudy
@@ -16,6 +16,7 @@ public class java_clinica_plantilla {
      */
     public static void main(String[] args) {
         // TODO code application logic here
+        new Thread(new splash()).start();
     }
     
 }
