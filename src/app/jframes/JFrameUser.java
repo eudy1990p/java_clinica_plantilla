@@ -15,28 +15,36 @@ import javax.swing.table.DefaultTableModel;
 public class JFrameUser extends javax.swing.JFrame {
 
     ClassUser user = new ClassUser(); 
+    int lineas = 10;
     /**
      * Creates new form User
      */
     public JFrameUser() {
         initComponents();
-       //this.user.mostrarDatosTabla(jTable1,this.jLabel6);
-       this.jtable();
+       this.user.mostrarDatosTabla(jTable1,this.jLabel6);
+      // this.jtable();
     }
     //EJEMPLO SIMPLE PARA MOSTRAR DATOS EN UNA TABLA
     public void jtable(){
+            JOptionPane.showMessageDialog(null, "Tabla");
            //DefaultTableModel modelo = (DefaultTableModel) this.jTable1.getModel();
-           DefaultTableModel modelo = new DefaultTableModel();
-           String[] titulos = {"id","usuario"};
-           modelo.setColumnIdentifiers(titulos);
            
-           Object[] fila = new Object[modelo.getColumnCount()];
-           for(int i = 0 ; i < 10 ; i++){
-               fila[0] = i;
-               fila[1] = "Eudy"+i;
-               modelo.addRow(fila);
+           String[] titulos = {"id","usuario"};
+           this.lineas = this.lineas + 2;
+          //modelo.setColumnIdentifiers(titulos);
+           
+           Object[][] fila = new Object[this.lineas][2];
+           for(int c = 0 ; c < this.lineas ; c++){
+               System.out.println("---- x "+ c);
+                //for(int i = 0 ; i < 2 ; i++){
+                    fila[c][0] = "x "+ c+" y ";
+                    //System.out.println("x "+ c+" y "+i);
+                    fila[c][1]  = "Eudy";
+                    //modelo.addRow(fila);
+                //}
            }
-          
+          DefaultTableModel modelo = new DefaultTableModel(fila,titulos);
+          this.jTable1.setModel(modelo);
     }
     
     /**
@@ -104,11 +112,6 @@ public class JFrameUser extends javax.swing.JFrame {
             }
         ));
         jScrollPane1.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setMinWidth(30);
-            jTable1.getColumnModel().getColumn(0).setPreferredWidth(30);
-            jTable1.getColumnModel().getColumn(0).setMaxWidth(30);
-        }
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
 
@@ -217,7 +220,7 @@ public class JFrameUser extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
        this.jtable();
-       String p1 = new String(this.jPasswordField1.getPassword());
+      /* String p1 = new String(this.jPasswordField1.getPassword());
        String p2 = new String(this.jPasswordField2.getPassword());
        String type_user = (String) this.jComboBox1.getSelectedItem();
        //JOptionPane.showMessageDialog(null, type_user);
@@ -225,7 +228,7 @@ public class JFrameUser extends javax.swing.JFrame {
        if(respuesta){
            this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
            //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
-       }
+       }*/
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**

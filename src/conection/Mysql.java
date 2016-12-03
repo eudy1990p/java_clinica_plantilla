@@ -112,19 +112,24 @@ public class Mysql {
         }
     }
     
-    public void generarSelect(String table_name,DefaultTableModel model,Object[] columnas,String[] datos) {
+    public void generarSelect(String table_name,String[] campos,javax.swing.JTable tabla) {
         try {
             String Query = "SELECT * FROM " + table_name;
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);
             
+            resultSet.beforeFirst();  
+            resultSet.last();  
             
+           System.out.print("GetRow "+resultSet.getRow());
+            resultSet.beforeFirst();
             while (resultSet.next()) {
-                    for(int i = 0 ; i < datos.length; i++){
-                        columnas[i] = resultSet.getString(datos[i]);
-                    }
-                    model.addRow(columnas);
+                    System.out.println("ID: " + resultSet.getString("id"));
+                    // for(int i = 0 ; i < campos.length; i++){
+                      //  columnas[i] = resultSet.getString(datos[i]);
+                    //}
+                    //model.addRow(columnas);
                /* System.out.println("ID: " + resultSet.getString("ID") + " "
                         + "Nombre: " + resultSet.getString("Nombre") + " " + resultSet.getString("Apellido") + " "
                         + "Edad: " + resultSet.getString("Edad") + " "

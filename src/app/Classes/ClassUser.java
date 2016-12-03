@@ -23,6 +23,7 @@ public class ClassUser{
     private String usuario,clave,type_user;
     private String[] key = {"name_user","password_user","when_it","id_user","type_of_user"};
     private int id_user;
+    private int lineas=10;
 
             
     public ClassUser(){
@@ -55,17 +56,33 @@ public class ClassUser{
     }
    
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal){
+        /*String[] titulos = {"id","usuario"};
+          //modelo.setColumnIdentifiers(titulos);
+           Object[][] fila = new Object[this.lineas][2];
+           for(int c = 0 ; c < this.lineas ; c++){
+               System.out.println("---- x "+ c);
+                //for(int i = 0 ; i < 2 ; i++){
+                    fila[c][0] = "x "+ c+" y ";
+                    //System.out.println("x "+ c+" y "+i);
+                    fila[c][1]  = "Eudy";
+                    //modelo.addRow(fila);
+                //}
+           }
+          DefaultTableModel modelo = new DefaultTableModel(fila,titulos);
+          table.setModel(modelo);*/
+
+
         //table.setModel(null);
-        DefaultTableModel modal = (DefaultTableModel) table.getModel();
-        table.setModel(new DefaultTableModel());
-        table.setModel(modal);
+        //DefaultTableModel modal = (DefaultTableModel) table.getModel();
+        //table.setModel(new DefaultTableModel());
+        //table.setModel(modal);
         //DefaultTableModel modal = (DefaultTableModel) table.getModel();
         
-        Object[] columnas = new Object[modal.getColumnCount()];
+        //Object[] columnas = new Object[modal.getColumnCount()];
         //{"name_user","password_user","when_it","id_user","type_of_user"}
         String[] datos = {"id","name_user"};
         
-      //  this.mysql.generarSelect("users", modal, columnas,datos);
+          this.mysql.generarSelect("users", datos,table);
        // JLabelTotal.setText(""+modal.getRowCount());
         
     }
