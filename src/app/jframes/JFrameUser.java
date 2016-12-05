@@ -10,12 +10,15 @@ import app.Classes.ClassUser;
  * @author Eudy
  */
 import conection.Mysql;
+import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 public class JFrameUser extends javax.swing.JFrame {
 
     ClassUser user = new ClassUser(); 
     int lineas = 10;
+    String palabraBuscar="",id="";
+    
     /**
      * Creates new form User
      */
@@ -72,6 +75,7 @@ public class JFrameUser extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Administrar Usuario");
@@ -111,9 +115,22 @@ public class JFrameUser extends javax.swing.JFrame {
                 "id", "Nombre de usuario"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         jTextField2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextField2.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField2KeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextField2KeyTyped(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel5.setText("Total de usuarios");
@@ -128,8 +145,11 @@ public class JFrameUser extends javax.swing.JFrame {
         jLabel8.setText("Tipo de usuario");
 
         jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Cajero", "Medico" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CAJERO", "MEDICO", "ADMIN" }));
         jComboBox1.setToolTipText("");
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setText("Agregar Usuario");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -154,7 +174,11 @@ public class JFrameUser extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(19, 19, 19)))
-                        .addGap(38, 38, 38)))
+                        .addGap(38, 38, 38))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(59, 59, 59)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(49, 49, 49)
@@ -183,7 +207,10 @@ public class JFrameUser extends javax.swing.JFrame {
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField2))
+                    .addComponent(jTextField2)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(24, 24, 24)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -219,18 +246,62 @@ public class JFrameUser extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-       this.jtable();
-      /* String p1 = new String(this.jPasswordField1.getPassword());
-       String p2 = new String(this.jPasswordField2.getPassword());
-       String type_user = (String) this.jComboBox1.getSelectedItem();
-       //JOptionPane.showMessageDialog(null, type_user);
-       boolean respuesta = this.user.insert(this.jTextField1.getText(), p1, p2,type_user.toLowerCase());
-       if(respuesta){
-           this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
-           //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
-       }*/
+      // this.jtable();
+      if(this.user.getAgregar()){
+        String p1 = new String(this.jPasswordField1.getPassword());
+        String p2 = new String(this.jPasswordField2.getPassword());
+        String type_user = (String) this.jComboBox1.getSelectedItem();
+        //JOptionPane.showMessageDialog(null, type_user);
+        boolean respuesta = this.user.insert(this.jTextField1.getText(), p1, p2,type_user.toLowerCase());
+        if(respuesta){
+            this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
+            //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
+        }
+      }else{
+           String p1 = new String(this.jPasswordField1.getPassword());
+            String p2 = new String(this.jPasswordField2.getPassword());
+            String type_user = (String) this.jComboBox1.getSelectedItem();
+            //JOptionPane.showMessageDialog(null, type_user);
+            boolean respuesta = this.user.update(this.jTextField1.getText(), p1, p2,type_user.toLowerCase(),this.id);
+            if(respuesta){
+                this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
+                this.user.setAgregar(true);
+                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
+                //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
+            }
+          
+      }
+      
     }//GEN-LAST:event_jButton1MouseClicked
 
+    private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jTextField2KeyTyped
+
+    private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
+        // TODO add your handling code here:
+        this.palabraBuscar = this.jTextField2.getText();
+        //        this.palabraBuscar +=evt.getKeyChar();
+
+        System.out.println(this.palabraBuscar);
+        this.user.mostrarDatosTabla(this.jTable1, this.jLabel6,this.palabraBuscar);
+    }//GEN-LAST:event_jTextField2KeyReleased
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        // TODO add your handling code here:
+        int select = this.jTable1.rowAtPoint(evt.getPoint());
+        String id = this.jTable1.getValueAt(select, 0).toString();
+        this.id = id;
+        System.out.println(id);
+        String[] respuesta = this.user.mostrarEditarUsuario(id);
+        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField1);
+        this.jTextField1.setText(respuesta[1]);
+        this.jComboBox1.setSelectedItem(respuesta[2].toUpperCase());
+        
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    
     /**
      * @param args the command line arguments
      */
@@ -249,6 +320,7 @@ public class JFrameUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JPasswordField jPasswordField2;
     private javax.swing.JScrollPane jScrollPane1;

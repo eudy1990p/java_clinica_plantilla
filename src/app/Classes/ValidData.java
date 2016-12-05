@@ -32,4 +32,12 @@ public class ValidData {
         }
         
     }
+    public boolean validEmpty(String n){
+        if(n.isEmpty()){
+            return false;
+        }else{
+            return true;
+        }
+        
+    }
 }

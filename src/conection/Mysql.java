@@ -112,9 +112,49 @@ public class Mysql {
         }
     }
     
-    public void generarSelect(String table_name,String[] campos,javax.swing.JTable tabla) {
+    public Object generarSelect(String table_name,String[] campos) {
         try {
             String Query = "SELECT * FROM " + table_name;
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);            
+            resultSet.beforeFirst();  
+            resultSet.last();  
+            
+           //System.out.print("GetRow "+resultSet.getRow());
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+            Object[][] fila = new Object[totalFilas][campos.length];
+            while (resultSet.next()) {
+                    System.out.println("ID: " + resultSet.getString("id"));
+                    for(int i = 0 ; i < campos.length ;i++){
+                        fila[f][i] = resultSet.getString(campos[i]);
+                    }
+                    
+                    //fila[f][1]  = resultSet.getString("name_user");
+                    //fila[f][2]  = resultSet.getString("type_of_user");
+
+                    f++;
+            }
+            Object[][] resultado = new Object[1][2];
+            resultado[0][0]=fila;
+            resultado[0][1]=totalFilas;
+            return resultado;
+        } catch (SQLException ex) {
+             Object[][] resultado = new Object[1][1];
+            resultado[0][0]=0;
+            resultado[0][1]=0;
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return resultado;
+        }
+            
+    }
+    
+    public Object generarSelect(String table_name,String[] campos,String palabra) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" where name_user like '%"+palabra+"%' ";
+            System.out.println(Query);
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);
@@ -122,26 +162,64 @@ public class Mysql {
             resultSet.beforeFirst();  
             resultSet.last();  
             
-           System.out.print("GetRow "+resultSet.getRow());
+           //System.out.print("GetRow "+resultSet.getRow());
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
             resultSet.beforeFirst();
+            Object[][] fila = new Object[totalFilas][campos.length];
             while (resultSet.next()) {
                     System.out.println("ID: " + resultSet.getString("id"));
-                    // for(int i = 0 ; i < campos.length; i++){
-                      //  columnas[i] = resultSet.getString(datos[i]);
-                    //}
-                    //model.addRow(columnas);
-               /* System.out.println("ID: " + resultSet.getString("ID") + " "
-                        + "Nombre: " + resultSet.getString("Nombre") + " " + resultSet.getString("Apellido") + " "
-                        + "Edad: " + resultSet.getString("Edad") + " "
-                        + "Sexo: " + resultSet.getString("Sexo"));
-                    */
-            }
+                      for(int i = 0 ; i < campos.length ;i++){
+                        fila[f][i] = resultSet.getString(campos[i]);
+                    }
+                    //fila[f][0] = resultSet.getString("id");
+                    //fila[f][1]  = resultSet.getString("name_user");
+                    //fila[f][2]  = resultSet.getString("type_of_user");
 
+                    f++;
+            }
+            Object[][] resultado = new Object[1][2];
+            resultado[0][0]=fila;
+            resultado[0][1]=totalFilas;
+            return resultado;
         } catch (SQLException ex) {
+            
+            Object[][] resultado = new Object[1][2];
+            Object[][] fila = new Object[1][2];
+            resultado[0][0]=fila;
+            resultado[0][1]=0;
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return resultado;
         }
+            
     }
     
+    public String[] generarSelect(String table_name,String id,String[] campos) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" where id = "+id+" ";
+            System.out.println(Query);
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            resultSet.beforeFirst();  
+            resultSet.last();  
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+           String[] fila = new String[campos.length];
+            if (resultSet.next()) {
+                    for(int i = 0 ; i < campos.length ; i++){
+                        fila[i]=resultSet.getString(campos[i]);
+                        System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                    }       
+            }
+            return fila;
+        } catch (SQLException ex) {
+            String[] fila = {"no"};
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return fila;
+        }
+    }
     public void closeConnection() {
         try {
             Conexion.close();
@@ -223,5 +301,37 @@ public class Mysql {
         }
     }
 
+    public boolean updateRecord(String table_name, String id,String[] key, String[] value) {
+        String keysValues = "";
+        try {
+            for(int i = 0 ; i < value.length ; i++){
+                System.out.println(i +" "+value.length);
+                if(i == 0){
+                    System.out.println("0 Values "+value[i]+" key "+key[i]);
+                    if(value[i].equals("now()")){
+                        keysValues += key[i]+" = "+value[i]+" ";
+                    }else{
+                         keysValues += key[i]+" = '"+value[i]+"' ";
+                    }
+                }else{
+                    System.out.println("0 + Values "+value[i]+" key "+key[i]);
+                    if(value[i].equals("now()")){
+                         keysValues += ", "+key[i]+" = "+value[i]+" ";
+                    }else{
+                         keysValues += ", "+key[i]+" = '"+value[i]+"' ";
+                    }
+                }
+            }
+            
+            String Query = "update " + table_name + " set "+keysValues+" WHERE id = '" +id+ "' ";
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            return false;
+        }
+    }
     
 }
