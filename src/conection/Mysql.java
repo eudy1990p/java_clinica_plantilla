@@ -114,7 +114,7 @@ public class Mysql {
     
     public Object generarSelect(String table_name,String[] campos) {
         try {
-            String Query = "SELECT * FROM " + table_name;
+            String Query = "SELECT * FROM " + table_name+" where display = '1'";
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);            
@@ -153,7 +153,7 @@ public class Mysql {
     
     public Object generarSelect(String table_name,String[] campos,String palabra) {
         try {
-            String Query = "SELECT * FROM " + table_name+" where name_user like '%"+palabra+"%' ";
+            String Query = "SELECT * FROM " + table_name+" where name_user like '%"+palabra+"%' and display = '1' ";
             System.out.println(Query);
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
@@ -196,7 +196,7 @@ public class Mysql {
     
     public String[] generarSelect(String table_name,String id,String[] campos) {
         try {
-            String Query = "SELECT * FROM " + table_name+" where id = "+id+" ";
+            String Query = "SELECT * FROM " + table_name+" where id = "+id+" and display = '1'";
             System.out.println(Query);
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
@@ -270,6 +270,25 @@ public class Mysql {
         }
     }
 
+    public int getValues(String table_name, String where) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" "+where;
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            
+            resultSet.beforeFirst();  
+            resultSet.last();  
+           int totalFilas = resultSet.getRow();
+           
+           return totalFilas;
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return 0;
+        }
+    }
+    
     public void getValues(String table_name) {
         try {
             String Query = "SELECT * FROM " + table_name;
@@ -289,15 +308,17 @@ public class Mysql {
         }
     }
 
-    public void deleteRecord(String table_name, String ID) {
+    public boolean deleteRecord(String table_name, String ID) {
         try {
-            String Query = "DELETE FROM " + table_name + " WHERE ID = \"" + ID + "\"";
+            //String Query = "DELETE FROM " + table_name + " WHERE ID = \"" + ID + "\"";
+            String Query = "update " + table_name + " set display = '0' WHERE ID = \"" + ID + "\"";
             Statement st = Conexion.createStatement();
             st.executeUpdate(Query);
-
+            return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            return false;
         }
     }
 

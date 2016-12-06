@@ -10,7 +10,7 @@ import app.Main;
  * @author Eudy
  */
 public class login_f extends javax.swing.JFrame {
-
+    private conection.Mysql mysql;
     /**
      * Creates new form login_f
      */
@@ -18,7 +18,11 @@ public class login_f extends javax.swing.JFrame {
         initComponents();
         this.setLocationRelativeTo(null);
     }
-
+    public login_f(conection.Mysql mysql){
+        this.mysql = mysql;
+        initComponents();
+        this.setLocationRelativeTo(null);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -137,7 +141,7 @@ public class login_f extends javax.swing.JFrame {
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
         this.dispose();
-        new Main().setVisible(true);
+        new Main(this.mysql).setVisible(true);
     }//GEN-LAST:event_jButton1MouseClicked
 
     /**

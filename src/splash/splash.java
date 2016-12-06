@@ -19,6 +19,7 @@ public class splash extends javax.swing.JFrame implements Runnable {
     
     Thread hilo;
     private int cont=9;
+    private conection.Mysql mysql;
     /**
      * Creates new form splash
      */
@@ -26,6 +27,12 @@ public class splash extends javax.swing.JFrame implements Runnable {
         initComponents();
         AWTUtilities.setWindowOpaque(this, false);
         this.setLocationRelativeTo(null);
+    }
+    public splash(conection.Mysql mysql){
+        initComponents();
+        AWTUtilities.setWindowOpaque(this, false);
+        this.setLocationRelativeTo(null);
+        this.mysql = mysql;
     }
 
     /**
@@ -98,6 +105,6 @@ public class splash extends javax.swing.JFrame implements Runnable {
             Logger.getLogger(splash.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
-        new login_f().setVisible(true);
+        new login_f(this.mysql).setVisible(true);
     }
 }

@@ -14,11 +14,18 @@ import app.jframes.JFrameUser;
  * @author Eudy
  */
 public class Main extends javax.swing.JFrame {
-
+     private conection.Mysql mysql;
+     
     /**
      * Creates new form Main
      */
     public Main() {
+        initComponents();
+        this.configurations();
+    }
+    
+    public Main(conection.Mysql mysql){
+        this.mysql = mysql;
         initComponents();
         this.configurations();
     }

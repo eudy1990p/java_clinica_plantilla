@@ -16,7 +16,8 @@ public class java_clinica_plantilla {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        new Thread(new splash()).start();
+            conection.Mysql mysql = new conection.Mysql();
+            new Thread(new splash(mysql)).start();
     }
     
 }

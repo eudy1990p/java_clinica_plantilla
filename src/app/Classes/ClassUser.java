@@ -41,7 +41,10 @@ public class ClassUser{
     public void setAgregar(boolean estado){
         this.agregar = estado;
     }
-    
+    public boolean elimnar(String id){
+        boolean respuesta = this.mysql.deleteRecord("users", id);
+        return respuesta;
+    }
     public boolean insert(String usuario,String clave,String RepetidaClave,String type_user){
         if(valid.validEmpty(usuario, "Nombre de usuario")){
            return false; 
@@ -52,14 +55,32 @@ public class ClassUser{
         }else if(valid.differentPass(clave, RepetidaClave)){
             return false;
         }else{
-            this.usuario = usuario;
-            this.clave = clave;
-            this.type_user = type_user;
-            boolean respuesta = this.procesarInsert();
-            return respuesta;
-        }
+           
+                if(this.validarUsuario(usuario)){
+                    this.usuario = usuario;
+                    this.clave = clave;
+                    this.type_user = type_user;
+                    boolean respuesta = this.procesarInsert();
+                    return respuesta;
+                }else{
+                    return false;
+                }
+         }
+        
     }
+    public boolean validarUsuario(String usuario){
+         int existe = this.mysql.getValues("users", "where name_user = '"+usuario+"' ");
+          if(existe < 1){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "El usuario ya existe");
+            return false;
+          }
+    }
+    public void limpiarTexto(javax.swing.JPasswordField p1,javax.swing.JPasswordField p2,javax.swing.JTextField texto,javax.swing.JComboBox combo){
+        p1.setText("");p2.setText("");texto.setText("");combo.setSelectedIndex(0);
     
+    }
     public boolean update( String usuario,String clave,String RepetidaClave,String type_user,String id){
         
         if(valid.validEmpty(type_user)){
@@ -85,7 +106,7 @@ public class ClassUser{
         boolean respuesta = mysql.generarInsert(this.key, values, "users");
         return respuesta;
     }
-   
+    
     public boolean procesarUpdate(){
          int total =this.camposEdit.size();
          String[] key = new String[total];
