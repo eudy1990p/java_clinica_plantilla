@@ -253,7 +253,7 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem11MousePressed
         // TODO add your handling code here:
-          new JFrameUser().setVisible(true);
+          new JFrameUser(this.mysql).setVisible(true);
     }//GEN-LAST:event_jMenuItem11MousePressed
 
     /**

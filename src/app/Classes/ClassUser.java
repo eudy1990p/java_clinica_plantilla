@@ -20,8 +20,8 @@ import java.util.ArrayList;
  * @author Eudy
  */
 public class ClassUser{
+    private conection.Mysql mysql;
     private ValidData valid = new ValidData();
-    private Mysql mysql;
     private String usuario,clave,type_user,id;
     private String[] key = {"name_user","password_user","when_it","id_user","type_of_user"};
     private int id_user;
@@ -33,7 +33,9 @@ public class ClassUser{
     public ClassUser(){
         mysql = new Mysql();
     }
-    
+    public ClassUser(conection.Mysql mysql){
+       this.mysql =mysql;
+    }
     public boolean getAgregar(){
         return agregar;
     }

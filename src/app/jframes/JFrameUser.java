@@ -15,10 +15,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 public class JFrameUser extends javax.swing.JFrame {
 
-    ClassUser user = new ClassUser(); 
-    int lineas = 10;
-    String palabraBuscar="",id="";
     
+    private int lineas = 10;
+    private String palabraBuscar="",id="";
+    private conection.Mysql mysql;
+    private ClassUser user ;
     /**
      * Creates new form User
      */
@@ -27,6 +28,14 @@ public class JFrameUser extends javax.swing.JFrame {
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
     }
+    public JFrameUser(conection.Mysql mysql) {
+       initComponents();
+        this.mysql = mysql;
+        user = new ClassUser(this.mysql); 
+       this.user.mostrarDatosTabla(jTable1,this.jLabel6);
+      // this.jtable();
+    }
+    
     //EJEMPLO SIMPLE PARA MOSTRAR DATOS EN UNA TABLA
     public void jtable(){
             JOptionPane.showMessageDialog(null, "Tabla");
