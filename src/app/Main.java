@@ -16,7 +16,7 @@ import app.jframes.*;
  */
 public class Main extends javax.swing.JFrame {
      private conection.Mysql mysql;
-     
+     private String[] session;
     /**
      * Creates new form Main
      */
@@ -30,7 +30,12 @@ public class Main extends javax.swing.JFrame {
         initComponents();
         this.configurations();
     }
-    
+    public Main(conection.Mysql mysql,String[] session){
+        this.mysql = mysql;
+        this.session = session;
+        initComponents();
+        this.configurations();
+    }
     public void configurations(){
         //maximizar en hambos sentidos
         this.setExtendedState(MAXIMIZED_BOTH);

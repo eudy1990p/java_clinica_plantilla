@@ -299,13 +299,14 @@ public class Mysql {
     }
     
     public String[] getValues(String table_name, String where, String[] campos) {
+        String[] datos = new String[campos.length];
         try {
             String Query = "SELECT * FROM " + table_name+" "+where;
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);
              
-             String[] datos = new String[campos.length];
+             
              if(resultSet.next()){
                  for(int i = 0 ; i < campos.length ; i++){
                      datos[i] = resultSet.getString(campos[i]);
@@ -316,7 +317,7 @@ public class Mysql {
             
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
-            return 0;
+            return datos;
         }
     }
     

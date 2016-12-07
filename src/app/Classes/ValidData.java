@@ -13,6 +13,7 @@ import javax.swing.JOptionPane;
  */
 public class ValidData {
     
+    private boolean bt;
     
     public boolean differentPass(String pass1, String pass2){
         if((pass1.equals(pass2))){
@@ -40,4 +41,5 @@ public class ValidData {
         }
         
     }
+    
 }

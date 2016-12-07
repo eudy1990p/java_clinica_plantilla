@@ -157,7 +157,7 @@ public class login_f extends javax.swing.JFrame {
         boolean respuesta = this.login.validarUsuario(usuario, clave);
         if(respuesta){
             this.dispose();
-            new Main(this.mysql).setVisible(true);
+            new Main(this.mysql,this.login.getSession()).setVisible(true);
         }
     }
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
