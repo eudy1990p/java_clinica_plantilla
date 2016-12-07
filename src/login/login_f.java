@@ -5,21 +5,25 @@
  */
 package login;
 import app.Main;
+import java.awt.event.KeyEvent;
 /**
  *
  * @author Eudy
  */
 public class login_f extends javax.swing.JFrame {
     private conection.Mysql mysql;
+    private ClassLogin login;
     /**
      * Creates new form login_f
      */
     public login_f() {
         initComponents();
         this.setLocationRelativeTo(null);
+        
     }
     public login_f(conection.Mysql mysql){
         this.mysql = mysql;
+        this.login = new ClassLogin(mysql);
         initComponents();
         this.setLocationRelativeTo(null);
     }
@@ -78,6 +82,11 @@ public class login_f extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jPasswordField1KeyPressed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -140,9 +149,24 @@ public class login_f extends javax.swing.JFrame {
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
         // TODO add your handling code here:
-        this.dispose();
-        new Main(this.mysql).setVisible(true);
+          this.login();
     }//GEN-LAST:event_jButton1MouseClicked
+    public void login(){
+        String usuario = this.jTextField1.getText();
+        String clave = new String(this.jPasswordField1.getPassword());
+        boolean respuesta = this.login.validarUsuario(usuario, clave);
+        if(respuesta){
+            this.dispose();
+            new Main(this.mysql).setVisible(true);
+        }
+    }
+    private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
+        // TODO add your handling code here:
+        System.out.println(evt.getKeyCode());
+        if(evt.getKeyCode() == 10){
+                this.login();
+        }
+    }//GEN-LAST:event_jPasswordField1KeyPressed
 
     /**
      * @param args the command line arguments

@@ -115,6 +115,8 @@ public class Mysql {
     public Object generarSelect(String table_name,String[] campos) {
         try {
             String Query = "SELECT * FROM " + table_name+" where display = '1'";
+            System.out.println("QUERY "+Query);
+
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);            
@@ -129,6 +131,8 @@ public class Mysql {
             while (resultSet.next()) {
                     System.out.println("ID: " + resultSet.getString("id"));
                     for(int i = 0 ; i < campos.length ;i++){
+                        System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
+
                         fila[f][i] = resultSet.getString(campos[i]);
                     }
                     
@@ -137,12 +141,17 @@ public class Mysql {
 
                     f++;
             }
+            System.out.println(" fin while" );
             Object[][] resultado = new Object[1][2];
+            System.out.println(" objecto" );
+
             resultado[0][0]=fila;
             resultado[0][1]=totalFilas;
+            System.out.println(" fin" );
+
             return resultado;
         } catch (SQLException ex) {
-             Object[][] resultado = new Object[1][1];
+            Object[][] resultado = new Object[1][2];
             resultado[0][0]=0;
             resultado[0][1]=0;
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
@@ -151,9 +160,9 @@ public class Mysql {
             
     }
     
-    public Object generarSelect(String table_name,String[] campos,String palabra) {
+    public Object generarSelect(String table_name,String[] campos,String palabra,String campo) {
         try {
-            String Query = "SELECT * FROM " + table_name+" where name_user like '%"+palabra+"%' and display = '1' ";
+            String Query = "SELECT * FROM " + table_name+" where "+campo+" like '%"+palabra+"%' and display = '1' ";
             System.out.println(Query);
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
@@ -289,6 +298,28 @@ public class Mysql {
         }
     }
     
+    public String[] getValues(String table_name, String where, String[] campos) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" "+where;
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+             
+             String[] datos = new String[campos.length];
+             if(resultSet.next()){
+                 for(int i = 0 ; i < campos.length ; i++){
+                     datos[i] = resultSet.getString(campos[i]);
+                 }
+             }
+             
+           return datos;
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return 0;
+        }
+    }
+    
     public void getValues(String table_name) {
         try {
             String Query = "SELECT * FROM " + table_name;
@@ -345,6 +376,7 @@ public class Mysql {
             }
             
             String Query = "update " + table_name + " set "+keysValues+" WHERE id = '" +id+ "' ";
+            System.out.println(Query);
             Statement st = Conexion.createStatement();
             st.executeUpdate(Query);
             return true;

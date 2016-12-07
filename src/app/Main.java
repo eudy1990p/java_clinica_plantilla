@@ -7,7 +7,8 @@ package app;
 
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
-import app.jframes.JFrameUser;
+//import app.jframes.JFrameBlood;
+import app.jframes.*;
 
 /**
  *
@@ -171,10 +172,20 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem9.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem9.setText("Hospitales");
+        jMenuItem9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem9MousePressed(evt);
+            }
+        });
         jMenu6.add(jMenuItem9);
 
         jMenuItem10.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem10.setText("Tipo De Sangre");
+        jMenuItem10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem10MousePressed(evt);
+            }
+        });
         jMenu6.add(jMenuItem10);
 
         jMenuItem11.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -255,6 +266,16 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
           new JFrameUser(this.mysql).setVisible(true);
     }//GEN-LAST:event_jMenuItem11MousePressed
+
+    private void jMenuItem10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem10MousePressed
+        // TODO add your handling code here:
+         new JFrameBlood(this.mysql).setVisible(true);
+    }//GEN-LAST:event_jMenuItem10MousePressed
+
+    private void jMenuItem9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem9MousePressed
+        // TODO add your handling code here:
+        new JFrameHospital(this.mysql).setVisible(true);
+    }//GEN-LAST:event_jMenuItem9MousePressed
 
     /**
      * @param args the command line arguments
