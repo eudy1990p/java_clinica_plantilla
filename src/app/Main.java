@@ -5,6 +5,7 @@
  */
 package app;
 
+import app.Classes.ValidData;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 //import app.jframes.JFrameBlood;
@@ -17,6 +18,7 @@ import app.jframes.*;
 public class Main extends javax.swing.JFrame {
      private conection.Mysql mysql;
      private String[] session;
+     private ValidData validador;
     /**
      * Creates new form Main
      */
@@ -33,6 +35,9 @@ public class Main extends javax.swing.JFrame {
     public Main(conection.Mysql mysql,String[] session){
         this.mysql = mysql;
         this.session = session;
+        this.validador = new ValidData();
+        System.out.println(session[2]);
+        this.validador.validarPermisos(session[2]);
         initComponents();
         this.configurations();
     }
@@ -151,6 +156,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem4.setText("Crear Nuevo");
+        jMenuItem4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem4MousePressed(evt);
+            }
+        });
         jMenu5.add(jMenuItem4);
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -269,18 +279,32 @@ public class Main extends javax.swing.JFrame {
 
     private void jMenuItem11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem11MousePressed
         // TODO add your handling code here:
+        if(this.validador.getBtCrearUsuario()){
           new JFrameUser(this.mysql).setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem11MousePressed
 
     private void jMenuItem10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem10MousePressed
         // TODO add your handling code here:
-         new JFrameBlood(this.mysql).setVisible(true);
+        if(this.validador.getBtCrearTypoDeSangre()){
+        new JFrameBlood(this.mysql).setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem10MousePressed
 
     private void jMenuItem9MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem9MousePressed
         // TODO add your handling code here:
-        new JFrameHospital(this.mysql).setVisible(true);
+        
+        if(this.validador.getBtCrearHospital()){
+            new JFrameHospital(this.mysql).setVisible(true);
+        }
     }//GEN-LAST:event_jMenuItem9MousePressed
+
+    private void jMenuItem4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MousePressed
+        // TODO add your handling code here:
+         if(this.validador.getBtCrearPaciente()){
+            new JFrameCrearPaciente(this.mysql).setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem4MousePressed
 
     /**
      * @param args the command line arguments
