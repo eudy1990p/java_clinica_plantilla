@@ -140,10 +140,10 @@ public class ClassCrearPaciente{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal,String palabraBuscar){
-        String[] datos = {"id","name_hospital","rnc","telephone","email","web_page","address"};
-        String campo = "name_hospital";
+        String[] datos = {"id","name_patient","last_patient","sex","document_id","date_of_birth","when_it"};
+        String campo = "name_patient";
         System.out.println(palabraBuscar);
-        Object[][] resultado = (Object[][]) this.mysql.generarSelect("hospital", datos,palabraBuscar,campo);
+        Object[][] resultado = (Object[][]) this.mysql.generarSelect("patient", datos,palabraBuscar,campo);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         JLabelTotal.setText(resultado[0][1]+"");
@@ -169,56 +169,13 @@ public class ClassCrearPaciente{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal){
-        /*String[] titulos = {"id","usuario"};
-          //modelo.setColumnIdentifiers(titulos);
-           Object[][] fila = new Object[this.lineas][2];
-           for(int c = 0 ; c < this.lineas ; c++){
-               System.out.println("---- x "+ c);
-                //for(int i = 0 ; i < 2 ; i++){
-                    fila[c][0] = "x "+ c+" y ";
-                    //System.out.println("x "+ c+" y "+i);
-                    fila[c][1]  = "Eudy";
-                    //modelo.addRow(fila);
-                //}
-           }
-          DefaultTableModel modelo = new DefaultTableModel(fila,titulos);
-          table.setModel(modelo);*/
-
-
-        //table.setModel(null);
-        //DefaultTableModel modal = (DefaultTableModel) table.getModel();
-        //table.setModel(new DefaultTableModel());
-        //table.setModel(modal);
-        //DefaultTableModel modal = (DefaultTableModel) table.getModel();
         
-        //Object[] columnas = new Object[modal.getColumnCount()];
-        //{"name_hospital","password_user","when_it","id_user","type_of_user"}
-        String[] datos = {"id","name_hospital","rnc","telephone","email","web_page","address"};
-        
-        Object[][] resultado = (Object[][]) this.mysql.generarSelect("hospital", datos);
+        String[] datos = {"id","name_patient","last_patient","sex","document_id","date_of_birth","when_it"};
+
+        Object[][] resultado = (Object[][]) this.mysql.generarSelect("patient", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         JLabelTotal.setText(resultado[0][1]+"");
         table.setModel(modelo);
-       // JLabelTotal.setText(""+modal.getRowCount());
-        
-    }
-    
-   /* public void mostrarNuevoDatoTabla(JTable table,JLabel JLabelTotal){
-        //table.setModel(this.getBasicModel());
-        DefaultTableModel modal = (DefaultTableModel) table.getModel();
-        DefaultTableModel t = new DefaultTableModel();
-        table.setModel(t);
-        table.setModel(modal);
-        
-        
-        Object[] columnas = new Object[modal.getColumnCount()];
-        //{"name_hospital","password_user","when_it","id_user","type_of_user"}
-        String[] datos = {"id","name_hospital"};
-        String where = "where id = (SELECT max(id) from users)";
-        this.mysql.generarSelectLastRow("users",where, modal, columnas,datos);
-        JLabelTotal.setText(""+modal.getRowCount());
-        
-    }*/
-    
+    }  
 }
