@@ -405,11 +405,13 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
       // this.jtable();
       if(this.user.getAgregar()){
-        boolean respuesta = this.user.insert(this.jTextField1.getText(), this.jTextField3.getText(),this.jTextField4.getText(),this.jTextField5.getText(),this.jTextField6.getText(),this.jTextArea1.getText());
+        String tipo_sangre = this.user.getIdTipoSangre(this.jComboBox2.getSelectedIndex());
+       this.user.setValoresAtributos(this.jTextField1.getText(), this.jTextField5.getText(),this.jTextField6.getText(),this.jTextField7.getText(),this.jTextField3.getText(),this.jTextField4.getText(),this.jComboBox1.getSelectedItem().toString(),tipo_sangre,this.jTextField8.getText(),this.jTextField9.getText(),this.jTextField10.getText());
+        boolean respuesta = this.user.insert();
         if(respuesta){
             this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
             //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);
-            this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6, this.jTextArea1);
+            this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6);
         }
       }else{
             //JOptionPane.showMessageDialog(null, type_user);
@@ -431,18 +433,19 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jTextField2KeyTyped
 
+
     private void jTextField2KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyReleased
         // TODO add your handling code here:
         this.palabraBuscar = this.jTextField2.getText();
         //        this.palabraBuscar +=evt.getKeyChar();
 
-        System.out.println(this.palabraBuscar);
-        this.user.mostrarDatosTabla(this.jTable1, this.jLabel6,this.palabraBuscar);
+       // System.out.println(this.palabraBuscar);
+       // this.user.mostrarDatosTabla(this.jTable1, this.jLabel6,this.palabraBuscar);
     }//GEN-LAST:event_jTextField2KeyReleased
 
     private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
         // TODO add your handling code here:
-        int select = this.jTable1.rowAtPoint(evt.getPoint());
+     /*   int select = this.jTable1.rowAtPoint(evt.getPoint());
         String id = this.jTable1.getValueAt(select, 0).toString();
         this.id = id;
         System.out.println(id);
@@ -453,14 +456,14 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         this.jTextField3.setText(respuesta[3]);
         this.jTextField4.setText(respuesta[4]);
         this.jTextField5.setText(respuesta[2]);
-        this.jTextField6.setText(respuesta[5]);
+        this.jTextField6.setText(respuesta[5]);*/
         //this.jTextArea1.setText(respuesta[6]);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jMenuItem2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MousePressed
         // TODO add your handling code here:
          // TODO add your handling code here:
-        int fila = this.jTable1.getSelectedRow();
+       /* int fila = this.jTable1.getSelectedRow();
          
         String id = this.jTable1.getValueAt(fila, 0).toString();
         String user = this.jTable1.getValueAt(fila, 0).toString();
@@ -482,18 +485,18 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         }/*else{
             //JOptionPane.showMessageDialog(null, "NO");
 
-        }*/
+        }*******
        //String id1 = this.jTable1.getModel().getValueAt(this.jTable1.getSelectedRow(),0).toString();
         //String id1 = this.jTable1.getValueAt(select, 0).toString();
         
         
         
-        System.out.println("prueba "+id+" prueba ");
+        System.out.println("prueba "+id+" prueba ");*****/
     }//GEN-LAST:event_jMenuItem2MousePressed
 
     private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
         // TODO add your handling code here:
-        this.user.validarUsuario(this.jTextField1.getText());
+        //this.user.validarUsuario(this.jTextField1.getText());
     }//GEN-LAST:event_jTextField1FocusLost
 
     private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
@@ -579,4 +582,5 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
     private javax.swing.JTextField jTextField8;
     private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
+
 }

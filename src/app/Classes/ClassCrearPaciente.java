@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class ClassCrearPaciente{
     private conection.Mysql mysql;
     private ValidData valid = new ValidData();
-    private String nombre,telefono,email, rnc, paginaWeb, direccion,id;
+    private  String nombre,apellido, telefono, email, cedula, fecha_nacimiento, sexo, tipo_sangre_id, provincia, sector, direccion,id;
     private String[] key = {"id","name_hospital","rnc","telephone","email","web_page","address"};
     private int id_user;
     private int lineas=10;
@@ -40,7 +40,9 @@ public class ClassCrearPaciente{
     public boolean getAgregar(){
         return agregar;
     }
-    
+    public String getIdTipoSangre(int index){
+        return this.idTipoSangre[index];
+    }
     public void llenarComboBox(javax.swing.JComboBox JCTipoSangre){
             String[] campos = {"id","name_of_blood"};
            Object[][] resultado = (Object[][])  this.mysql.generarSelect("type_of_blood",campos,"name_of_blood","asc","");
@@ -63,22 +65,31 @@ public class ClassCrearPaciente{
         boolean respuesta = this.mysql.deleteRecord("hospital", id);
         return respuesta;
     }
-    public boolean insert(String nombre,String telefono,String email,String cedula,String paginaWeb,String direccion){
-        if(valid.validEmpty(nombre, "Nombre de la empresa")){
-           return false; 
-        }else{
-                if(this.validarCedula(cedula)){
-                    this.nombre = nombre;
+    public void setValoresAtributos(String nombre,String apellido,String telefono,String email,String cedula,String fecha_nacimiento,String sexo,String tipo_sangre_id,String provincia,String sector,String direccion){
+                    this.fecha_nacimiento = fecha_nacimiento;
+                     this.cedula = cedula;
+                     this.nombre = nombre;
+                     this.sexo = sexo;
+                     this.tipo_sangre_id = tipo_sangre_id;
+                     this.provincia = provincia;
+                     this.sector = sector;
+                     this.apellido = apellido;
                     this.telefono = telefono;
                     this.email = email;
-                    this.rnc = rnc;
-                    this.paginaWeb = paginaWeb;
                     this.direccion = direccion;
-                    boolean respuesta = this.procesarInsert();
-                    return respuesta;
-                }else{
+    }
+    public boolean insert(){
+        if(this.valid.validEmpty(this.nombre, "Nombre de la empresa")){
+           return false; 
+        }else{
+            if(this.valid.validEmpty(this.cedula)){
+                if(!this.validarCedula(this.cedula)){
                     return false;
                 }
+            }
+                    boolean respuesta = this.procesarInsert();
+                    return respuesta;
+               
          }
         
     }
@@ -91,7 +102,7 @@ public class ClassCrearPaciente{
             return false;
           }
     }
-    public void limpiarTexto(javax.swing.JTextField texto, javax.swing.JTextField texto1, javax.swing.JTextField texto2, javax.swing.JTextField texto3, javax.swing.JTextField texto4, javax.swing.JTextArea texto5){
+    public void limpiarTexto(javax.swing.JTextField texto, javax.swing.JTextField texto1, javax.swing.JTextField texto2, javax.swing.JTextField texto3, javax.swing.JTextField texto4, javax.swing.JTextField texto5, javax.swing.JTextField texto6, javax.swing.JTextField texto7, javax.swing.JTextField texto8){
        texto.setText("");texto1.setText("");texto2.setText("");texto3.setText("");texto4.setText("");texto5.setText("");
     }
     public boolean update( String nombre,String telefono,String email,String rnc,String paginaWeb,String direccion,String id){
