@@ -78,6 +78,20 @@ public class ClassCrearPaciente{
                     this.email = email;
                     this.direccion = direccion;
     }
+    public void setValoresAtributos(String nombre,String apellido,String telefono,String email,String cedula,String fecha_nacimiento,String sexo,String tipo_sangre_id,String provincia,String sector,String direccion,String id){
+                    this.fecha_nacimiento = fecha_nacimiento;
+                     this.cedula = cedula;
+                     this.nombre = nombre;
+                     this.sexo = sexo;
+                     this.tipo_sangre_id = tipo_sangre_id;
+                     this.provincia = provincia;
+                     this.sector = sector;
+                     this.apellido = apellido;
+                    this.telefono = telefono;
+                    this.email = email;
+                    this.direccion = direccion;
+                    this.id = id;
+    }
     public boolean insert(){
         if(this.valid.validEmpty(this.nombre, "Nombre de la empresa")){
            return false; 
@@ -102,10 +116,12 @@ public class ClassCrearPaciente{
             return false;
           }
     }
-    public void limpiarTexto(javax.swing.JTextField texto, javax.swing.JTextField texto1, javax.swing.JTextField texto2, javax.swing.JTextField texto3, javax.swing.JTextField texto4, javax.swing.JTextField texto5, javax.swing.JTextField texto6, javax.swing.JTextField texto7, javax.swing.JTextField texto8){
+    public void limpiarTexto(javax.swing.JTextField texto, javax.swing.JTextField texto1, javax.swing.JTextField texto2, javax.swing.JTextField texto3, javax.swing.JTextField texto4, javax.swing.JTextField texto5, javax.swing.JTextField texto6, javax.swing.JTextField texto7, javax.swing.JTextField texto8, javax.swing.JComboBox texto9, javax.swing.JComboBox texto10){
        texto.setText("");texto1.setText("");texto2.setText("");texto3.setText("");texto4.setText("");texto5.setText("");
+       texto.setText("");texto6.setText("");texto7.setText("");texto8.setText("");texto9.setSelectedIndex(0);texto10.setSelectedIndex(0);
+
     }
-    public boolean update( String nombre,String telefono,String email,String rnc,String paginaWeb,String direccion,String id){
+    public boolean update(){
         
         if(valid.validEmpty(nombre)){
           this.valorEdit.add(nombre);
@@ -176,13 +192,39 @@ public class ClassCrearPaciente{
         JLabelTotal.setText(resultado[0][1]+"");
         table.setModel(modelo); 
     }
-    public String[] mostrarEditarUsuario(String id){
-        String[] campos = {"id","name_hospital","rnc","telephone","email","web_page","address"};
-        String[] respuesta = this.mysql.generarSelect("hospital", id,campos);
+    public String[] mostrarEditarPaciente(String id){
+        String[] campos = {"id","name_patient","last_patient","document_id","date_of_birth","sex"};
+        String[] respuesta = this.mysql.generarSelect("patient", id,campos);
         this.setAgregar(false);
         return respuesta;
     }
     
+    public String[] mostrarEditarDireccion(String id){
+        String[] campos = {"id","sector","province","address"};
+        String[] respuesta = this.mysql.generarSelect("address","id_patient", id,campos,"id","desc");
+        this.setAgregar(false);
+        return respuesta;
+    }
+    public String[] mostrarEditarTelefono(String id){
+        String[] campos = {"id","telephone"};
+        String[] respuesta = this.mysql.generarSelect("telephone","id_patient", id,campos,"id","desc");
+        this.setAgregar(false);
+        return respuesta;
+    }
+    
+    public String[] mostrarEditarEmail(String id){
+        String[] campos = {"id","email"};
+        String[] respuesta = this.mysql.generarSelect("email","id_patient", id,campos,"id","desc");
+        this.setAgregar(false);
+        return respuesta;
+    }
+    
+    public String[] mostrarEditarSeguroPaciente(String id){
+        String[] campos = {"id","name_insurance_patient","insurance_number"};
+        String[] respuesta = this.mysql.generarSelect("insurance_patient","id_patient", id,campos,"id","desc");
+        this.setAgregar(false);
+        return respuesta;
+    }
     public void cambiarTestoParaEditar(javax.swing.JButton b,javax.swing.JLabel l,javax.swing.JTextField jtf){
         if(this.getAgregar()){
             b.setText("Agregar");

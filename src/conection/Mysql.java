@@ -278,6 +278,34 @@ public class Mysql {
             return fila;
         }
     }
+    
+    
+    public String[] generarSelect(String table_name,String nameId,String id,String[] campos,String CampoOrder,String order) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" where "+nameId+" = "+id+" and display = '1' order by "+CampoOrder+" "+order+" ";
+            System.out.println(Query);
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            resultSet.beforeFirst();  
+            resultSet.last();  
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+           String[] fila = new String[campos.length];
+            if (resultSet.next()) {
+                    for(int i = 0 ; i < campos.length ; i++){
+                        fila[i]=resultSet.getString(campos[i]);
+                        System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                    }       
+            }
+            return fila;
+        } catch (SQLException ex) {
+            String[] fila = {"no"};
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return fila;
+        }
+    }
     public void closeConnection() {
         try {
             Conexion.close();
