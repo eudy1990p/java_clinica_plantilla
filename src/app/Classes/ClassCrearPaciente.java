@@ -29,7 +29,8 @@ public class ClassCrearPaciente{
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
-            
+    private String[] idTipoSangre;
+    
     public ClassCrearPaciente(){
         mysql = new Mysql();
     }
@@ -40,6 +41,21 @@ public class ClassCrearPaciente{
         return agregar;
     }
     
+    public void llenarComboBox(javax.swing.JComboBox JCTipoSangre){
+            String[] campos = {"id","name_of_blood"};
+           Object[][] resultado = (Object[][])  this.mysql.generarSelect("type_of_blood",campos,"name_of_blood","asc","");
+          Object[][] infoTabla= (Object[][]) resultado[0][0];
+          System.out.println(infoTabla.length);
+          System.out.println(infoTabla[1].length);
+          
+          this.idTipoSangre = new String[infoTabla.length];
+          for(int i = 0 ; i < infoTabla.length ; i++){
+                JCTipoSangre.addItem(infoTabla[i][1]);
+                idTipoSangre[i]= infoTabla[i][0].toString();
+                System.out.println(infoTabla[i][0]+" "+infoTabla[i][1]);
+          }
+    }
+    
     public void setAgregar(boolean estado){
         this.agregar = estado;
     }
@@ -47,11 +63,11 @@ public class ClassCrearPaciente{
         boolean respuesta = this.mysql.deleteRecord("hospital", id);
         return respuesta;
     }
-    public boolean insert(String nombre,String telefono,String email,String rnc,String paginaWeb,String direccion){
+    public boolean insert(String nombre,String telefono,String email,String cedula,String paginaWeb,String direccion){
         if(valid.validEmpty(nombre, "Nombre de la empresa")){
            return false; 
         }else{
-                if(this.validarUsuario(nombre)){
+                if(this.validarCedula(cedula)){
                     this.nombre = nombre;
                     this.telefono = telefono;
                     this.email = email;
@@ -66,12 +82,12 @@ public class ClassCrearPaciente{
          }
         
     }
-    public boolean validarUsuario(String usuario){
-         int existe = this.mysql.getValues("hospital", "where name_hospital = '"+usuario+"' ");
+    public boolean validarCedula(String cedula){
+         int existe = this.mysql.getValues("patient", "where document_id = '"+cedula+"' ");
           if(existe < 1){
             return true;
         }else{
-            JOptionPane.showMessageDialog(null, "El hospital ya existe");
+            JOptionPane.showMessageDialog(null, "La cedula ya existe");
             return false;
           }
     }
