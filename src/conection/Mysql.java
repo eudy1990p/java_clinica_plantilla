@@ -86,6 +86,58 @@ public class Mysql {
         }
     }
     
+    public String generarInsertWithGetLastID(String[] key, String[] value,String tableName) {
+        String values = "";
+        String keys = "";
+        String ultimoID = "";
+        try {
+            for(int i = 0 ; i < value.length ; i++){
+                System.out.println(i +" "+value.length);
+                if(i == 0){
+                    System.out.println("0 Values "+value[i]+" key "+key[i]);
+                    keys += key[i];
+                    if(value[i].equals("now()")){
+                        values += ""+value[i]+"";
+                    }else{
+                        values += "'"+value[i]+"'";
+                    }
+                }else{
+                    System.out.println("0 + Values "+value[i]+" key "+key[i]);
+                    keys += ","+key[i];
+                    if(value[i].equals("now()")){
+                        values += ","+value[i]+"";
+                    }else{
+                        values += ",'"+value[i]+"'";
+                    }
+                }
+                
+            }
+            String Query = "INSERT INTO " + tableName + " "
+                    + "("+keys+")"
+                    + "values ("+values+")";
+            System.out.println("Query "+Query);
+          
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
+            
+            Query = "SELECT max(id) as id FROM " + tableName+"";
+            st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            
+            if(resultSet.next()){
+                ultimoID = resultSet.getString("id");
+            }
+                
+            
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+            ultimoID = "";
+        }
+        return ultimoID;
+    }
+    
     public void generarSelectLastRow(String table_name,String where,DefaultTableModel model,Object[] columnas,String[] datos) {
         try {
             String Query = "SELECT * FROM " + table_name +" "+where;
@@ -129,30 +181,26 @@ public class Mysql {
             resultSet.beforeFirst();
             Object[][] fila = new Object[totalFilas][campos.length];
             while (resultSet.next()) {
-                    System.out.println("ID: " + resultSet.getString("id"));
+                    //System.out.println("ID: " + resultSet.getString("id"));
                     for(int i = 0 ; i < campos.length ;i++){
-                        System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
-
+                      System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
                         fila[f][i] = resultSet.getString(campos[i]);
                     }
-                    
-                    //fila[f][1]  = resultSet.getString("name_user");
-                    //fila[f][2]  = resultSet.getString("type_of_user");
-
                     f++;
             }
-            System.out.println(" fin while" );
+            System.out.print(" fin while" );
             Object[][] resultado = new Object[1][2];
-            System.out.println(" objecto" );
+            System.out.print(" objecto" );
 
             resultado[0][0]=fila;
             resultado[0][1]=totalFilas;
-            System.out.println(" fin" );
+            System.out.print(" fin" );
 
             return resultado;
         } catch (SQLException ex) {
             Object[][] resultado = new Object[1][2];
-            resultado[0][0]=0;
+            Object[][] fila = new Object[1][2];
+            resultado[0][0]=fila;
             resultado[0][1]=0;
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
             return resultado;
@@ -177,25 +225,20 @@ public class Mysql {
             resultSet.beforeFirst();
             Object[][] fila = new Object[totalFilas][campos.length];
             while (resultSet.next()) {
-                    System.out.println("ID: " + resultSet.getString("id"));
+                    //System.out.println("ID: " + resultSet.getString("id"));
                     for(int i = 0 ; i < campos.length ;i++){
                         System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
-
                         fila[f][i] = resultSet.getString(campos[i]);
                     }
-                    
-                    //fila[f][1]  = resultSet.getString("name_user");
-                    //fila[f][2]  = resultSet.getString("type_of_user");
-
                     f++;
             }
-            System.out.println(" fin while" );
+            System.out.print(" fin while" );
             Object[][] resultado = new Object[1][2];
-            System.out.println(" objecto" );
+            System.out.print(" objecto" );
 
             resultado[0][0]=fila;
             resultado[0][1]=totalFilas;
-            System.out.println(" fin" );
+            System.out.print(" fin" );
 
             return resultado;
         } catch (SQLException ex) {
@@ -465,4 +508,37 @@ public class Mysql {
         }
     }
     
+    public boolean updateRecord(String table_name,String nameId, String id,String[] key, String[] value) {
+        String keysValues = "";
+        try {
+            for(int i = 0 ; i < value.length ; i++){
+                System.out.println(i +" "+value.length);
+                if(i == 0){
+                    System.out.println("0 Values "+value[i]+" key "+key[i]);
+                    if(value[i].equals("now()")){
+                        keysValues += key[i]+" = "+value[i]+" ";
+                    }else{
+                         keysValues += key[i]+" = '"+value[i]+"' ";
+                    }
+                }else{
+                    System.out.println("0 + Values "+value[i]+" key "+key[i]);
+                    if(value[i].equals("now()")){
+                         keysValues += ", "+key[i]+" = "+value[i]+" ";
+                    }else{
+                         keysValues += ", "+key[i]+" = '"+value[i]+"' ";
+                    }
+                }
+            }
+            
+            String Query = "update " + table_name + " set "+keysValues+" WHERE "+nameId+" = " +id+ " ";
+            System.out.println(Query);
+            Statement st = Conexion.createStatement();
+            st.executeUpdate(Query);
+            return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            return false;
+        }
+    }
 }

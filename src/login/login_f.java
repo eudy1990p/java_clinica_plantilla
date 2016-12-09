@@ -162,7 +162,7 @@ public class login_f extends javax.swing.JFrame {
     }
     private void jPasswordField1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jPasswordField1KeyPressed
         // TODO add your handling code here:
-        System.out.println(evt.getKeyCode());
+        //System.out.println(evt.getKeyCode());
         if(evt.getKeyCode() == 10){
                 this.login();
         }
