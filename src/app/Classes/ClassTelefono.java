@@ -73,9 +73,9 @@ public class ClassTelefono{
         
     }
     public void llenarComboBox(javax.swing.JComboBox JCTipoSangre){
-            String[] campos = {"id","telephone"};
+            String[] campos = {"id","name_type_telephone"};
             
-            Object[][] resultado = (Object[][])  this.mysql.generarSelect(this.NombreTabla,campos,"id","asc","");
+            Object[][] resultado = (Object[][])  this.mysql.generarSelect("type_of_telephone",campos,"id","asc","");
             Object[][] infoTabla= (Object[][]) resultado[0][0];
           //System.out.println(infoTabla.length);
           //System.out.println(infoTabla[1].length);
