@@ -132,6 +132,11 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         jPopupMenu1.add(EditarEliminarVerPaciente);
 
         EditarEliminarVerTelefono.setText("Editar / Eliminar / Ver Teléfono");
+        EditarEliminarVerTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                EditarEliminarVerTelefonoMousePressed(evt);
+            }
+        });
         jPopupMenu1.add(EditarEliminarVerTelefono);
 
         EditarEliminarVerEmail.setText("Editar / Eliminar / Ver Email");
@@ -780,6 +785,14 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         String id_patient = this.jTable1.getValueAt(fila, 0).toString();
         new JFrameDireccion(mysql,id_patient).setVisible(true);
     }//GEN-LAST:event_EditarEliminarVerDireccionMousePressed
+
+    private void EditarEliminarVerTelefonoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerTelefonoMousePressed
+        // TODO add your handling code here:
+         int fila = this.jTable1.getSelectedRow();
+        String id_patient = this.jTable1.getValueAt(fila, 0).toString();
+        new JFrameTelefono(mysql,id_patient).setVisible(true);
+        
+    }//GEN-LAST:event_EditarEliminarVerTelefonoMousePressed
 
     
     /**
