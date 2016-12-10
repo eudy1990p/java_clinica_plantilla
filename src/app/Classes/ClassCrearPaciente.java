@@ -63,7 +63,7 @@ public class ClassCrearPaciente{
         this.agregar = estado;
     }
     public boolean elimnar(String id){
-        boolean respuesta = this.mysql.deleteRecord("hospital", id);
+        boolean respuesta = this.mysql.deleteRecord("patient", id);
         return respuesta;
     }
     public void setValoresAtributos(String nombre,String apellido,String telefonoCasa,String telefonoCelular,String telefonoTrabajo,String email1,String email2,String cedula,String fecha_nacimiento,String sexo,String tipo_sangre_id,String provincia,String sector,String direccion,String nombreSeguro,String numeroSeguro){
@@ -123,6 +123,10 @@ public class ClassCrearPaciente{
                 if(this.valid.validEmpty(numeroSeguro,"Numero del seguro necesitar estar lleno para agregar el seguro pero")){
                     return false;
                 }
+            }
+            if( !this.valid.validEmpty(this.fecha_nacimiento)){
+                java.util.Date fecha = new java.util.Date();
+                this.fecha_nacimiento = fecha.getYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
             }
                     boolean respuesta = this.procesarInsertPaciente();
                     return respuesta;
@@ -327,10 +331,10 @@ public class ClassCrearPaciente{
         
         this.id_paciente = mysql.generarInsertWithGetLastID(key, values, "patient");
         System.out.println("id Paciente "+ this.id_paciente);
-        //this.insertPacienteDireccion();
-        //this.insertPacienteSeguro();
-        //this.insertPacienteEmail();
-        //this.insertPacienteTelefono();
+        this.insertPacienteDireccion();
+        this.insertPacienteSeguro();
+        this.insertPacienteEmail();
+        this.insertPacienteTelefono();
         boolean respuesta = true;
         
         return respuesta;

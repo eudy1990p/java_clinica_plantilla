@@ -57,6 +57,7 @@ public class login_f extends javax.swing.JFrame {
 
         jTextField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jTextField1.setText("eudy");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jLabel3.setText("Clave");
@@ -82,6 +83,7 @@ public class login_f extends javax.swing.JFrame {
 
         jPasswordField1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jPasswordField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        jPasswordField1.setText("123");
         jPasswordField1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 jPasswordField1KeyPressed(evt);

@@ -208,6 +208,50 @@ public class Mysql {
             
     }
     
+    public Object generarSelect(String table_name,String[] campos, String where) {
+        try {
+            String Query = "SELECT * FROM " + table_name+" where "+where+" display = '1' ";
+            System.out.println("QUERY "+Query);
+
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);            
+            resultSet.beforeFirst();  
+            resultSet.last();  
+            
+           //System.out.print("GetRow "+resultSet.getRow());
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+            Object[][] fila = new Object[totalFilas][campos.length];
+            while (resultSet.next()) {
+                    //System.out.println("ID: " + resultSet.getString("id"));
+                    for(int i = 0 ; i < campos.length ;i++){
+                      System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
+                        fila[f][i] = resultSet.getString(campos[i]);
+                    }
+                    f++;
+            }
+            System.out.print(" fin while" );
+            Object[][] resultado = new Object[1][2];
+            System.out.print(" objecto" );
+
+            resultado[0][0]=fila;
+            resultado[0][1]=totalFilas;
+            System.out.print(" fin" );
+
+            return resultado;
+        } catch (SQLException ex) {
+            Object[][] resultado = new Object[1][2];
+            Object[][] fila = new Object[1][2];
+            resultado[0][0]=fila;
+            resultado[0][1]=0;
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return resultado;
+        }
+            
+    }
+    
     public Object generarSelect(String table_name,String[] campos,String CampoOrdenar,String tipoOrden,String otros) {
         try {
             String Query = "SELECT * FROM " + table_name+" where display = '1' order by "+CampoOrdenar+" "+tipoOrden+" "+otros+" ";
@@ -269,7 +313,7 @@ public class Mysql {
             resultSet.beforeFirst();
             Object[][] fila = new Object[totalFilas][campos.length];
             while (resultSet.next()) {
-                    System.out.println("ID: " + resultSet.getString("id"));
+                    //System.out.println("ID: " + resultSet.getString("id"));
                       for(int i = 0 ; i < campos.length ;i++){
                         fila[f][i] = resultSet.getString(campos[i]);
                     }

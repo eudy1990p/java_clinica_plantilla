@@ -71,7 +71,13 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
     private void initComponents() {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
+        VerHistorico = new javax.swing.JMenuItem();
+        EditarEliminarVerPaciente = new javax.swing.JMenuItem();
+        EditarEliminarVerTelefono = new javax.swing.JMenuItem();
+        EditarEliminarVerEmail = new javax.swing.JMenuItem();
+        EditarEliminarVerDireccion = new javax.swing.JMenuItem();
+        EditarEliminarVerSeguro = new javax.swing.JMenuItem();
+        EliminarPaciente = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jTextFieldNombre = new javax.swing.JTextField();
@@ -114,13 +120,51 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         jTextFieldEmail1 = new javax.swing.JTextField();
         jDateChooserFechaNacimiento = new com.toedter.calendar.JDateChooser();
 
-        jMenuItem2.setText("Eliminar");
-        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+        VerHistorico.setText("VerHistorico");
+        jPopupMenu1.add(VerHistorico);
+
+        EditarEliminarVerPaciente.setText("Editar / Eliminar / Ver Paciente");
+        EditarEliminarVerPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenuItem2MousePressed(evt);
+                EditarEliminarVerPacienteMousePressed(evt);
             }
         });
-        jPopupMenu1.add(jMenuItem2);
+        jPopupMenu1.add(EditarEliminarVerPaciente);
+
+        EditarEliminarVerTelefono.setText("Editar / Eliminar / Ver Teléfono");
+        jPopupMenu1.add(EditarEliminarVerTelefono);
+
+        EditarEliminarVerEmail.setText("Editar / Eliminar / Ver Email");
+        EditarEliminarVerEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                EditarEliminarVerEmailMousePressed(evt);
+            }
+        });
+        jPopupMenu1.add(EditarEliminarVerEmail);
+
+        EditarEliminarVerDireccion.setText("Editar / Eliminar / Ver Dirección");
+        EditarEliminarVerDireccion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                EditarEliminarVerDireccionMousePressed(evt);
+            }
+        });
+        jPopupMenu1.add(EditarEliminarVerDireccion);
+
+        EditarEliminarVerSeguro.setText("Editar / Eliminar / Ver Seguro");
+        EditarEliminarVerSeguro.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                EditarEliminarVerSeguroMousePressed(evt);
+            }
+        });
+        jPopupMenu1.add(EditarEliminarVerSeguro);
+
+        EliminarPaciente.setText("EliminarPaciente");
+        EliminarPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                EliminarPacienteMousePressed(evt);
+            }
+        });
+        jPopupMenu1.add(EliminarPaciente);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar Paciente");
@@ -405,7 +449,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(596, Short.MAX_VALUE)
+                        .addContainerGap(601, Short.MAX_VALUE)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -414,7 +458,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, 76, Short.MAX_VALUE)
                                 .addGap(564, 564, 564))
                             .addComponent(jTextField2)))
                     .addComponent(jScrollPane1))
@@ -489,7 +533,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
         );
 
         pack();
@@ -568,7 +612,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         int select = this.jTable1.rowAtPoint(evt.getPoint());
         String id = this.jTable1.getValueAt(select, 0).toString();
         this.id = id;
-        System.out.println(id);
+        System.out.println("Click editar registro "+id);
         String[] respuesta = this.user.mostrarEditarPaciente(id);
         this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextFieldNombre);
         
@@ -580,7 +624,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         //this.jTextArea1.setText(respuesta[6]);
     }//GEN-LAST:event_jTable1MouseClicked
 
-    private void jMenuItem2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MousePressed
+    private void EditarEliminarVerPacienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerPacienteMousePressed
         // TODO add your handling code here:
          // TODO add your handling code here:
        /* int fila = this.jTable1.getSelectedRow();
@@ -612,7 +656,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         
         
         System.out.println("prueba "+id+" prueba ");*****/
-    }//GEN-LAST:event_jMenuItem2MousePressed
+    }//GEN-LAST:event_EditarEliminarVerPacienteMousePressed
 
     private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
         // TODO add your handling code here:
@@ -685,8 +729,57 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
 
     private void jDateChooserFechaNacimientoFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDateChooserFechaNacimientoFocusLost
         // TODO add your handling code here:
-        
+
     }//GEN-LAST:event_jDateChooserFechaNacimientoFocusLost
+
+    private void EliminarPacienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EliminarPacienteMousePressed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+         // TODO add your handling code here:
+        int fila = this.jTable1.getSelectedRow();
+         
+        String id = this.jTable1.getValueAt(fila, 0).toString();
+        String user = this.jTable1.getValueAt(fila, 0).toString();
+        
+        this.id = id;
+        int respuesta = JOptionPane.showConfirmDialog(null, "Desea eliminar este registro?", "Eliminar registro", JOptionPane.YES_NO_OPTION);
+        if(respuesta == JOptionPane.YES_OPTION){
+            boolean eliminado = this.user.elimnar(id);
+            if(eliminado){
+                JOptionPane.showMessageDialog(null, "Se elimino correctamente el registro.");
+                this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
+                this.user.setAgregar(true);
+                this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextFieldNombre);
+                this.user.limpiarTexto(this.jTextFieldNombre, this.jTextFieldApellido,this.jTextFieldTelefonoCelular,this.jTextFieldEmail2,this.jTextFieldCedula,this.jTextFieldTelefonoCasa,this.jTextFieldProvincia,this.jTextFieldSector,this.jTextFieldDireccion,this.jComboBoxSexo,this.jComboBoxSangre,this.jTextFieldNombreSeguro,this.jTextFieldNumeroSeguro,this.jDateChooserFechaNacimiento,this.jTextFieldTelefonoTrabajo,this.jTextFieldEmail1);
+
+            }else{
+                 JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el registro.");           
+            }
+        }
+        System.out.println("prueba "+id+" prueba ");
+    }//GEN-LAST:event_EliminarPacienteMousePressed
+
+    private void EditarEliminarVerEmailMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerEmailMousePressed
+        // TODO add your handling code here:
+        int fila = this.jTable1.getSelectedRow();
+        String id_patient = this.jTable1.getValueAt(fila, 0).toString();
+        new JFrameEmail(mysql,id_patient).setVisible(true);
+    }//GEN-LAST:event_EditarEliminarVerEmailMousePressed
+
+    private void EditarEliminarVerSeguroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerSeguroMousePressed
+        // TODO add your handling code here:
+        int fila = this.jTable1.getSelectedRow();
+        String id_patient = this.jTable1.getValueAt(fila, 0).toString();
+        new JFrameSeguro(mysql,id_patient).setVisible(true);
+                                                     
+    }//GEN-LAST:event_EditarEliminarVerSeguroMousePressed
+
+    private void EditarEliminarVerDireccionMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerDireccionMousePressed
+        // TODO add your handling code here:
+        int fila = this.jTable1.getSelectedRow();
+        String id_patient = this.jTable1.getValueAt(fila, 0).toString();
+        new JFrameDireccion(mysql,id_patient).setVisible(true);
+    }//GEN-LAST:event_EditarEliminarVerDireccionMousePressed
 
     
     /**
@@ -697,6 +790,13 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
   // }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem EditarEliminarVerDireccion;
+    private javax.swing.JMenuItem EditarEliminarVerEmail;
+    private javax.swing.JMenuItem EditarEliminarVerPaciente;
+    private javax.swing.JMenuItem EditarEliminarVerSeguro;
+    private javax.swing.JMenuItem EditarEliminarVerTelefono;
+    private javax.swing.JMenuItem EliminarPaciente;
+    private javax.swing.JMenuItem VerHistorico;
     private javax.swing.JButton jButton1;
     private javax.swing.JComboBox<String> jComboBoxSangre;
     private javax.swing.JComboBox<String> jComboBoxSexo;
@@ -722,7 +822,6 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;

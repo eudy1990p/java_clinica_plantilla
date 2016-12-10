@@ -8,12 +8,54 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <MenuItem class="javax.swing.JMenuItem" name="jMenuItem2">
+        <MenuItem class="javax.swing.JMenuItem" name="VerHistorico">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Eliminar"/>
+            <Property name="text" type="java.lang.String" value="VerHistorico"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EditarEliminarVerPaciente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar / Eliminar / Ver Paciente"/>
           </Properties>
           <Events>
-            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jMenuItem2MousePressed"/>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EditarEliminarVerPacienteMousePressed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EditarEliminarVerTelefono">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar / Eliminar / Ver Tel&#xe9;fono"/>
+          </Properties>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EditarEliminarVerEmail">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar / Eliminar / Ver Email"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EditarEliminarVerEmailMousePressed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EditarEliminarVerDireccion">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar / Eliminar / Ver Direcci&#xf3;n"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EditarEliminarVerDireccionMousePressed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EditarEliminarVerSeguro">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Editar / Eliminar / Ver Seguro"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EditarEliminarVerSeguroMousePressed"/>
+          </Events>
+        </MenuItem>
+        <MenuItem class="javax.swing.JMenuItem" name="EliminarPaciente">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="EliminarPaciente"/>
+          </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EliminarPacienteMousePressed"/>
           </Events>
         </MenuItem>
       </SubComponents>
@@ -103,7 +145,7 @@
                   <Component id="jLabel1" alignment="0" max="32767" attributes="0"/>
                   <Component id="jLabel9" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace pref="596" max="32767" attributes="0"/>
+                      <EmptySpace pref="601" max="32767" attributes="0"/>
                       <Component id="jButton1" min="-2" pref="163" max="-2" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="1" attributes="0">
@@ -114,7 +156,7 @@
                       <EmptySpace min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
-                              <Component id="jLabel6" pref="71" max="32767" attributes="0"/>
+                              <Component id="jLabel6" pref="76" max="32767" attributes="0"/>
                               <EmptySpace min="-2" pref="564" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jTextField2" max="32767" attributes="0"/>
@@ -209,7 +251,7 @@
                   <Component id="jLabel5" alignment="3" max="32767" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="269" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="90" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
