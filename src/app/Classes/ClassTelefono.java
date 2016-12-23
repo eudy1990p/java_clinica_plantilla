@@ -31,6 +31,7 @@ public class ClassTelefono{
     private ArrayList<String> valorEdit = new ArrayList<String>();
     private String NombreTabla = " telephone";        
     private String[] idTipoTelefono;
+    private String telefonoOld="",tipoOld="";
     
     public ClassTelefono(){
         mysql = new Mysql();
@@ -89,11 +90,11 @@ public class ClassTelefono{
     }
     
     public boolean validarUsuario(String usuario){
-         int existe = this.mysql.getValues(this.NombreTabla, "where telephone = '"+usuario+"' ");
+         int existe = this.mysql.getValues(this.NombreTabla, "where telephone = '"+usuario+"' and id_patient = '"+this.id_patient+"' ");
           if(existe < 1){
             return true;
         }else{
-            JOptionPane.showMessageDialog(null, "El numero ya existe");
+            //JOptionPane.showMessageDialog(null, "El numero ya existe");
             return false;
           }
     }
@@ -104,12 +105,12 @@ public class ClassTelefono{
     public boolean update( String usuario,String numeroSeguro, String id){
         boolean respuesta = true;
         if(valid.validEmpty(numeroSeguro)){
-            if(!this.validarUsuario(numeroSeguro)){
-                System.out.println("numero Seguro existe");
+            if( (!this.validarUsuario(numeroSeguro)) && (!numeroSeguro.equals(this.telefonoOld)) ){
+                System.out.println("numero telefono existe");
                 respuesta = false;
                 return respuesta;
             }else{
-               System.out.println("numero Seguro existe");
+               System.out.println("Vamos");
                 this.valorEdit.add(numeroSeguro);
                 this.camposEdit.add("telephone");
                 
@@ -148,17 +149,27 @@ public class ClassTelefono{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal,String palabraBuscar){
-        String[] datos = {"id","telephone","id_type_of_telephone"};
-        String campo = "id_patient = '"+this.id_patient+"' and telephone";
-        Object[][] resultado = (Object[][]) this.mysql.generarSelect(this.NombreTabla, datos,palabraBuscar,campo);
+        //String[] datos = {"id","telephone","id_type_of_telephone"};
+        //String campo = "id_patient = '"+this.id_patient+"' and telephone";
+         String[] datos = {"t.id","t.telephone","t1.name_type_telephone"};
+        String select = "t.id, t.telephone, t1.name_type_telephone";
+        String where = "t.id_patient = '"+this.id_patient+"' and t.telephone like '%"+palabraBuscar+"%' and ";
+        String tablasJoin = ""+this.NombreTabla+" as t left join type_of_telephone as t1 on "
+                + "t.id_type_of_telephone = t1.id";
+        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t."); /*this.mysql.generarSelect(this.NombreTabla, datos,palabraBuscar,campo)*/;
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         JLabelTotal.setText(resultado[0][1]+"");
         table.setModel(modelo); 
     }
     public String[] mostrarEditarUsuario(String id){
-        String[] campos ={"id","telephone","id_type_of_telephone"};
-        String[] respuesta = this.mysql.generarSelect(this.NombreTabla, id,campos);
+        String[] campos ={"t.id","t.telephone","t1.name_type_telephone"};
+        String join = this.NombreTabla+" as t left join type_of_telephone as t1 "
+                + "on t.id_type_of_telephone = t1.id";
+        String columnas = "t.id, t.telephone, t.id_type_of_telephone, t1.name_type_telephone";
+        String[] respuesta = this.mysql.generarSelectWithJoin(join,"t.id,t.telephone,t1.name_type_telephone", id+" and id_patient = "+this.id_patient,campos,"t.");
+        this.telefonoOld = respuesta[1];
+        this.tipoOld = respuesta[2];
         this.setAgregar(false);
         return respuesta;
     }
@@ -176,9 +187,12 @@ public class ClassTelefono{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal){
-        String[] datos = {"id","telephone","id_type_of_telephone"};
-        String where = "id_patient = '"+this.id_patient+"' and ";
-        Object[][] resultado = (Object[][]) this.mysql.generarSelect(this.NombreTabla, datos,where);
+        String[] datos = {"t.id","t.telephone","t1.name_type_telephone"};
+        String select = "t.id, t.telephone, t1.name_type_telephone";
+        String where = "t.id_patient = '"+this.id_patient+"' and ";
+        String tablasJoin = ""+this.NombreTabla+" as t left join type_of_telephone as t1 on "
+                + "t.id_type_of_telephone = t1.id";
+        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);

@@ -72,7 +72,6 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
 
         jPopupMenu1 = new javax.swing.JPopupMenu();
         VerHistorico = new javax.swing.JMenuItem();
-        EditarEliminarVerPaciente = new javax.swing.JMenuItem();
         EditarEliminarVerTelefono = new javax.swing.JMenuItem();
         EditarEliminarVerEmail = new javax.swing.JMenuItem();
         EditarEliminarVerDireccion = new javax.swing.JMenuItem();
@@ -121,15 +120,12 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         jDateChooserFechaNacimiento = new com.toedter.calendar.JDateChooser();
 
         VerHistorico.setText("VerHistorico");
-        jPopupMenu1.add(VerHistorico);
-
-        EditarEliminarVerPaciente.setText("Editar / Eliminar / Ver Paciente");
-        EditarEliminarVerPaciente.addMouseListener(new java.awt.event.MouseAdapter() {
+        VerHistorico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mousePressed(java.awt.event.MouseEvent evt) {
-                EditarEliminarVerPacienteMousePressed(evt);
+                VerHistoricoMousePressed(evt);
             }
         });
-        jPopupMenu1.add(EditarEliminarVerPaciente);
+        jPopupMenu1.add(VerHistorico);
 
         EditarEliminarVerTelefono.setText("Editar / Eliminar / Ver Teléfono");
         EditarEliminarVerTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -173,7 +169,6 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Administrar Paciente");
-        setPreferredSize(new java.awt.Dimension(774, 500));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -538,7 +533,7 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
                     .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 90, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE))
         );
 
         pack();
@@ -628,40 +623,6 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         this.jComboBoxSexo.setSelectedItem(respuesta[5]);
         //this.jTextArea1.setText(respuesta[6]);
     }//GEN-LAST:event_jTable1MouseClicked
-
-    private void EditarEliminarVerPacienteMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerPacienteMousePressed
-        // TODO add your handling code here:
-         // TODO add your handling code here:
-       /* int fila = this.jTable1.getSelectedRow();
-         
-        String id = this.jTable1.getValueAt(fila, 0).toString();
-        String user = this.jTable1.getValueAt(fila, 0).toString();
-        
-        this.id = id;
-        int respuesta = JOptionPane.showConfirmDialog(null, "Desea eliminar este registro?", "Eliminar registro", JOptionPane.YES_NO_OPTION);
-        if(respuesta == JOptionPane.YES_OPTION){
-            boolean eliminado = this.user.elimnar(id);
-            if(eliminado){
-                JOptionPane.showMessageDialog(null, "Se elimino correctamente el registro.");
-                this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
-                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
-//                this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6, this.jTextArea1);
-
-            }else{
-                 JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el registro.");           
-            }
-        }/*else{
-            //JOptionPane.showMessageDialog(null, "NO");
-
-        }*******
-       //String id1 = this.jTable1.getModel().getValueAt(this.jTable1.getSelectedRow(),0).toString();
-        //String id1 = this.jTable1.getValueAt(select, 0).toString();
-        
-        
-        
-        System.out.println("prueba "+id+" prueba ");*****/
-    }//GEN-LAST:event_EditarEliminarVerPacienteMousePressed
 
     private void jTextFieldNombreFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreFocusLost
         // TODO add your handling code here:
@@ -794,6 +755,13 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         
     }//GEN-LAST:event_EditarEliminarVerTelefonoMousePressed
 
+    private void VerHistoricoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VerHistoricoMousePressed
+        // TODO add your handling code here:
+        int fila = this.jTable1.getSelectedRow();
+        String id_patient = this.jTable1.getValueAt(fila, 0).toString();
+        new JFrameHistorialPaciente(mysql,id_patient).setVisible(true);
+    }//GEN-LAST:event_VerHistoricoMousePressed
+
     
     /**
      * @param args the command line arguments
@@ -805,7 +773,6 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem EditarEliminarVerDireccion;
     private javax.swing.JMenuItem EditarEliminarVerEmail;
-    private javax.swing.JMenuItem EditarEliminarVerPaciente;
     private javax.swing.JMenuItem EditarEliminarVerSeguro;
     private javax.swing.JMenuItem EditarEliminarVerTelefono;
     private javax.swing.JMenuItem EliminarPaciente;

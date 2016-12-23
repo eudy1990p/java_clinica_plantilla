@@ -31,12 +31,33 @@ public class Mysql {
     public void MySQLConnection(String user, String pass, String db_name) {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-            Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db_name, user, pass);
+            Conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/"+db_name, user, pass);
+            //Conexion.createStatement().executeQuery("use java_hospital_theme_db");
             System.out.println("Se ha iniciado la conexión con el servidor de forma exitosa");
         } catch (ClassNotFoundException ex) {
+            System.out.println("Error1");
             Logger.getLogger(Mysql.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
-            Logger.getLogger(Mysql.class.getName()).log(Level.SEVERE, null, ex);
+            
+            System.out.println("error "+ex.getLocalizedMessage());
+            System.out.println("Error2 : 1 "+ex.getErrorCode()+" 2- "+ex.getCause()+" 3- "+ex.getLocalizedMessage()+" 4- "+ex.getMessage()+" 5- "+ex.getSQLState()
+                    );
+            switch(ex.getSQLState()){
+                /*case "java.net.ConnectException: Connection refused: connect":
+                    System.out.println("entro en este caso");
+                    break;*/
+                 case "08S01":
+                    System.out.println("no conecta al servidor");
+                    break;
+                case "42000":
+                    System.out.println("acceso denegado");
+                    System.out.println(ex.getCause());
+                    if(ex.getCause() == null){
+                        System.out.println("prueba caso "+ex.getCause());
+                    }
+                    break;
+            }
+            //Logger.getLogger(Mysql.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -82,6 +103,8 @@ public class Mysql {
             return true;
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
+                        System.out.println(ex.getErrorCode()+" "+ex.getMessage()+" "+ex.getCause());
+
             return false;
         }
     }
@@ -134,6 +157,8 @@ public class Mysql {
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
             ultimoID = "";
+                        System.out.println(ex.getErrorCode()+" "+ex.getMessage()+" "+ex.getCause());
+
         }
         return ultimoID;
     }
@@ -211,6 +236,50 @@ public class Mysql {
     public Object generarSelect(String table_name,String[] campos, String where) {
         try {
             String Query = "SELECT * FROM " + table_name+" where "+where+" display = '1' ";
+            System.out.println("QUERY "+Query);
+
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);            
+            resultSet.beforeFirst();  
+            resultSet.last();  
+            
+           //System.out.print("GetRow "+resultSet.getRow());
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+            Object[][] fila = new Object[totalFilas][campos.length];
+            while (resultSet.next()) {
+                    //System.out.println("ID: " + resultSet.getString("id"));
+                    for(int i = 0 ; i < campos.length ;i++){
+                      System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
+                        fila[f][i] = resultSet.getString(campos[i]);
+                    }
+                    f++;
+            }
+            System.out.print(" fin while" );
+            Object[][] resultado = new Object[1][2];
+            System.out.print(" objecto" );
+
+            resultado[0][0]=fila;
+            resultado[0][1]=totalFilas;
+            System.out.print(" fin" );
+
+            return resultado;
+        } catch (SQLException ex) {
+            Object[][] resultado = new Object[1][2];
+            Object[][] fila = new Object[1][2];
+            resultado[0][0]=fila;
+            resultado[0][1]=0;
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return resultado;
+        }
+            
+    }
+    
+    public Object generarSelectMultipleTabla(String table_name,String[] campos,String select, String where,String prefijo) {
+        try {
+            String Query = "SELECT "+select+" FROM " + table_name+" where "+where+" "+prefijo+"display = '1' ";
             System.out.println("QUERY "+Query);
 
             Statement st = Conexion.createStatement();
@@ -339,9 +408,64 @@ public class Mysql {
             
     }
     
-    public String[] generarSelect(String table_name,String id,String[] campos) {
+       public String[] generarSelect(String table_name,String id,String[] campos) {
         try {
             String Query = "SELECT * FROM " + table_name+" where id = "+id+" and display = '1'";
+            System.out.println(Query);
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            resultSet.beforeFirst();  
+            resultSet.last();  
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+           String[] fila = new String[campos.length];
+            if (resultSet.next()) {
+                    for(int i = 0 ; i < campos.length ; i++){
+                        fila[i]=resultSet.getString(campos[i]);
+                        System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                    }       
+            }
+            return fila;
+        } catch (SQLException ex) {
+            String[] fila = {"no"};
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return fila;
+        }
+    }
+    
+       public String[] generarSelectWithJoin(String table_name,String mostrarCampos,String id,String[] campos,String prefijo) {
+        try {
+            String Query = "SELECT "+mostrarCampos+" FROM " + table_name+" where "+prefijo+"id = "+id+" and  "+prefijo+"display = '1'";
+            System.out.println(Query);
+            Statement st = Conexion.createStatement();
+            java.sql.ResultSet resultSet;
+            resultSet = st.executeQuery(Query);
+            resultSet.beforeFirst();  
+            resultSet.last();  
+           int totalFilas = resultSet.getRow();
+           int f = 0 ;
+            resultSet.beforeFirst();
+           String[] fila = new String[campos.length];
+            if (resultSet.next()) {
+                    for(int i = 0 ; i < campos.length ; i++){
+                        fila[i]=resultSet.getString(campos[i]);
+                        System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                    }       
+            }
+            return fila;
+        } catch (SQLException ex) {
+            String[] fila = {"no"};
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            return fila;
+        }
+    }
+       
+       
+    public String[] generarSelect(String table_name,String columnas,String id,String[] campos) {
+        try {
+            String Query = "SELECT "+columnas+" FROM " + table_name+" where id = "+id+" and display = '1'";
             System.out.println(Query);
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
@@ -439,6 +563,7 @@ public class Mysql {
             st.executeUpdate(Query);
             JOptionPane.showMessageDialog(null, "Datos almacenados de forma exitosa");
         } catch (SQLException ex) {
+            System.out.println(ex.getErrorCode()+" "+ex.getMessage()+" "+ex.getCause());
             JOptionPane.showMessageDialog(null, "Error en el almacenamiento de datos");
         }
     }

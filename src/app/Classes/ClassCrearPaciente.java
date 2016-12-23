@@ -327,7 +327,7 @@ public class ClassCrearPaciente{
 
         String[] key = {"name_patient","last_patient","document_id","sex","type_of_blood_id","when_it","id_user","date_of_birth"};
         System.out.println(this.fecha_nacimiento);
-        String[] values = {this.nombre,this.apellido,this.cedula,this.sexo,this.tipo_sangre_id,"now()",this.id_user+"1",this.fecha_nacimiento};
+        String[] values = {this.nombre,this.apellido,this.cedula,this.sexo.toLowerCase(),this.tipo_sangre_id,"now()","1",this.fecha_nacimiento};
         
         this.id_paciente = mysql.generarInsertWithGetLastID(key, values, "patient");
         System.out.println("id Paciente "+ this.id_paciente);

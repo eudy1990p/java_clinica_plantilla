@@ -276,7 +276,8 @@ public class JFrameTelefono extends javax.swing.JFrame {
         System.out.println(id);
         String[] respuesta = this.user.mostrarEditarUsuario(id);
         this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField3);
-        this.jComboBoxSangre.setSelectedItem(respuesta[1]);this.jTextField3.setText(respuesta[1]);
+        this.jComboBoxSangre.setSelectedItem(respuesta[2]);
+        this.jTextField3.setText(respuesta[1]);
         
     }//GEN-LAST:event_jTable1MouseClicked
 

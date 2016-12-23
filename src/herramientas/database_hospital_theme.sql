@@ -8,7 +8,6 @@
  * Created: 25-nov-2016
  */
 
-DROP database java_hospital_theme_db;
 create database java_hospital_theme_db;
 use java_hospital_theme_db;
 create table users (
@@ -17,15 +16,21 @@ create table users (
     password_user varchar(150),
     when_it datetime,
     id_user int,
-    type_of_user enum('admin','medico','cajero')
+    type_of_user enum('admin','medico','cajero'),
+    display int(1) default 1
 );
+insert into users 
+(name_user, password_user, when_it,id_user,type_of_user) 
+values
+('eudy','123',now(),'1','admin');
 
 create table type_of_sonography(
     id int not null auto_increment primary key,
     name_of_type_sonography varchar(100),
     when_it datetime,
     id_user int,
-    foreign key (id_user) references users(id)
+    foreign key (id_user) references users(id),
+    display int(1) default 1
 );
 
 create table hospital(
@@ -38,7 +43,8 @@ create table hospital(
     when_it datetime,
     rnc varchar(50),
     id_user int,
-    foreign key (id_user) references users(id)
+    foreign key (id_user) references users(id),
+    display int(1) default 1
 );
 
 create table type_of_blood(
@@ -46,7 +52,8 @@ create table type_of_blood(
     name_of_blood varchar(10),
     when_it datetime,
     id_user int,
-    foreign key (id_user) references users(id)
+    foreign key (id_user) references users(id),
+    display int(1) default 1
 );
 
 create table patient(
@@ -59,8 +66,24 @@ create table patient(
     type_of_blood varchar(5),
     when_it datetime,
     id_user int,
-    foreign key (id_user) references users(id)
+    foreign key (id_user) references users(id),
+    display int(1) default 1
 );
+
+create table type_of_telephone(
+    id int not null auto_increment primary key,
+    name_type_telephone varchar(20),
+    when_it datetime,
+    id_user int,
+    foreign key (id_user) references users(id),
+    display int(1) default 1
+);
+
+insert into type_of_telephone 
+(name_type_telephone, when_it,id_user) 
+values
+('admin',now(),'1'),('medico',now(),'1'),('cajero',now(),'1');
+
 
 create table telephone(
     id int not null auto_increment primary key,
@@ -68,8 +91,11 @@ create table telephone(
     when_it datetime,
     id_patient int,
     id_user int,
+    id_type_of_telephone int,
     foreign key (id_user) references users(id),
-    foreign key (id_patient) references patient(id)
+    foreign key (id_patient) references patient(id),
+    foreign key (id_type_of_telephone) references type_of_telephone(id),
+    display int(1) default 1
 );
 
 create table insurance_patient(
@@ -80,7 +106,8 @@ create table insurance_patient(
     id_patient int,
     id_user int,
     foreign key (id_user) references users(id),
-    foreign key (id_patient) references patient(id)
+    foreign key (id_patient) references patient(id),
+    display int(1) default 1
 );
 
 create table email(
@@ -90,7 +117,8 @@ create table email(
     id_patient int,
     id_user int,
     foreign key (id_user) references users(id),
-    foreign key (id_patient) references patient(id)
+    foreign key (id_patient) references patient(id),
+    display int(1) default 1
 );
 
 create table address(
@@ -102,10 +130,10 @@ create table address(
     id_patient int,
     id_user int,
     foreign key (id_user) references users(id),
-    foreign key (id_patient) references patient(id)
+    foreign key (id_patient) references patient(id),
+    display int(1) default 1
 );
 
-drop table sonography;
 create table sonography(
     id int not null auto_increment primary key,
     referred_for varchar(100),
@@ -121,20 +149,20 @@ create table sonography(
     foreign key (id_user) references users(id),
     foreign key (id_type_of_sonography) references type_of_sonography(id),
     foreign key (id_hospital) references hospital(id),
-    foreign key (id_patient) references patient(id)
+    foreign key (id_patient) references patient(id),
+    display int(1) default 1
 );
 
-drop table title_report_delivered;
 create table title_report_delivered(
     id int not null auto_increment primary key,
     title varchar(150),
     id_user int,
     id_hospital int,
     foreign key (id_user) references users(id),
-    foreign key (id_hospital) references hospital(id)
+    foreign key (id_hospital) references hospital(id),
+    display int(1) default 1
 );
 
-drop table report_delivered;
 create table report_delivered(
     id int not null auto_increment primary key,
     id_hospital int,
@@ -144,10 +172,11 @@ create table report_delivered(
     foreign key (id_sonography) references sonography(id),
     foreign key (id_user) references users(id),
     foreign key (id_hospital) references hospital(id),
-    foreign key (id_title_report_delivered) references title_report_delivered(id)
+    foreign key (id_title_report_delivered) references title_report_delivered(id),
+    display int(1) default 1
 );
 
-drop table price_of_hospital;
+
 create table price_of_hospital(
     id int not null auto_increment primary key,
     price decimal(20,2),
@@ -156,5 +185,6 @@ create table price_of_hospital(
     id_user int,
     foreign key (id_user) references users(id),
     foreign key (id_type_of_sonography) references type_of_sonography(id),
-    foreign key (id_hospital) references hospital(id)
+    foreign key (id_hospital) references hospital(id),
+    display int(1) default 1
 );
