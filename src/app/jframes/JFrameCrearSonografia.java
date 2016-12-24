@@ -21,15 +21,25 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private conection.Mysql mysql;
     private ClassCrearSonografia sonografia ;
     private JFrameCrearSonografia yo;
-    private String id;
+    private String idPaciente,NombreCompletoPaciente,EdadPaciente,TipoDeSangrePaciente,SexoPaciente;
     
     public JFrameCrearSonografia() {
         initComponents();
         this.paso();
     }
 
-    public void setId(String id){
-        this.id =id;
+    public void setInfoPacienteBuscado(String id,String NombreCompletoPaciente,String TipoDeSangrePaciente,String EdadPaciente,String sexoPaciente){
+        this.idPaciente =id;
+        this.NombreCompletoPaciente = NombreCompletoPaciente;
+        this.TipoDeSangrePaciente = TipoDeSangrePaciente;
+        this.EdadPaciente = EdadPaciente;
+        this.SexoPaciente = sexoPaciente;
+        this.jLabel1NombreCompleto.setText(NombreCompletoPaciente);
+        this.jLabel1TipoDeSangre.setText(TipoDeSangrePaciente);
+        this.jLabel1Edad.setText(EdadPaciente);
+        this.jLabel1Sexo.setText(sexoPaciente);
+                
+        
     }
     
     public void setYO(JFrameCrearSonografia yo){
@@ -76,10 +86,10 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel1NombreCompleto = new javax.swing.JLabel();
+        jLabel1Edad = new javax.swing.JLabel();
+        jLabel1Sexo = new javax.swing.JLabel();
+        jLabel1TipoDeSangre = new javax.swing.JLabel();
         jPanelInfoSonografia = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
@@ -148,17 +158,17 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("Tipo de sangre");
 
-        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel9.setText("Nombre Completo");
+        jLabel1NombreCompleto.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1NombreCompleto.setText("Nombre Completo");
 
-        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel10.setText("Edad");
+        jLabel1Edad.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1Edad.setText("Edad");
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel11.setText("Sexo");
+        jLabel1Sexo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1Sexo.setText("Sexo");
 
-        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel12.setText("Tipo de sangre");
+        jLabel1TipoDeSangre.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jLabel1TipoDeSangre.setText("Tipo de sangre");
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel13.setText("Institución (Hospital)");
@@ -203,19 +213,19 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
             .addGroup(jPanelInfoPacienteLayout.createSequentialGroup()
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jLabel1NombreCompleto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                    .addComponent(jLabel1Edad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
                 .addGap(127, 127, 127)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1Sexo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
                 .addGap(132, 132, 132)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
+                    .addComponent(jLabel1TipoDeSangre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanelInfoSonografia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -229,10 +239,10 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel1NombreCompleto)
+                    .addComponent(jLabel1Edad)
+                    .addComponent(jLabel1Sexo)
+                    .addComponent(jLabel1TipoDeSangre))
                 .addGap(18, 18, 18)
                 .addComponent(jPanelInfoSonografia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(85, Short.MAX_VALUE))
@@ -455,13 +465,13 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private void jButtonSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSiguienteMouseClicked
         // TODO add your handling code here:
         this.paso(1);
-        JOptionPane.showMessageDialog(null, this.id);
+        JOptionPane.showMessageDialog(null, this.idPaciente);
     }//GEN-LAST:event_jButtonSiguienteMouseClicked
 
     private void jButtonCancelarPasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarPasosMouseClicked
         // TODO add your handling code here:
         this.paso(0);
-        JOptionPane.showMessageDialog(null, this.id);
+        JOptionPane.showMessageDialog(null, this.idPaciente);
     }//GEN-LAST:event_jButtonCancelarPasosMouseClicked
 
     private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
@@ -490,15 +500,15 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                break;
              case "TELEFONO":
                         JOptionPane.showMessageDialog(null,"-"+buscar);
-                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+                jfsvbp.mostrarDatosTablaPorTelefono(buscar);
                break;
                case "SEGURO":
                         JOptionPane.showMessageDialog(null,"-"+buscar);
-                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+                jfsvbp.mostrarDatosTablaPorSeguro(buscar);
                break;
                case "EMAIL":
                         JOptionPane.showMessageDialog(null,"-"+buscar);
-                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+                jfsvbp.mostrarDatosTablaPorEmail(buscar);
                break;
                
         }
@@ -522,9 +532,6 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> jComboBoxHospital;
     private javax.swing.JComboBox<String> jComboBoxTipoDeSonografia;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -532,6 +539,10 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel1Edad;
+    private javax.swing.JLabel jLabel1NombreCompleto;
+    private javax.swing.JLabel jLabel1Sexo;
+    private javax.swing.JLabel jLabel1TipoDeSangre;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
@@ -542,7 +553,6 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel jLabelCedula;
     private javax.swing.JLabel jLabelEdad;
     private javax.swing.JLabel jLabelEdad1;
