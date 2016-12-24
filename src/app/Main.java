@@ -134,6 +134,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem1.setText("Crear Nueva");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem1MousePressed(evt);
+            }
+        });
         jMenu2.add(jMenuItem1);
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
@@ -305,6 +310,13 @@ public class Main extends javax.swing.JFrame {
             new JFrameCrearPaciente(this.mysql).setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem4MousePressed
+
+    private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
+        // TODO add your handling code here:
+        if(this.validador.getBtCrearSonografia()){
+            new JFrameCrearSonografia(this.mysql).setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem1MousePressed
 
     /**
      * @param args the command line arguments
