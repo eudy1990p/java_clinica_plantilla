@@ -17,6 +17,7 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
 
     private JFrameCrearSonografia padre;
     private conection.Mysql mysql;
+
     /**
      * Creates new form JFrameSelectVistaBuscadorPaciente
      */
@@ -93,8 +94,10 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
         String TipoDeSangrePaciente = this.jTable1.getValueAt(select, 6).toString();
         String EdadPaciente = this.jTable1.getValueAt(select, 7).toString();
         String SexoPaciente = this.jTable1.getValueAt(select, 5).toString();
+        String CedulaPaciente = this.jTable1.getValueAt(select, 5).toString();
 
-        this.padre.setInfoPacienteBuscado(id,nombreCompleto,TipoDeSangrePaciente,EdadPaciente,SexoPaciente);
+
+        this.padre.setInfoPacienteBuscado(id,nombreCompleto,TipoDeSangrePaciente,EdadPaciente,SexoPaciente,CedulaPaciente);
         this.dispose();
     }//GEN-LAST:event_jTable1MouseClicked
 
