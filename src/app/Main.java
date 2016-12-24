@@ -324,12 +324,15 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem1MousePressed
         // TODO add your handling code here:
         if(this.validador.getBtCrearSonografia()){
-            new JFrameCrearSonografia(this.mysql).setVisible(true);
+          JFrameCrearSonografia sonografia =  new JFrameCrearSonografia(this.mysql);
+          sonografia.setYO(sonografia);
+          sonografia.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem1MousePressed
 
     private void jMenuItem15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem15MousePressed
         // TODO add your handling code here:
+        //permiso
         new JFrameTipoSonografia(this.mysql).setVisible(true);
     }//GEN-LAST:event_jMenuItem15MousePressed
 

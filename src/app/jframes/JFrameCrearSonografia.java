@@ -7,6 +7,7 @@ package app.jframes;
 
 import app.Classes.ClassCrearSonografia;
 import app.Classes.ClassTelefono;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -19,12 +20,25 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
      */
     private conection.Mysql mysql;
     private ClassCrearSonografia sonografia ;
+    private JFrameCrearSonografia yo;
+    private String id;
     
     public JFrameCrearSonografia() {
         initComponents();
         this.paso();
     }
 
+    public void setId(String id){
+        this.id =id;
+    }
+    
+    public void setYO(JFrameCrearSonografia yo){
+        this.yo = yo;
+    }
+    public JFrameCrearSonografia getYo(){
+        return this.yo;
+    }
+    
     private void paso(){
             this.jTabbedPane1.setSelectedIndex(0);
     }
@@ -55,7 +69,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        jComboBoxBuscarPor = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jPanelInfoPaciente = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
@@ -111,11 +125,16 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("Buscar por");
 
-        jComboBox1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CEDULA", "NOMBRE COMPLETO", "NOMBRE", "APELLIDO", "TELEFONO", "SEGURO", "EMAIL" }));
+        jComboBoxBuscarPor.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jComboBoxBuscarPor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "CEDULA", "NOMBRE COMPLETO", "NOMBRE", "APELLIDO", "TELEFONO", "SEGURO", "EMAIL" }));
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton1.setText("Buscar");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel5.setText("Nombre Completo");
@@ -240,7 +259,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                         .addGap(79, 79, 79)
                         .addGroup(jPanel1de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jComboBoxBuscarPor, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(67, 67, 67)
                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1de2Layout.createSequentialGroup()
@@ -267,7 +286,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addGroup(jPanel1de2Layout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jComboBoxBuscarPor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(22, 22, 22)
                 .addComponent(jPanelInfoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -436,12 +455,57 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private void jButtonSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSiguienteMouseClicked
         // TODO add your handling code here:
         this.paso(1);
+        JOptionPane.showMessageDialog(null, this.id);
     }//GEN-LAST:event_jButtonSiguienteMouseClicked
 
     private void jButtonCancelarPasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarPasosMouseClicked
         // TODO add your handling code here:
         this.paso(0);
+        JOptionPane.showMessageDialog(null, this.id);
     }//GEN-LAST:event_jButtonCancelarPasosMouseClicked
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        JFrameSelectVistaBuscadorPaciente jfsvbp = new JFrameSelectVistaBuscadorPaciente(this.mysql);
+        String buscar = this.jTextField1.getText();
+        JOptionPane.showMessageDialog(null,""+buscar);
+        //CEDULA, NOMBRE COMPLETO, NOMBRE, APELLIDO, TELEFONO, SEGURO, EMAIL
+        switch(this.jComboBoxBuscarPor.getSelectedItem().toString()){
+            case "CEDULA":
+                    JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorCedula(buscar);
+               break;
+            case "NOMBRE":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorNombre(buscar);
+               break;
+            case "APELLIDO":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+
+                jfsvbp.mostrarDatosTablaPorApellido(buscar);
+               break;
+             case "NOMBRE COMPLETO":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+               break;
+             case "TELEFONO":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+               break;
+               case "SEGURO":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+               break;
+               case "EMAIL":
+                        JOptionPane.showMessageDialog(null,"-"+buscar);
+                jfsvbp.mostrarDatosTablaPorNombreCompleto(buscar);
+               break;
+               
+        }
+        jfsvbp.setPadre(this.yo);
+        jfsvbp.setVisible(true);
+        
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -454,7 +518,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButtonCancelarPasos;
     private javax.swing.JButton jButtonSiguiente;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBoxBuscarPor;
     private javax.swing.JComboBox<String> jComboBoxHospital;
     private javax.swing.JComboBox<String> jComboBoxTipoDeSonografia;
     private javax.swing.JLabel jLabel1;
