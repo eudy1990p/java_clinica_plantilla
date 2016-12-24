@@ -5,6 +5,9 @@
  */
 package app.jframes;
 
+import app.Classes.ClassCrearSonografia;
+import app.Classes.ClassTelefono;
+
 /**
  *
  * @author Eudy
@@ -14,26 +17,27 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     /**
      * Creates new form JFrameHistorialPaciente
      */
-    private boolean pasos = false;
     private conection.Mysql mysql;
+    private ClassCrearSonografia sonografia ;
+    
     public JFrameCrearSonografia() {
         initComponents();
         this.paso();
     }
 
     private void paso(){
-        pasos = (!pasos);
-        this.jPanel1de2.setVisible(pasos);
-        this.jPanel2de2.setVisible(!pasos);
+            this.jTabbedPane1.setSelectedIndex(0);
     }
-    
+    private void paso(int i){
+            this.jTabbedPane1.setSelectedIndex(i);
+    }
     public JFrameCrearSonografia(conection.Mysql mysql) {
-       initComponents();
-       this.paso();
+        initComponents();
+        this.paso();
         this.mysql = mysql;
-       
-      // this.jtable();
-    
+        sonografia = new ClassCrearSonografia(this.mysql); 
+        this.sonografia.llenarComboBoxHospital(this.jComboBoxHospital);
+        this.sonografia.llenarComboBoxTipoDeSonografia(this.jComboBoxTipoDeSonografia);
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -65,9 +69,9 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jPanelInfoSonografia = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        jComboBox2 = new javax.swing.JComboBox<>();
-        jComboBox3 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        jComboBoxHospital = new javax.swing.JComboBox<>();
+        jComboBoxTipoDeSonografia = new javax.swing.JComboBox<>();
+        jButtonSiguiente = new javax.swing.JButton();
         jPanel2de2 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -87,9 +91,9 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        jButtonCancelarPasos = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
@@ -143,9 +147,9 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel14.setText("Tipo de sonografia");
 
-        jComboBox2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jComboBoxHospital.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        jComboBox3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        jComboBoxTipoDeSonografia.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
         javax.swing.GroupLayout jPanelInfoSonografiaLayout = new javax.swing.GroupLayout(jPanelInfoSonografia);
         jPanelInfoSonografia.setLayout(jPanelInfoSonografiaLayout);
@@ -153,12 +157,12 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
             jPanelInfoSonografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelInfoSonografiaLayout.createSequentialGroup()
                 .addGroup(jPanelInfoSonografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jComboBoxHospital, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(94, 94, 94)
                 .addGroup(jPanelInfoSonografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox3, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jComboBoxTipoDeSonografia, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanelInfoSonografiaLayout.setVerticalGroup(
             jPanelInfoSonografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +172,8 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addComponent(jLabel14))
                 .addGap(18, 18, 18)
                 .addGroup(jPanelInfoSonografiaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jComboBoxHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBoxTipoDeSonografia, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(132, Short.MAX_VALUE))
         );
 
@@ -179,20 +183,20 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
             jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelInfoPacienteLayout.createSequentialGroup()
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 207, Short.MAX_VALUE)
+                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(36, 36, 36)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE))
+                    .addComponent(jLabel6, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
                 .addGap(127, 127, 127)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                    .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, 55, Short.MAX_VALUE))
                 .addGap(132, 132, 132)
                 .addGroup(jPanelInfoPacienteLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE)
-                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                    .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE)
+                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                 .addContainerGap())
             .addComponent(jPanelInfoSonografia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -215,11 +219,11 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                 .addContainerGap(85, Short.MAX_VALUE))
         );
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton2.setText("Siguiente");
-        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonSiguiente.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonSiguiente.setText("Siguiente");
+        jButtonSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton2MouseClicked(evt);
+                jButtonSiguienteMouseClicked(evt);
             }
         });
 
@@ -242,7 +246,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addGroup(jPanel1de2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2))
+                        .addComponent(jButtonSiguiente))
                     .addComponent(jPanelInfoPaciente, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -251,7 +255,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
             .addGroup(jPanel1de2Layout.createSequentialGroup()
                 .addGroup(jPanel1de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jButton2))
+                    .addComponent(jButtonSiguiente))
                 .addGap(30, 30, 30)
                 .addGroup(jPanel1de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1de2Layout.createSequentialGroup()
@@ -311,7 +315,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("CUERPO DEL ESTUDIO");
+        jLabel22.setText("CUERPO DEL ESTUDIO (Sonografia)");
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -323,11 +327,11 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jButton4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButton4.setText("Vista Previa");
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButton5.setText("Cancelar");
-        jButton5.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonCancelarPasos.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonCancelarPasos.setText("Cancelar");
+        jButtonCancelarPasos.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton5MouseClicked(evt);
+                jButtonCancelarPasosMouseClicked(evt);
             }
         });
 
@@ -369,7 +373,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
             .addGroup(jPanel2de2Layout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton5)
+                .addComponent(jButtonCancelarPasos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton4)
                 .addGap(18, 18, 18)
@@ -383,7 +387,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addComponent(jLabel15)
                     .addComponent(jButton3)
                     .addComponent(jButton4)
-                    .addComponent(jButton5))
+                    .addComponent(jButtonCancelarPasos))
                 .addGap(35, 35, 35)
                 .addGroup(jPanel2de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
@@ -429,15 +433,15 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+    private void jButtonSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonSiguienteMouseClicked
         // TODO add your handling code here:
-        this.paso();
-    }//GEN-LAST:event_jButton2MouseClicked
+        this.paso(1);
+    }//GEN-LAST:event_jButtonSiguienteMouseClicked
 
-    private void jButton5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton5MouseClicked
+    private void jButtonCancelarPasosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonCancelarPasosMouseClicked
         // TODO add your handling code here:
-        this.paso();
-    }//GEN-LAST:event_jButton5MouseClicked
+        this.paso(0);
+    }//GEN-LAST:event_jButtonCancelarPasosMouseClicked
 
     /**
      * @param args the command line arguments
@@ -446,13 +450,13 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
+    private javax.swing.JButton jButtonCancelarPasos;
+    private javax.swing.JButton jButtonSiguiente;
     private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox3;
+    private javax.swing.JComboBox<String> jComboBoxHospital;
+    private javax.swing.JComboBox<String> jComboBoxTipoDeSonografia;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

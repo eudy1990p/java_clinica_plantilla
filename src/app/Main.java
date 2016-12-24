@@ -87,6 +87,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
+        jMenuItem15 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal / Tu Sonografia");
@@ -220,6 +221,15 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem11);
 
+        jMenuItem15.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem15.setText("Tipo De Sonografia");
+        jMenuItem15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem15MousePressed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem15);
+
         jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
@@ -318,6 +328,11 @@ public class Main extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem1MousePressed
 
+    private void jMenuItem15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem15MousePressed
+        // TODO add your handling code here:
+        new JFrameTipoSonografia(this.mysql).setVisible(true);
+    }//GEN-LAST:event_jMenuItem15MousePressed
+
     /**
      * @param args the command line arguments
      */
@@ -344,6 +359,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
     private javax.swing.JMenuItem jMenuItem4;
