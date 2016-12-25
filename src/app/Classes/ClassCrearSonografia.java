@@ -91,7 +91,7 @@ public class ClassCrearSonografia{
         boolean respuesta = this.mysql.deleteRecord(this.NombreTabla, id);
         return respuesta;
     }
-    public boolean insert(String usuario,String numeroSeguro){
+    public boolean insertSonografia(String usuario,String numeroSeguro){
         if(valid.validEmpty(numeroSeguro, "Numero de seguro")){
            return false; 
         }else{
@@ -148,12 +148,20 @@ public class ClassCrearSonografia{
        // }
     }
     public boolean procesarInsert(){
+        //`body``when_it``condition_sonography``status``id_type_of_sonography``id_patient``id_hospital`
         String[] values = {this.numeroSeguro,this.usuario,"now()",this.id_user+"1",this.id_patient};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
         return respuesta;
     }
     
+     public boolean procesarInsert(String idPaciente,String referred_for,String body,String condition_sonography,String id_type_of_sonography,String id_patient,String id_hospital){
+        //`body``when_it``condition_sonography``status``id_type_of_sonography``id_patient``id_hospital`
+        String[] values = {this.numeroSeguro,this.usuario,"now()",this.id_user+"1",this.id_patient};
+        System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
+        boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
+        return respuesta;
+    }
     public boolean procesarUpdate(){
          int total =this.camposEdit.size();
          String[] key = new String[total];
