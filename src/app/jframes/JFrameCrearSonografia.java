@@ -116,9 +116,9 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         jLabelEdad = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabelEdad1 = new javax.swing.JLabel();
+        jLabelFechaActual = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
-        jLabelEdad2 = new javax.swing.JLabel();
+        jLabelTipoSonografia = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
@@ -343,14 +343,14 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         jLabel20.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel20.setText("FECHA");
 
-        jLabelEdad1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabelEdad1.setText("EDAD");
+        jLabelFechaActual.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelFechaActual.setText("EDAD");
 
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel21.setText("TIPO DE SONOGRAFIA");
 
-        jLabelEdad2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabelEdad2.setText("EDAD");
+        jLabelTipoSonografia.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelTipoSonografia.setText("EDAD");
 
         jLabel22.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -396,7 +396,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel2de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2de2Layout.createSequentialGroup()
-                                .addComponent(jLabelEdad2, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabelTipoSonografia, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(jButton2))
                             .addGroup(jPanel2de2Layout.createSequentialGroup()
@@ -415,7 +415,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                                     .addGroup(jPanel2de2Layout.createSequentialGroup()
                                         .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jLabelEdad1, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(jLabelFechaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 219, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(0, 9, Short.MAX_VALUE))))
                     .addGroup(jPanel2de2Layout.createSequentialGroup()
                         .addComponent(jLabel15)
@@ -448,12 +448,12 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
                     .addComponent(jLabel18)
                     .addComponent(jLabelEdad)
                     .addComponent(jLabel20)
-                    .addComponent(jLabelEdad1))
+                    .addComponent(jLabelFechaActual))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2de2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel21)
-                        .addComponent(jLabelEdad2))
+                        .addComponent(jLabelTipoSonografia))
                     .addComponent(jButton2, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel22)
@@ -583,10 +583,10 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabelCedula;
     private javax.swing.JLabel jLabelEdad;
-    private javax.swing.JLabel jLabelEdad1;
-    private javax.swing.JLabel jLabelEdad2;
+    private javax.swing.JLabel jLabelFechaActual;
     private javax.swing.JLabel jLabelNombreCompleto;
     private javax.swing.JLabel jLabelSexo;
+    private javax.swing.JLabel jLabelTipoSonografia;
     private javax.swing.JPanel jPanel1de2;
     private javax.swing.JPanel jPanel2de2;
     private javax.swing.JPanel jPanelInfoPaciente;

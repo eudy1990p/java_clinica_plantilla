@@ -428,7 +428,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" attributes="0">
-                                      <Component id="jLabelEdad2" min="-2" pref="160" max="-2" attributes="0"/>
+                                      <Component id="jLabelTipoSonografia" min="-2" pref="160" max="-2" attributes="0"/>
                                       <EmptySpace max="32767" attributes="0"/>
                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -451,7 +451,7 @@
                                           <Group type="102" attributes="0">
                                               <Component id="jLabel20" min="-2" pref="61" max="-2" attributes="0"/>
                                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                              <Component id="jLabelEdad1" min="-2" pref="219" max="-2" attributes="0"/>
+                                              <Component id="jLabelFechaActual" min="-2" pref="219" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="0" pref="9" max="32767" attributes="0"/>
@@ -495,13 +495,13 @@
                           <Component id="jLabel18" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabelEdad" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jLabel20" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabelEdad1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="jLabelFechaActual" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel21" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabelEdad2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabelTipoSonografia" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jButton2" alignment="1" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -594,7 +594,7 @@
                 <Property name="text" type="java.lang.String" value="FECHA"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelEdad1">
+            <Component class="javax.swing.JLabel" name="jLabelFechaActual">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="16" style="0"/>
@@ -610,7 +610,7 @@
                 <Property name="text" type="java.lang.String" value="TIPO DE SONOGRAFIA"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabelEdad2">
+            <Component class="javax.swing.JLabel" name="jLabelTipoSonografia">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Tahoma" size="16" style="0"/>
