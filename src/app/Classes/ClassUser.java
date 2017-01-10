@@ -24,11 +24,11 @@ public class ClassUser{
     private ValidData valid = new ValidData();
     private String usuario,clave,type_user,id;
     private String[] key = {"name_user","password_user","when_it","id_user","type_of_user"};
-    private int id_user;
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
             
     public ClassUser(){
         mysql = new Mysql();
@@ -46,6 +46,13 @@ public class ClassUser{
     public boolean elimnar(String id){
         boolean respuesta = this.mysql.deleteRecord("users", id);
         return respuesta;
+    }
+    
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);    
     }
     public boolean insert(String usuario,String clave,String RepetidaClave,String type_user){
         if(valid.validEmpty(usuario, "Nombre de usuario")){
@@ -103,7 +110,7 @@ public class ClassUser{
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.usuario,this.clave,"now()",this.id_user+"1",this.type_user};
+        String[] values = {this.usuario,this.clave,"now()",this.usuarioID,this.type_user};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, "users");
         return respuesta;

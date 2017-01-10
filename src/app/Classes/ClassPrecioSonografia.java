@@ -19,40 +19,37 @@ import java.util.ArrayList;
  *
  * @author Eudy
  */
-public class ClassCrearSonografia{
+public class ClassPrecioSonografia{
     private conection.Mysql mysql;
     private ValidData valid = new ValidData();
     private String usuario,numeroSeguro,type_user,id,id_patient="1";
     private String[] key = {"telephone","id_type_of_telephone","when_it","id_user","id_patient"};
+  
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
     private String NombreTabla = " telephone";        
-    private String[] idHospitales,idTipoDeSonografia;
+    private String[] idTipoTelefono;
     private String telefonoOld="",tipoOld="";
-    private String usuarioID,nombreUsuario,nombreTituloUsuario;
+      private String usuarioID,nombreUsuario,nombreTituloUsuario;
+          private String[] idHospitales,idTipoDeSonografia;
 
-    
-    public ClassCrearSonografia(){
-        mysql = new Mysql();
-    }
-    public ClassCrearSonografia(conection.Mysql mysql){
-       this.mysql =mysql;
-    }
-     public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
         this.usuarioID = usuarioID;
         this.nombreUsuario = nombreUsuario;
         this.nombreTituloUsuario = nombreTituloUsuario;
-        JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
     }
-      public void llenarComboBoxHospital(javax.swing.JComboBox JCTipoSangre){
+     public void llenarComboBoxHospital(javax.swing.JComboBox JCTipoSangre){
             String[] campos = {"id","name_hospital","rnc"};
             
             Object[][] resultado = (Object[][])  this.mysql.generarSelect("hospital",campos,"name_hospital","asc","");
             Object[][] infoTabla= (Object[][]) resultado[0][0];
           //System.out.println(infoTabla.length);
-          //System.out.println(infoTabla[1].length);
+          //System.out.println(infoTabla[1].length);llenarComboBox
           
           this.idHospitales = new String[infoTabla.length];
           for(int i = 0 ; i < infoTabla.length ; i++){
@@ -76,12 +73,14 @@ public class ClassCrearSonografia{
                 //System.out.println(infoTabla[i][0]+" "+infoTabla[i][1]);
           }
     }
-    
-    public String getIdHospital(int index){
-        return this.idHospitales[index];
+    public ClassPrecioSonografia(){
+        mysql = new Mysql();
     }
-    public String getIdTipoDeSonografia(int index){
-        return this.idTipoDeSonografia[index];
+    public ClassPrecioSonografia(conection.Mysql mysql){
+       this.mysql =mysql;
+    }
+    public String getIdTipoSangre(int index){
+        return this.idTipoTelefono[index];
     }
     public boolean getAgregar(){
         return agregar;
@@ -97,7 +96,7 @@ public class ClassCrearSonografia{
         boolean respuesta = this.mysql.deleteRecord(this.NombreTabla, id);
         return respuesta;
     }
-    public boolean insertSonografia(String usuario,String numeroSeguro){
+    public boolean insert(String usuario,String numeroSeguro){
         if(valid.validEmpty(numeroSeguro, "Numero de seguro")){
            return false; 
         }else{
@@ -114,7 +113,22 @@ public class ClassCrearSonografia{
          }
         
     }
-  
+    public void llenarComboBox(javax.swing.JComboBox JCTipoSangre){
+            String[] campos = {"id","name_type_telephone"};
+            
+            Object[][] resultado = (Object[][])  this.mysql.generarSelect("type_of_telephone",campos,"id","asc","");
+            Object[][] infoTabla= (Object[][]) resultado[0][0];
+          //System.out.println(infoTabla.length);
+          //System.out.println(infoTabla[1].length);
+          
+          this.idTipoTelefono = new String[infoTabla.length];
+          for(int i = 0 ; i < infoTabla.length ; i++){
+                JCTipoSangre.addItem(infoTabla[i][1]);
+                idTipoTelefono[i]= infoTabla[i][0].toString();
+               // System.out.println(infoTabla[i][0]+" "+infoTabla[i][1]);
+          }
+    }
+    
     public boolean validarUsuario(String usuario){
          int existe = this.mysql.getValues(this.NombreTabla, "where telephone = '"+usuario+"' and id_patient = '"+this.id_patient+"' ");
           if(existe < 1){
@@ -154,29 +168,12 @@ public class ClassCrearSonografia{
        // }
     }
     public boolean procesarInsert(){
-        //`body``when_it``condition_sonography``status``id_type_of_sonography``id_patient``id_hospital`
         String[] values = {this.numeroSeguro,this.usuario,"now()",this.usuarioID,this.id_patient};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
         return respuesta;
     }
     
-     public String procesarInsert(String idPaciente,String referred_for,String body,String condition_sonography,String id_type_of_sonography,String id_hospital){
-        //`body``when_it``condition_sonography``status``id_type_of_sonography``id_patient``id_hospital`
-        String[] campos1 = {"id_patient","referred_for", "body", "condition_sonography","id_type_of_sonography","id_hospital","when_it","id_user"};
-        String[] values = {idPaciente,referred_for,body,condition_sonography,id_type_of_sonography,id_hospital,"now()",this.usuarioID};
-       // boolean respuesta = mysql.generarInsert(campos1, values, "sonography");
-       String respuesta = mysql.generarInsertWithGetLastID(campos1, values, "sonography");
-       return respuesta;
-    }
-    public boolean procesarUpdateSonografia(String[] values,String id){
-        String[] key = {"referred_for", "body","condition_sonography"};
-        //System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
-        boolean respuesta = mysql.updateRecord("sonography",id,key, values);
-        return respuesta;
-    }
-     
-     
     public boolean procesarUpdate(){
          int total =this.camposEdit.size();
          String[] key = new String[total];
@@ -242,13 +239,6 @@ public class ClassCrearSonografia{
         JLabelTotal.setText(resultado[0][1]+"");
         table.setModel(modelo);
         
-    }
-    
-    public String[] optenerDatosHospital(String idHospital){
-        String[] campos = {"name_hospital","telephone","email","address","web_page","rnc","icono_url","eslogan"};
-        String where = "where id = "+idHospital+" and display = '1' ";
-        String[] datos = this.mysql.getValues("hospital",where , campos);
-        return datos;
     }
     
 }

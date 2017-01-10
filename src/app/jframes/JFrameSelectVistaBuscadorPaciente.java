@@ -6,6 +6,7 @@
 package app.jframes;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -17,6 +18,11 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
 
     private JFrameCrearSonografia padre;
     private conection.Mysql mysql;
+    private int total;
+    private JFrameSelectVistaBuscadorPaciente yo;
+    private String[] DatosPaciente;
+     private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
 
     /**
      * Creates new form JFrameSelectVistaBuscadorPaciente
@@ -24,6 +30,35 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
     public JFrameSelectVistaBuscadorPaciente(conection.Mysql mysql) {
         initComponents();
         this.mysql = mysql;
+    }
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        //this.sonografia.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+    }
+    public void setDatosPaciente(String[] DatosPaciente){
+        this.DatosPaciente=DatosPaciente;
+        this.mostrarDatosTablaPorID(this.DatosPaciente[6]);
+       // this.setDatosPaciente(this.DatosPaciente[6], this.DatosPaciente[0]+" "+this.DatosPaciente[1], this.DatosPaciente[4], EdadPaciente, this.DatosPaciente[3], this.DatosPaciente[2]);
+    }
+     public void setYO(JFrameSelectVistaBuscadorPaciente yo){
+        this.yo = yo;
+    }
+    public JFrameSelectVistaBuscadorPaciente getYo(){
+        return this.yo;
+    }
+    public void crearNuevoPaciente(){
+        //if(this.total.equals("0") || (this.total.isEmpty())){
+        JOptionPane.showMessageDialog(null, this.total+"");
+        if(this.total==0){
+           JFrameCrearPacienteSiNoExiste pacienteNuevo = new JFrameCrearPacienteSiNoExiste(this.mysql);
+           pacienteNuevo.setPadre(this.getYo());
+           pacienteNuevo.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+           pacienteNuevo.setVisible(true);
+           
+        }
     }
     
     public void setPadre(JFrameCrearSonografia padre){
@@ -95,13 +130,23 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
         String EdadPaciente = this.jTable1.getValueAt(select, 7).toString();
         String SexoPaciente = this.jTable1.getValueAt(select, 5).toString();
         String CedulaPaciente = this.jTable1.getValueAt(select, 5).toString();
-
+        
 
         this.padre.setInfoPacienteBuscado(id,nombreCompleto,TipoDeSangrePaciente,EdadPaciente,SexoPaciente,CedulaPaciente);
         this.dispose();
     }//GEN-LAST:event_jTable1MouseClicked
 
-  
+    public void setDatosPaciente(String id, String nombreCompleto,String TipoDeSangrePaciente,String EdadPaciente,String SexoPaciente,String CedulaPaciente){
+        /*  String id = this.jTable1.getValueAt(select, 0).toString();
+        String nombreCompleto = this.jTable1.getValueAt(select, 1).toString() +" "+this.jTable1.getValueAt(select, 2).toString();
+        String TipoDeSangrePaciente = this.jTable1.getValueAt(select, 6).toString();
+        String EdadPaciente = this.jTable1.getValueAt(select, 7).toString();
+        String SexoPaciente = this.jTable1.getValueAt(select, 5).toString();
+        String CedulaPaciente = this.jTable1.getValueAt(select, 5).toString();*/
+        this.padre.setInfoPacienteBuscado(id,nombreCompleto,TipoDeSangrePaciente,EdadPaciente,SexoPaciente,CedulaPaciente);
+        
+    }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
@@ -112,59 +157,98 @@ public class JFrameSelectVistaBuscadorPaciente extends javax.swing.JFrame {
 public void mostrarDatosTablaPorCedula(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+                + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t.document_id = '"+buscar+"' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id";
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+        this.total = (int)resultado[0][1];
+        
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
+        //this.crearNuevoPaciente();
     }
 public void mostrarDatosTablaPorNombre(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+                + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t.name_patient like '%"+buscar+"%' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id";
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+    //            this.total = Integer.parseInt((String)resultado[0][1]);
+
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }
 public void mostrarDatosTablaPorApellido(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+        + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t.last_patient like '%"+buscar+"%' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id";
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+//                this.total = Integer.parseInt((String)resultado[0][1]);
+
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }
 public void mostrarDatosTablaPorNombreCompleto(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+              + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "CONCAT(t.name_patient,' ',t.last_patient) like '%"+buscar+"%' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id";
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+//                this.total = Integer.parseInt((String)resultado[0][1]);
+
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }
 public void mostrarDatosTablaPorTelefono(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+        + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t2.telephone like '%"+buscar+"%' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id"
@@ -172,6 +256,9 @@ public void mostrarDatosTablaPorTelefono(String buscar){
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+//                        this.total = Integer.parseInt((String)resultado[0][1]);
+
+        
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }
@@ -179,7 +266,13 @@ public void mostrarDatosTablaPorTelefono(String buscar){
 public void mostrarDatosTablaPorEmail(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+                + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t2.email like '%"+buscar+"%' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id"
@@ -187,6 +280,8 @@ public void mostrarDatosTablaPorEmail(String buscar){
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+//                   this.total = Integer.parseInt((String)resultado[0][1]);
+     
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }
@@ -194,7 +289,13 @@ public void mostrarDatosTablaPorEmail(String buscar){
 public void mostrarDatosTablaPorSeguro(String buscar){
         String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
                 ,"t.sex","t1.name_of_blood","edad"};
-        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,(CURDATE() -t.date_of_birth) as edad";
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+        + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
         String where = "t2.insurance_number = '"+buscar+"' and ";
         String tablasJoin = "patient as t left join type_of_blood as t1 on "
                 + "t.type_of_blood_id = t1.id"
@@ -202,6 +303,29 @@ public void mostrarDatosTablaPorSeguro(String buscar){
         Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
+//                this.total = Integer.parseInt((String)resultado[0][1]);
+
+        DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
+        this.jTable1.setModel(modelo);
+    }
+
+public void mostrarDatosTablaPorID(String buscar){
+        String[] datos = {"t.id","t.name_patient","t.last_patient","t.document_id","t.date_of_birth"
+                ,"t.sex","t1.name_of_blood","edad"};
+        String select = "t.id,t.name_patient,t.last_patient,t.document_id,t.date_of_birth,t.sex,t1.name_of_blood,"
+                + "IF(TIMESTAMPDIFF( YEAR,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( MONTH,t.date_of_birth, CURDATE() ) < 1 ," +
+"IF(TIMESTAMPDIFF( DAY,t.date_of_birth, CURDATE() ) < 1 ,' Horas', " +
+"CONCAT(TIMESTAMPDIFF(DAY, t.date_of_birth, CURDATE()) , ' Dias' ) ), " +
+"CONCAT(TIMESTAMPDIFF(MONTH, t.date_of_birth, CURDATE()) , ' Meses' ) ), " +
+"CONCAT(TIMESTAMPDIFF(YEAR, t.date_of_birth, CURDATE()) , ' Años' ) ) AS edad";
+        String where = "t.id = '"+buscar+"' and ";
+        String tablasJoin = "patient as t left join type_of_blood as t1 on "
+                + "t.type_of_blood_id = t1.id";
+        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
+        //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
+        Object[][] infoTabla= (Object[][]) resultado[0][0];
+//        this.total = Integer.parseInt((String)resultado[0][1]);
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
     }

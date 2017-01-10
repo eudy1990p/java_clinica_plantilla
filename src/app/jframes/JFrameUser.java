@@ -20,6 +20,7 @@ public class JFrameUser extends javax.swing.JFrame {
     private String palabraBuscar="",id="";
     private conection.Mysql mysql;
     private ClassUser user ;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
     /**
      * Creates new form User
      */
@@ -35,6 +36,15 @@ public class JFrameUser extends javax.swing.JFrame {
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
     }
+    
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+    }
+    
     
     //EJEMPLO SIMPLE PARA MOSTRAR DATOS EN UNA TABLA
     public void jtable(){

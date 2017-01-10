@@ -20,6 +20,8 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
     private String palabraBuscar="",id="";
     private conection.Mysql mysql;
     private ClassCrearPaciente user ;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
     /**
      * Creates new form User
      */
@@ -36,6 +38,13 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         this.user.mostrarDatosTabla(jTable1,this.jLabel6);
        
       // this.jtable();
+    }
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
     }
     
     /*EJEMPLO SIMPLE PARA MOSTRAR DATOS EN UNA TABLA
@@ -729,14 +738,14 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila = this.jTable1.getSelectedRow();
         String id_patient = this.jTable1.getValueAt(fila, 0).toString();
-        new JFrameEmail(mysql,id_patient).setVisible(true);
+        new JFrameEmail(mysql,id_patient,this.usuarioID,this.nombreUsuario,this.nombreTituloUsuario).setVisible(true);
     }//GEN-LAST:event_EditarEliminarVerEmailMousePressed
 
     private void EditarEliminarVerSeguroMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerSeguroMousePressed
         // TODO add your handling code here:
         int fila = this.jTable1.getSelectedRow();
         String id_patient = this.jTable1.getValueAt(fila, 0).toString();
-        new JFrameSeguro(mysql,id_patient).setVisible(true);
+        new JFrameSeguro(mysql,id_patient,this.usuarioID,this.nombreUsuario,this.nombreTituloUsuario).setVisible(true);
                                                      
     }//GEN-LAST:event_EditarEliminarVerSeguroMousePressed
 
@@ -744,14 +753,14 @@ public class JFrameCrearPaciente extends javax.swing.JFrame {
         // TODO add your handling code here:
         int fila = this.jTable1.getSelectedRow();
         String id_patient = this.jTable1.getValueAt(fila, 0).toString();
-        new JFrameDireccion(mysql,id_patient).setVisible(true);
+        new JFrameDireccion(mysql,id_patient,this.usuarioID,this.nombreUsuario,this.nombreTituloUsuario).setVisible(true);
     }//GEN-LAST:event_EditarEliminarVerDireccionMousePressed
 
     private void EditarEliminarVerTelefonoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EditarEliminarVerTelefonoMousePressed
         // TODO add your handling code here:
          int fila = this.jTable1.getSelectedRow();
         String id_patient = this.jTable1.getValueAt(fila, 0).toString();
-        new JFrameTelefono(mysql,id_patient).setVisible(true);
+        new JFrameTelefono(mysql,id_patient,this.usuarioID,this.nombreUsuario,this.nombreTituloUsuario).setVisible(true);
         
     }//GEN-LAST:event_EditarEliminarVerTelefonoMousePressed
 

@@ -24,7 +24,7 @@ public class ClassTelefono{
     private ValidData valid = new ValidData();
     private String usuario,numeroSeguro,type_user,id,id_patient="1";
     private String[] key = {"telephone","id_type_of_telephone","when_it","id_user","id_patient"};
-    private int id_user;
+  
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
@@ -32,7 +32,15 @@ public class ClassTelefono{
     private String NombreTabla = " telephone";        
     private String[] idTipoTelefono;
     private String telefonoOld="",tipoOld="";
-    
+      private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
+    }
     public ClassTelefono(){
         mysql = new Mysql();
     }
@@ -128,7 +136,7 @@ public class ClassTelefono{
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.numeroSeguro,this.usuario,"now()",this.id_user+"1",this.id_patient};
+        String[] values = {this.numeroSeguro,this.usuario,"now()",this.usuarioID,this.id_patient};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
         return respuesta;

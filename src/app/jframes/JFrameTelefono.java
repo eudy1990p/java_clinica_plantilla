@@ -20,6 +20,8 @@ public class JFrameTelefono extends javax.swing.JFrame {
     private String id_patient,palabraBuscar="",id="";
     private conection.Mysql mysql;
     private ClassTelefono user ;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
     
     /**
      * Creates new form User
@@ -37,7 +39,7 @@ public class JFrameTelefono extends javax.swing.JFrame {
       // this.jtable();
     }
     
-    public JFrameTelefono(conection.Mysql mysql, String id_patient) {
+    public JFrameTelefono(conection.Mysql mysql, String id_patient,String usuarioID,String nombreUsuario,String nombreTituloUsuario) {
        initComponents();
        this.id_patient = id_patient;
         this.mysql = mysql;
@@ -45,6 +47,13 @@ public class JFrameTelefono extends javax.swing.JFrame {
         this.user.llenarComboBox(this.jComboBoxSangre);
         this.user.setId_patient(id_patient);
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
+       this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
+       
       // this.jtable();
     }
     /**

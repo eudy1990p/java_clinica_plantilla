@@ -24,12 +24,15 @@ public class ClassBlood{
     private ValidData valid = new ValidData();
     private String usuario,clave,type_user,id;
     private String[] key = {"name_of_blood","when_it","id_user"};
-    private int id_user;
+   
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
-            
+   
+        private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
+    
     public ClassBlood(){
         mysql = new Mysql();
     }
@@ -47,6 +50,14 @@ public class ClassBlood{
         boolean respuesta = this.mysql.deleteRecord("type_of_blood", id);
         return respuesta;
     }
+    
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);    
+    }
+    
     public boolean insert(String usuario){
         if(valid.validEmpty(usuario, "Nombre de tipo de sangre")){
            return false; 
@@ -98,7 +109,7 @@ public class ClassBlood{
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.usuario,"now()",this.id_user+"1"};
+        String[] values = {this.usuario,"now()",this.usuarioID};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, "type_of_blood");
         return respuesta;

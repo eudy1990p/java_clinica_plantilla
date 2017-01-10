@@ -20,6 +20,8 @@ public class JFrameEmail extends javax.swing.JFrame {
     private String id_patient,palabraBuscar="",id="";
     private conection.Mysql mysql;
     private ClassEmail user ;
+          private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
     
     /**
      * Creates new form User
@@ -37,13 +39,18 @@ public class JFrameEmail extends javax.swing.JFrame {
       // this.jtable();
     }
     
-    public JFrameEmail(conection.Mysql mysql, String id_patient) {
+    public JFrameEmail(conection.Mysql mysql, String id_patient,String usuarioID,String nombreUsuario,String nombreTituloUsuario) {
        initComponents();
        this.id_patient = id_patient;
         this.mysql = mysql;
         user = new ClassEmail(this.mysql); 
         this.user.setId_patient(id_patient);
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+          this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+
       // this.jtable();
     }
     /**

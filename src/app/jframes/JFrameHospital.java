@@ -20,6 +20,23 @@ public class JFrameHospital extends javax.swing.JFrame {
     private String palabraBuscar="",id="";
     private conection.Mysql mysql;
     private ClassHospital user ;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
+    private String RutaIcono="";
+   private JFrameHospital yo;
+
+    public void setRutaIcono(String RutaIcono) {
+        this.RutaIcono = RutaIcono;
+    }
+   
+
+    public JFrameHospital getYo() {
+        return yo;
+    }
+
+    public void setYo(JFrameHospital yo) {
+        this.yo = yo;
+    }
+
     /**
      * Creates new form User
      */
@@ -31,9 +48,17 @@ public class JFrameHospital extends javax.swing.JFrame {
     public JFrameHospital(conection.Mysql mysql) {
        initComponents();
         this.mysql = mysql;
-        user = new ClassHospital(this.mysql); 
+        user = new ClassHospital(this.mysql,yo); 
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
+    }
+    
+     public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
     }
     
     //EJEMPLO SIMPLE PARA MOSTRAR DATOS EN UNA TABLA
@@ -72,7 +97,7 @@ public class JFrameHospital extends javax.swing.JFrame {
         jMenuItem2 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        jTextFieldNombreHospital = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -82,16 +107,20 @@ public class JFrameHospital extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextFieldTelefonoHospital = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
+        jTextFieldEsloganHospital = new javax.swing.JTextField();
+        jTextFieldRNCHospital = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        jTextFieldWebPageHospital = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        jTextAreaDireccionHospital = new javax.swing.JTextArea();
+        jLabelIconoHospitalAdmin = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        jTextFieldEmailHospital = new javax.swing.JTextField();
 
         jMenuItem2.setText("Eliminar");
         jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -105,15 +134,16 @@ public class JFrameHospital extends javax.swing.JFrame {
         setTitle("Administrar Hospital");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Administrar Hospital");
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel2.setText("Nombre");
 
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldNombreHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldNombreHospital.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
+                jTextFieldNombreHospitalFocusLost(evt);
             }
         });
 
@@ -165,29 +195,30 @@ public class JFrameHospital extends javax.swing.JFrame {
         jLabel8.setText("Teléfono");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Agregar Hospital");
 
-        jTextField3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldTelefonoHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldTelefonoHospital.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField3FocusLost(evt);
+                jTextFieldTelefonoHospitalFocusLost(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel10.setText("Email");
+        jLabel10.setText("Eslogan");
 
-        jTextField4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField4.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldEsloganHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldEsloganHospital.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField4FocusLost(evt);
+                jTextFieldEsloganHospitalFocusLost(evt);
             }
         });
 
-        jTextField5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField5.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldRNCHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldRNCHospital.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField5FocusLost(evt);
+                jTextFieldRNCHospitalFocusLost(evt);
             }
         });
 
@@ -197,110 +228,162 @@ public class JFrameHospital extends javax.swing.JFrame {
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel12.setText("Pagina Web");
 
-        jTextField6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField6.addFocusListener(new java.awt.event.FocusAdapter() {
+        jTextFieldWebPageHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldWebPageHospital.addFocusListener(new java.awt.event.FocusAdapter() {
             public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField6FocusLost(evt);
+                jTextFieldWebPageHospitalFocusLost(evt);
             }
         });
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel13.setText("Pagina Web");
+        jLabel13.setText("Dirección");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jTextAreaDireccionHospital.setColumns(20);
+        jTextAreaDireccionHospital.setRows(5);
+        jScrollPane2.setViewportView(jTextAreaDireccionHospital);
+
+        jLabelIconoHospitalAdmin.setText("Click para seleccionar el Icono");
+        jLabelIconoHospitalAdmin.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jLabelIconoHospitalAdmin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabelIconoHospitalAdminMouseClicked(evt);
+            }
+        });
+
+        jSeparator1.setBackground(new java.awt.Color(0, 0, 0));
+        jSeparator1.setForeground(new java.awt.Color(0, 0, 0));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel14.setText("Email");
+
+        jTextFieldEmailHospital.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jTextFieldEmailHospital.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldEmailHospitalFocusLost(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1, javax.swing.GroupLayout.Alignment.LEADING))
-                        .addGap(12, 12, 12)))
-                .addGap(28, 28, 28)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabelIconoHospitalAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(113, 113, 113))
-                            .addComponent(jTextField2))
-                        .addGap(80, 80, 80))
-                    .addComponent(jScrollPane1)
+                                .addGap(19, 19, 19)
+                                .addComponent(jScrollPane2)
+                                .addGap(5, 5, 5))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(19, 19, 19)
+                                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 122, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextFieldNombreHospital)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addGap(44, 44, 44))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jTextFieldEsloganHospital)
+                                                .addGap(10, 10, 10))
+                                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jTextFieldRNCHospital, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldEmailHospital, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, 125, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldWebPageHospital)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 142, Short.MAX_VALUE)
+                                        .addGap(124, 124, 124))
+                                    .addComponent(jTextFieldTelefonoHospital, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel12, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(20, 20, 20))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 276, Short.MAX_VALUE)
-                        .addGap(284, 284, 284))))
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(jTextField2)
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel9)
+                .addGap(1, 1, 1)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelIconoHospitalAdmin, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addGap(10, 10, 10)
+                                .addComponent(jTextFieldTelefonoHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(3, 3, 3)
+                                .addComponent(jLabel12)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jTextFieldWebPageHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(jTextFieldEmailHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createSequentialGroup()
+                                    .addComponent(jLabel11)
+                                    .addGap(8, 8, 8)
+                                    .addComponent(jTextFieldRNCHospital, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(3, 3, 3)
+                                    .addComponent(jLabel14)
+                                    .addGap(31, 31, 31)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextFieldEsloganHospital, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                        .addComponent(jTextFieldNombreHospital, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(3, 3, 3)
+                                        .addComponent(jLabel10)
+                                        .addGap(32, 32, 32)))))
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel13)
+                        .addGap(10, 10, 10)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(22, 22, 22)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField5)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField4)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField6)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                        .addGap(3, 3, 3))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
-                        .addGap(29, 29, 29)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField2))
-                        .addGap(24, 24, 24)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 497, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addComponent(jLabel7)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(14, 14, 14)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel6))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
@@ -310,20 +393,21 @@ public class JFrameHospital extends javax.swing.JFrame {
         // TODO add your handling code here:
       // this.jtable();
       if(this.user.getAgregar()){
-        boolean respuesta = this.user.insert(this.jTextField1.getText(), this.jTextField3.getText(),this.jTextField4.getText(),this.jTextField5.getText(),this.jTextField6.getText(),this.jTextArea1.getText());
+         //insert(String nombre,String telefono,String email,String rnc,String paginaWeb,String direccion,String rutaIcono)
+        boolean respuesta = this.user.insert(this.jTextFieldNombreHospital.getText(), this.jTextFieldTelefonoHospital.getText(),this.jTextFieldEmailHospital.getText(),this.jTextFieldRNCHospital.getText(),this.jTextFieldWebPageHospital.getText(),this.jTextAreaDireccionHospital.getText(),this.RutaIcono,this.jTextFieldEsloganHospital.getText());
         if(respuesta){
             this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
             //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);
-            this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6, this.jTextArea1);
+            this.user.limpiarTexto(this.jTextFieldNombreHospital, this.jTextFieldTelefonoHospital, this.jTextFieldEsloganHospital, this.jTextFieldRNCHospital, this.jTextFieldWebPageHospital, this.jTextAreaDireccionHospital);
         }
       }else{
             //JOptionPane.showMessageDialog(null, type_user);
-           boolean respuesta = this.user.update(this.jTextField1.getText(), this.jTextField3.getText(),this.jTextField4.getText(),this.jTextField5.getText(),this.jTextField6.getText(),this.jTextArea1.getText(),this.id);
+           boolean respuesta = this.user.update(this.jTextFieldNombreHospital.getText(), this.jTextFieldTelefonoHospital.getText(),this.jTextFieldEsloganHospital.getText(),this.jTextFieldRNCHospital.getText(),this.jTextFieldWebPageHospital.getText(),this.jTextAreaDireccionHospital.getText(),this.id,this.RutaIcono,this.jTextFieldEsloganHospital.getText());
             if(respuesta){
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
-                this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6, this.jTextArea1);
+                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextFieldNombreHospital);
+                this.user.limpiarTexto(this.jTextFieldNombreHospital, this.jTextFieldTelefonoHospital, this.jTextFieldEsloganHospital, this.jTextFieldRNCHospital, this.jTextFieldWebPageHospital, this.jTextAreaDireccionHospital);
                 //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
             }
           
@@ -352,14 +436,17 @@ public class JFrameHospital extends javax.swing.JFrame {
         this.id = id;
         System.out.println(id);
         String[] respuesta = this.user.mostrarEditarUsuario(id);
-        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField1);
+        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextFieldNombreHospital);
         //"id","name_hospital","rnc","telephone","email","web_page","address"
-        this.jTextField1.setText(respuesta[1]);
-        this.jTextField3.setText(respuesta[3]);
-        this.jTextField4.setText(respuesta[4]);
-        this.jTextField5.setText(respuesta[2]);
-        this.jTextField6.setText(respuesta[5]);
-        this.jTextArea1.setText(respuesta[6]);
+        this.jTextFieldNombreHospital.setText(respuesta[1]);
+        this.jTextFieldTelefonoHospital.setText(respuesta[3]);
+        this.jTextFieldEsloganHospital.setText(respuesta[4]);
+        this.jTextFieldRNCHospital.setText(respuesta[2]);
+        this.jTextFieldWebPageHospital.setText(respuesta[5]);
+        this.jTextAreaDireccionHospital.setText(respuesta[6]);
+        this.user.setYo(user);
+        this.user.setPadre(this.yo);
+        this.user.setImage(respuesta[7],this.jLabelIconoHospitalAdmin);
     }//GEN-LAST:event_jTable1MouseClicked
 
     private void jMenuItem2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MousePressed
@@ -378,8 +465,8 @@ public class JFrameHospital extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se elimino correctamente el registro.");
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                  this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
-                this.user.limpiarTexto( this.jTextField1, this.jTextField3, this.jTextField4, this.jTextField5, this.jTextField6, this.jTextArea1);
+                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextFieldNombreHospital);
+                this.user.limpiarTexto(this.jTextFieldNombreHospital, this.jTextFieldTelefonoHospital, this.jTextFieldEsloganHospital, this.jTextFieldRNCHospital, this.jTextFieldWebPageHospital, this.jTextAreaDireccionHospital);
 
             }else{
                  JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el registro.");           
@@ -396,26 +483,40 @@ public class JFrameHospital extends javax.swing.JFrame {
         System.out.println("prueba "+id+" prueba ");
     }//GEN-LAST:event_jMenuItem2MousePressed
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
+    private void jTextFieldNombreHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldNombreHospitalFocusLost
         // TODO add your handling code here:
-        this.user.validarUsuario(this.jTextField1.getText());
-    }//GEN-LAST:event_jTextField1FocusLost
+        this.user.validarUsuario(this.jTextFieldNombreHospital.getText());
+    }//GEN-LAST:event_jTextFieldNombreHospitalFocusLost
 
-    private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
+    private void jTextFieldTelefonoHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldTelefonoHospitalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3FocusLost
+    }//GEN-LAST:event_jTextFieldTelefonoHospitalFocusLost
 
-    private void jTextField4FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField4FocusLost
+    private void jTextFieldEsloganHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldEsloganHospitalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4FocusLost
+    }//GEN-LAST:event_jTextFieldEsloganHospitalFocusLost
 
-    private void jTextField5FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField5FocusLost
+    private void jTextFieldRNCHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldRNCHospitalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5FocusLost
+    }//GEN-LAST:event_jTextFieldRNCHospitalFocusLost
 
-    private void jTextField6FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField6FocusLost
+    private void jTextFieldWebPageHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldWebPageHospitalFocusLost
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6FocusLost
+    }//GEN-LAST:event_jTextFieldWebPageHospitalFocusLost
+
+    private void jLabelIconoHospitalAdminMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelIconoHospitalAdminMouseClicked
+        // TODO add your handling code here:
+        //this.RutaIcono = this.user.cargarImagen(this.jLabelIconoHospital);
+        //JOptionPane.showMessageDialog(null, this.RutaIcono);
+       this.user.setPadre(this.yo);
+       this.user.setYo(this.user);
+       this.user.cargarImagen(this.jLabelIconoHospitalAdmin);
+        
+    }//GEN-LAST:event_jLabelIconoHospitalAdminMouseClicked
+
+    private void jTextFieldEmailHospitalFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldEmailHospitalFocusLost
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldEmailHospitalFocusLost
 
     
     /**
@@ -432,23 +533,27 @@ public class JFrameHospital extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel jLabelIconoHospitalAdmin;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextArea jTextAreaDireccionHospital;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JTextField jTextFieldEmailHospital;
+    private javax.swing.JTextField jTextFieldEsloganHospital;
+    private javax.swing.JTextField jTextFieldNombreHospital;
+    private javax.swing.JTextField jTextFieldRNCHospital;
+    private javax.swing.JTextField jTextFieldTelefonoHospital;
+    private javax.swing.JTextField jTextFieldWebPageHospital;
     // End of variables declaration//GEN-END:variables
 }

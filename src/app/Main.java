@@ -19,6 +19,7 @@ public class Main extends javax.swing.JFrame {
      private conection.Mysql mysql;
      private String[] session;
      private ValidData validador;
+    
     /**
      * Creates new form Main
      */
@@ -49,7 +50,7 @@ public class Main extends javax.swing.JFrame {
         //GraphicsDevice grafica=GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
         //grafica.setFullScreenWindow(this);
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -88,6 +89,7 @@ public class Main extends javax.swing.JFrame {
         jMenuItem10 = new javax.swing.JMenuItem();
         jMenuItem11 = new javax.swing.JMenuItem();
         jMenuItem15 = new javax.swing.JMenuItem();
+        jMenuItem14 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Menu Principal / Tu Sonografia");
@@ -230,6 +232,15 @@ public class Main extends javax.swing.JFrame {
         });
         jMenu6.add(jMenuItem15);
 
+        jMenuItem14.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jMenuItem14.setText("Precio Sonografia Por Hospital");
+        jMenuItem14.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem14MousePressed(evt);
+            }
+        });
+        jMenu6.add(jMenuItem14);
+
         jMenuBar1.add(jMenu6);
 
         setJMenuBar(jMenuBar1);
@@ -295,14 +306,19 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem11MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem11MousePressed
         // TODO add your handling code here:
         if(this.validador.getBtCrearUsuario()){
-          new JFrameUser(this.mysql).setVisible(true);
+              JFrameUser usuario =  new JFrameUser(this.mysql);
+                    usuario.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+               usuario.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem11MousePressed
 
     private void jMenuItem10MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem10MousePressed
         // TODO add your handling code here:
         if(this.validador.getBtCrearTypoDeSangre()){
-        new JFrameBlood(this.mysql).setVisible(true);
+          JFrameBlood sangre =  new JFrameBlood(this.mysql);
+          sangre.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+          sangre.setVisible(true);
+          
         }
     }//GEN-LAST:event_jMenuItem10MousePressed
 
@@ -310,14 +326,19 @@ public class Main extends javax.swing.JFrame {
         // TODO add your handling code here:
         
         if(this.validador.getBtCrearHospital()){
-            new JFrameHospital(this.mysql).setVisible(true);
+            JFrameHospital hospital =new JFrameHospital(this.mysql);
+            hospital.setYo(hospital);
+            hospital.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+            hospital.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem9MousePressed
 
     private void jMenuItem4MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem4MousePressed
         // TODO add your handling code here:
          if(this.validador.getBtCrearPaciente()){
-            new JFrameCrearPaciente(this.mysql).setVisible(true);
+          JFrameCrearPaciente crearPaciente=  new JFrameCrearPaciente(this.mysql);
+          crearPaciente.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+          crearPaciente.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem4MousePressed
 
@@ -326,6 +347,7 @@ public class Main extends javax.swing.JFrame {
         if(this.validador.getBtCrearSonografia()){
           JFrameCrearSonografia sonografia =  new JFrameCrearSonografia(this.mysql);
           sonografia.setYO(sonografia);
+          sonografia.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
           sonografia.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem1MousePressed
@@ -333,8 +355,17 @@ public class Main extends javax.swing.JFrame {
     private void jMenuItem15MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem15MousePressed
         // TODO add your handling code here:
         //permiso
-        new JFrameTipoSonografia(this.mysql).setVisible(true);
+      JFrameTipoSonografia tipoSonografia =  new JFrameTipoSonografia(this.mysql);
+      
+      tipoSonografia.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+      tipoSonografia.setVisible(true);
     }//GEN-LAST:event_jMenuItem15MousePressed
+
+    private void jMenuItem14MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem14MousePressed
+        // TODO add your handling code here:
+        JFramePrecioSonografia precioSonografia =  new JFramePrecioSonografia(this.mysql,this.session[0], this.session[1], this.session[3]);
+        precioSonografia.setVisible(true);
+    }//GEN-LAST:event_jMenuItem14MousePressed
 
     /**
      * @param args the command line arguments
@@ -362,6 +393,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem11;
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem13;
+    private javax.swing.JMenuItem jMenuItem14;
     private javax.swing.JMenuItem jMenuItem15;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;

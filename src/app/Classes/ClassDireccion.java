@@ -24,12 +24,14 @@ public class ClassDireccion{
     private ValidData valid = new ValidData();
     private String usuario,numeroSeguro,direccion,id,id_patient="1";
     private String[] key = {"sector","province","address","when_it","id_user","id_patient"};
-    private int id_user;
+   
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
-    private String NombreTabla = "address";        
+    private String NombreTabla = "address";
+          private String usuarioID,nombreUsuario,nombreTituloUsuario;
+
     
     public ClassDireccion(){
         mysql = new Mysql();
@@ -50,6 +52,13 @@ public class ClassDireccion{
     public boolean elimnar(String id){
         boolean respuesta = this.mysql.deleteRecord(this.NombreTabla, id);
         return respuesta;
+    }
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
     }
     public boolean insert(String usuario,String numeroSeguro,String direccion){
         if(valid.validEmpty(direccion, "Direccion")){
@@ -113,7 +122,7 @@ public class ClassDireccion{
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.usuario,this.numeroSeguro,this.direccion,"now()",this.id_user+"1",this.id_patient};
+        String[] values = {this.usuario,this.numeroSeguro,this.direccion,"now()",this.usuarioID,this.id_patient};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
         return respuesta;

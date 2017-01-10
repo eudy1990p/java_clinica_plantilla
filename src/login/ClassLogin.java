@@ -14,7 +14,7 @@ import javax.swing.JOptionPane;
 public class ClassLogin {
     private conection.Mysql mysql;
     private String name_user="",type_user="";
-    private String[] session = new String[3];
+    private String[] session = new String[4];
     public ClassLogin(conection.Mysql mysql){
         this.mysql = mysql;
     } 
@@ -30,7 +30,7 @@ public class ClassLogin {
             }
     }
     public void getValuesUser(String usuario,String clave){
-        String[] campos = {"id","name_user","type_of_user"};
+        String[] campos = {"id","name_user","type_of_user","nombre_titulo"};
        this.session = this.mysql.getValues("users", "where name_user = '"+usuario+"' and password_user = '"+clave+"' and display = '1'",campos);      
     }
     public String[] getSession(){

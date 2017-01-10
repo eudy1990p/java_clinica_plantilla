@@ -24,12 +24,14 @@ public class ClassTipoSonografia{
     private ValidData valid = new ValidData();
     private String usuario,clave,type_user,id;
     private String[] key = {"name_of_type_sonography","when_it","id_user"};
-    private int id_user;
+   
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
-            
+            private String usuarioID,nombreUsuario,nombreTituloUsuario;
+       
+    
     public ClassTipoSonografia(){
         mysql = new Mysql();
     }
@@ -42,6 +44,13 @@ public class ClassTipoSonografia{
     
     public void setAgregar(boolean estado){
         this.agregar = estado;
+    }
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
     }
     public boolean elimnar(String id){
         boolean respuesta = this.mysql.deleteRecord("type_of_sonography", id);
@@ -98,7 +107,7 @@ public class ClassTipoSonografia{
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.usuario,"now()",this.id_user+"1"};
+        String[] values = {this.usuario,"now()",this.usuarioID};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, "type_of_sonography");
         return respuesta;

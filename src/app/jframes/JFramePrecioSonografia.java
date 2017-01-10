@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package app.jframes;
-import app.Classes.ClassDireccion;
+import app.Classes.ClassPrecioSonografia;
 /**
  *
  * @author Eudy
@@ -13,44 +13,48 @@ import conection.Mysql;
 import java.util.Locale;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-public class JFrameDireccion extends javax.swing.JFrame {
+public class JFramePrecioSonografia extends javax.swing.JFrame {
 
     
     private int lineas = 10;
     private String id_patient,palabraBuscar="",id="";
     private conection.Mysql mysql;
-    private ClassDireccion user ;
-          private String usuarioID,nombreUsuario,nombreTituloUsuario;
+    private ClassPrecioSonografia user ;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
 
     
     /**
      * Creates new form User
      */
-    public JFrameDireccion() {
+    public JFramePrecioSonografia() {
         initComponents();
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
     }
-    public JFrameDireccion(conection.Mysql mysql) {
+    public JFramePrecioSonografia(conection.Mysql mysql) {
        initComponents();
         this.mysql = mysql;
-        user = new ClassDireccion(this.mysql); 
+        user = new ClassPrecioSonografia(this.mysql); 
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
     }
     
-    public JFrameDireccion(conection.Mysql mysql, String id_patient,String usuarioID,String nombreUsuario,String nombreTituloUsuario) {
+    public JFramePrecioSonografia(conection.Mysql mysql,String usuarioID,String nombreUsuario,String nombreTituloUsuario) {
        initComponents();
        this.id_patient = id_patient;
         this.mysql = mysql;
-        user = new ClassDireccion(this.mysql); 
+        user = new ClassPrecioSonografia(this.mysql); 
+        this.user.llenarComboBoxHospital(this.jComboBoxSangre);
+        this.user.llenarComboBoxTipoDeSonografia(this.jComboBoxTiposDeSonografias);
         this.user.setId_patient(id_patient);
        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
-        this.usuarioID = usuarioID;
+       this.usuarioID = usuarioID;
         this.nombreUsuario = nombreUsuario;
         this.nombreTituloUsuario = nombreTituloUsuario;
-         this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
-
+        this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
+       
       // this.jtable();
     }
     /**
@@ -65,8 +69,8 @@ public class JFrameDireccion extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
+        jComboBoxSangre = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jTextField2 = new javax.swing.JTextField();
@@ -77,9 +81,8 @@ public class JFrameDireccion extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jTextField3 = new javax.swing.JTextField();
+        jComboBoxTiposDeSonografias = new javax.swing.JComboBox<>();
         jLabel11 = new javax.swing.JLabel();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
 
         jMenuItem2.setText("Eliminar");
         jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -93,14 +96,8 @@ public class JFrameDireccion extends javax.swing.JFrame {
         setTitle("Administrar De Tipo de Sangre");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Administrar Dirección");
-
-        jTextField1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jTextField1.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jTextField1FocusLost(evt);
-            }
-        });
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Administrar Precio Sonografia");
 
         jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton1.setText("Agregar");
@@ -109,6 +106,9 @@ public class JFrameDireccion extends javax.swing.JFrame {
                 jButton1MouseClicked(evt);
             }
         });
+
+        jComboBoxSangre.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jComboBoxSangre.setToolTipText("");
 
         jTable1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
@@ -138,22 +138,22 @@ public class JFrameDireccion extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel5.setText("Total de dirección");
+        jLabel5.setText("Total de teléfono");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("4000");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel7.setText("Buscar dirección");
+        jLabel7.setText("Buscar teléfono");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel8.setText("Sector");
+        jLabel8.setText("Hospital");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel9.setText("Agregar Dirección");
+        jLabel9.setText("Agregar Precio");
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel10.setText("Provincia");
+        jLabel10.setText("Precio");
 
         jTextField3.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jTextField3.addFocusListener(new java.awt.event.FocusAdapter() {
@@ -162,12 +162,11 @@ public class JFrameDireccion extends javax.swing.JFrame {
             }
         });
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jLabel11.setText("Dirección");
+        jComboBoxTiposDeSonografias.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jComboBoxTiposDeSonografias.setToolTipText("");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setText("Sonografia");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -180,24 +179,22 @@ public class JFrameDireccion extends javax.swing.JFrame {
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(59, 59, 59))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jTextField1)
-                            .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(49, 49, 49)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(234, 234, 234))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel10, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxTiposDeSonografias, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jComboBoxSangre, javax.swing.GroupLayout.Alignment.LEADING, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(10, 10, 10))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
+                        .addComponent(jTextField3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
                         .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -209,13 +206,14 @@ public class JFrameDireccion extends javax.swing.JFrame {
                                 .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(175, 175, 175))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jTextField2)
-                                .addGap(62, 62, 62))))))
+                                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 482, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addContainerGap())))))
+            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 37, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
                 .addGap(11, 11, 11)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -224,29 +222,31 @@ public class JFrameDireccion extends javax.swing.JFrame {
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel7, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jTextField2)))
-                .addGap(24, 24, 24)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1)
-                        .addGap(20, 20, 20)
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jTextField3)
-                        .addGap(18, 18, 18)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(28, 28, 28))
-                    .addGroup(layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addGap(12, 12, 12))))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(jLabel8)
+                        .addGap(8, 8, 8)
+                        .addComponent(jComboBoxSangre, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel11)
+                        .addGap(8, 8, 8)
+                        .addComponent(jComboBoxTiposDeSonografias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(28, 28, 28)
+                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(97, 97, 97))))
         );
 
         pack();
@@ -260,20 +260,20 @@ public class JFrameDireccion extends javax.swing.JFrame {
         //String p2 = new String(this.jPasswordField2.getPassword());
        // String type_user = (String) this.jComboBox1.getSelectedItem();
         //JOptionPane.showMessageDialog(null, type_user);
-        boolean respuesta = this.user.insert(this.jTextField1.getText(),this.jTextField3.getText(),this.jTextArea1.getText());
+        boolean respuesta = this.user.insert(this.user.getIdTipoSangre(this.jComboBoxSangre.getSelectedIndex()),this.jTextField3.getText());
         if(respuesta){
             this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
             //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);
-            this.user.limpiarTexto(jTextField1,this.jTextField3,this.jTextArea1);
+            this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
         }
       }else{
            //JOptionPane.showMessageDialog(null, type_user);
-            boolean respuesta = this.user.update(this.jTextField1.getText(),this.jTextField3.getText(),this.jTextArea1.getText(),this.id);
+            boolean respuesta = this.user.update(this.user.getIdTipoSangre(this.jComboBoxSangre.getSelectedIndex()),this.jTextField3.getText(),this.id);
             if(respuesta){
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
-                this.user.limpiarTexto(jTextField1,this.jTextField3,this.jTextArea1);
+                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField3);
+                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
                 //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
             }
           
@@ -302,9 +302,9 @@ public class JFrameDireccion extends javax.swing.JFrame {
         this.id = id;
         System.out.println(id);
         String[] respuesta = this.user.mostrarEditarUsuario(id);
-        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField1);
-        this.jTextField1.setText(respuesta[1]);this.jTextField3.setText(respuesta[2]);
-        this.jTextArea1.setText(respuesta[3]);
+        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField3);
+        this.jComboBoxSangre.setSelectedItem(respuesta[2]);
+        this.jTextField3.setText(respuesta[1]);
         
     }//GEN-LAST:event_jTable1MouseClicked
 
@@ -324,8 +324,8 @@ public class JFrameDireccion extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se elimino correctamente el registro.");
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField1);
-                this.user.limpiarTexto(jTextField1,this.jTextField3,this.jTextArea1);
+                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField3);
+                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
             }else{
                  JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el registro.");           
             }
@@ -341,14 +341,9 @@ public class JFrameDireccion extends javax.swing.JFrame {
         System.out.println("prueba "+id+" prueba ");
     }//GEN-LAST:event_jMenuItem2MousePressed
 
-    private void jTextField1FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField1FocusLost
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_jTextField1FocusLost
-
     private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
         // TODO add your handling code here:
-       // this.user.validarUsuario(this.jTextField3.getText());
+        this.user.validarUsuario(this.jTextField3.getText());
     }//GEN-LAST:event_jTextField3FocusLost
 
     
@@ -358,6 +353,8 @@ public class JFrameDireccion extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBoxSangre;
+    private javax.swing.JComboBox<String> jComboBoxTiposDeSonografias;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -369,10 +366,7 @@ public class JFrameDireccion extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;
     // End of variables declaration//GEN-END:variables

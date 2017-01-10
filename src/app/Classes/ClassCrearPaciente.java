@@ -24,12 +24,13 @@ public class ClassCrearPaciente{
     private ValidData valid = new ValidData();
     private  String id_paciente,nombre,apellido, telefonoCasa, telefonoCelular, telefonoTrabajo, email1, email2, cedula, fecha_nacimiento, sexo, tipo_sangre_id, provincia, sector, direccion,id,nombreSeguro,numeroSeguro;
     private String[] key = {"id","name_patient","last_patient","document_id","date_of_birth","sex","type_of_blood_id"};
-    private int id_user;
+
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit;
     private ArrayList<String> valorEdit;
     private String[] idTipoSangre;
+    private String usuarioID,nombreUsuario,nombreTituloUsuario;
     
     public ClassCrearPaciente(){
         mysql = new Mysql();
@@ -42,6 +43,13 @@ public class ClassCrearPaciente{
     }
     public String getIdTipoSangre(int index){
         return this.idTipoSangre[index];
+    }
+    public void setDatosUsuario(String usuarioID, String nombreUsuario,String nombreTituloUsuario){
+        this.usuarioID = usuarioID;
+        this.nombreUsuario = nombreUsuario;
+        this.nombreTituloUsuario = nombreTituloUsuario;
+        //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
+        
     }
     public void llenarComboBox(javax.swing.JComboBox JCTipoSangre){
             String[] campos = {"id","name_of_blood"};
@@ -273,7 +281,7 @@ public class ClassCrearPaciente{
     }
     public boolean procesarInsertPacienteSeguro(){
         String[] key = {"insurance_number","name_insurance_patient","when_it","id_user","id_patient"};
-        String[] values = {this.numeroSeguro,this.nombreSeguro,"now()",this.id_user+"1",this.id_paciente};
+        String[] values = {this.numeroSeguro,this.nombreSeguro,"now()",this.usuarioID,this.id_paciente};
         //System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(key, values, "insurance_patient");
         return respuesta;
@@ -289,7 +297,7 @@ public class ClassCrearPaciente{
     }
     public boolean procesarInsertPacienteDireccion(){
         String[] key = {"sector","province","address","when_it","id_user","id_patient"};
-        String[] values = {this.sector,this.provincia,this.direccion,"now()",this.id_user+"1",this.id_paciente};
+        String[] values = {this.sector,this.provincia,this.direccion,"now()",this.usuarioID,this.id_paciente};
         //System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(key, values, "address");
         return respuesta;
@@ -327,7 +335,7 @@ public class ClassCrearPaciente{
 
         String[] key = {"name_patient","last_patient","document_id","sex","type_of_blood_id","when_it","id_user","date_of_birth"};
         System.out.println(this.fecha_nacimiento);
-        String[] values = {this.nombre,this.apellido,this.cedula,this.sexo.toLowerCase(),this.tipo_sangre_id,"now()","1",this.fecha_nacimiento};
+        String[] values = {this.nombre,this.apellido,this.cedula,this.sexo.toLowerCase(),this.tipo_sangre_id,"now()",this.usuarioID,this.fecha_nacimiento};
         
         this.id_paciente = mysql.generarInsertWithGetLastID(key, values, "patient");
         System.out.println("id Paciente "+ this.id_paciente);
@@ -338,6 +346,13 @@ public class ClassCrearPaciente{
         boolean respuesta = true;
         
         return respuesta;
+    }
+    
+    public String procesarInsertPaciente(String nombre,String apellido,String cedula,String sexo ,String tipo_sangre_id,String fecha_nacimiento){
+        String[] key = {"name_patient","last_patient","document_id","sex","type_of_blood_id","when_it","id_user","date_of_birth"};
+        String[] values = {nombre,apellido,cedula,sexo.toLowerCase(),tipo_sangre_id,"now()",this.usuarioID,fecha_nacimiento};
+        this.id_paciente = mysql.generarInsertWithGetLastID(key, values, "patient");
+        return this.id_paciente;
     }
     public boolean insertPacienteTelefono(){
         this.valorEdit = new ArrayList<String>();
@@ -372,7 +387,7 @@ public class ClassCrearPaciente{
     }
     public boolean procesarInsertPacienteTelefono(String telefono){
         String[] key = {"telephone","when_it","id_patient","id_user"};
-        String[] values = {telefono,"now()",this.id_paciente,this.id_user+"1"};
+        String[] values = {telefono,"now()",this.id_paciente,this.usuarioID};
         //System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(key, values, "telephone");
         return respuesta;
@@ -403,7 +418,7 @@ public class ClassCrearPaciente{
     }
     public boolean procesarInsertPacienteEmail(String email){
         String[] key = {"email","when_it","id_patient","id_user"};
-        String[] values = {email,"now()",this.id_paciente,this.id_user+"1"};
+        String[] values = {email,"now()",this.id_paciente,this.usuarioID};
         //System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(key, values, "email");
         return respuesta;
