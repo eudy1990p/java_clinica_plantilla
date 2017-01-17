@@ -23,15 +23,15 @@ public class ClassPrecioSonografia{
     private conection.Mysql mysql;
     private ValidData valid = new ValidData();
     private String usuario,numeroSeguro,type_user,id,id_patient="1";
-    private String[] key = {"telephone","id_type_of_telephone","when_it","id_user","id_patient"};
-  
+    private String[] key = {"price","id_hospital","id_type_of_sonography","when_it","id_user"};
+
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
-    private String NombreTabla = " telephone";        
+    private String NombreTabla = " price_of_hospital";        
     private String[] idTipoTelefono;
-    private String telefonoOld="",tipoOld="";
+    private String hospitalOld="",tipoSonografiaOld="";
       private String usuarioID,nombreUsuario,nombreTituloUsuario;
           private String[] idHospitales,idTipoDeSonografia;
 
@@ -81,6 +81,12 @@ public class ClassPrecioSonografia{
     }
     public String getIdTipoSangre(int index){
         return this.idTipoTelefono[index];
+    }
+    public String getIdHospital(int index){
+        return this.idHospitales[index];
+    }
+    public String getIdTipoSonografia(int index){
+        return this.idTipoDeSonografia[index];
     }
     public boolean getAgregar(){
         return agregar;
@@ -138,14 +144,22 @@ public class ClassPrecioSonografia{
             return false;
           }
     }
-    public void limpiarTexto(javax.swing.JComboBox texto,javax.swing.JTextField texto1){
-       texto.setSelectedIndex(0);texto1.setText("");
-    
+    public boolean validarNuevoPrecio(String idHospital, String idTipoSonografia){
+         int existe = this.mysql.getValues(this.NombreTabla, "where id_type_of_sonography = '"+idTipoSonografia+"' and id_hospital = '"+idHospital+"' ");
+          if(existe < 1){
+            return true;
+        }else{
+            JOptionPane.showMessageDialog(null, "Ya tiene precio esta sonografia");
+            return false;
+          }
     }
-    public boolean update( String usuario,String numeroSeguro, String id){
+    public void limpiarTexto(javax.swing.JComboBox texto,javax.swing.JTextField texto1,javax.swing.JComboBox texto2){
+       texto.setSelectedIndex(0);texto1.setText("");texto2.setSelectedIndex(0);
+    }
+    public boolean update( String precio,String hospitalID,String tipoSonografiaID, String id){
         boolean respuesta = true;
-        if(valid.validEmpty(numeroSeguro)){
-            if( (!this.validarUsuario(numeroSeguro)) && (!numeroSeguro.equals(this.telefonoOld)) ){
+
+            if(  (!numeroSeguro.equals(this.tipoSonografiaOld)) ){
                 System.out.println("numero telefono existe");
                 respuesta = false;
                 return respuesta;
@@ -162,8 +176,7 @@ public class ClassPrecioSonografia{
             this.id = id;
 
             respuesta = this.procesarUpdate();
-            
-        }
+         
             return respuesta;
        // }
     }
@@ -173,6 +186,7 @@ public class ClassPrecioSonografia{
         boolean respuesta = mysql.generarInsert(this.key, values, this.NombreTabla);
         return respuesta;
     }
+    
     
     public boolean procesarUpdate(){
          int total =this.camposEdit.size();
@@ -188,28 +202,66 @@ public class ClassPrecioSonografia{
         return respuesta;
     }
     
+    
+    public boolean procesarUpdate(String precio,String hospitalID,String tipoSonografiaID, String id){
+        String[] key = {"price","id_type_of_sonography","id_hospital"};
+        String[] values = {precio,tipoSonografiaID,hospitalID};
+        System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
+        boolean respuesta = mysql.updateRecord(this.NombreTabla,id,key, values);
+        return respuesta;
+    }
+            
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal,String palabraBuscar){
-        //String[] datos = {"id","telephone","id_type_of_telephone"};
-        //String campo = "id_patient = '"+this.id_patient+"' and telephone";
-         String[] datos = {"t.id","t.telephone","t1.name_type_telephone"};
-        String select = "t.id, t.telephone, t1.name_type_telephone";
-        String where = "t.id_patient = '"+this.id_patient+"' and t.telephone like '%"+palabraBuscar+"%' and ";
-        String tablasJoin = ""+this.NombreTabla+" as t left join type_of_telephone as t1 on "
-                + "t.id_type_of_telephone = t1.id";
-        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t."); /*this.mysql.generarSelect(this.NombreTabla, datos,palabraBuscar,campo)*/;
+        /*
+            SELECT poh.id, poh.price, h.name_hospital, tos.name_of_type_sonography
+
+FROM price_of_hospital AS poh
+
+INNER JOIN hospital AS h
+ON poh.id_hospital = h.id 
+
+INNER JOIN type_of_sonography AS tos
+ON poh.id_type_of_sonography = tos.id
+        */
+        String[] datos = {"poh.id","poh.price","h.name_hospital","tos.name_of_type_sonography"};
+        String select = "poh.id, poh.price,h.name_hospital,tos.name_of_type_sonography";
+        String where = " poh.price like '%"+palabraBuscar+"%' and ";
+        String tablasJoin = ""+this.NombreTabla+" AS poh " +
+                             "INNER JOIN hospital AS h " +
+                             "ON poh.id_hospital = h.id " +
+                             "INNER JOIN type_of_sonography AS tos " +
+                             "ON poh.id_type_of_sonography = tos.id ";
+        
+        
+        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"poh."); /*this.mysql.generarSelect(this.NombreTabla, datos,palabraBuscar,campo)*/;
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         JLabelTotal.setText(resultado[0][1]+"");
         table.setModel(modelo); 
     }
+     public boolean procesarInsert(String idHospital,String tipoSonografia, String precio){
+        boolean respuesta = this.validarNuevoPrecio(idHospital,tipoSonografia);
+         if(respuesta){
+       // JOptionPane.showMessageDialog(null, "Ya estamos entrando");
+        String[] key = {"price","id_hospital","id_type_of_sonography","when_it","id_user"};
+        String[] values = {precio,idHospital,tipoSonografia,"now()",this.usuarioID};
+        System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
+            respuesta = mysql.generarInsert(key, values, this.NombreTabla);
+         }
+        return respuesta;
+    }
     public String[] mostrarEditarUsuario(String id){
-        String[] campos ={"t.id","t.telephone","t1.name_type_telephone"};
-        String join = this.NombreTabla+" as t left join type_of_telephone as t1 "
-                + "on t.id_type_of_telephone = t1.id";
-        String columnas = "t.id, t.telephone, t.id_type_of_telephone, t1.name_type_telephone";
-        String[] respuesta = this.mysql.generarSelectWithJoin(join,"t.id,t.telephone,t1.name_type_telephone", id+" and id_patient = "+this.id_patient,campos,"t.");
-        this.telefonoOld = respuesta[1];
-        this.tipoOld = respuesta[2];
+        //String[] campos ={"t.id","t.telephone","t1.name_type_telephone"};
+        String[] campos = {"poh.id","poh.price","h.name_hospital","tos.name_of_type_sonography","h.rnc"};
+        String join = ""+this.NombreTabla+" AS poh " +
+                             "INNER JOIN hospital AS h " +
+                             "ON poh.id_hospital = h.id " +
+                             "INNER JOIN type_of_sonography AS tos " +
+                             "ON poh.id_type_of_sonography = tos.id ";
+        String columnas = "poh.id, poh.price,h.name_hospital,tos.name_of_type_sonography";
+        String[] respuesta = this.mysql.generarSelectWithJoin(join,"poh.id, poh.price,h.name_hospital,tos.name_of_type_sonography,h.rnc", id,campos,"poh.");
+         this.tipoSonografiaOld = respuesta[2];
+          this.hospitalOld = respuesta[3];
         this.setAgregar(false);
         return respuesta;
     }
@@ -227,12 +279,20 @@ public class ClassPrecioSonografia{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal){
-        String[] datos = {"t.id","t.telephone","t1.name_type_telephone"};
+     /*   String[] datos = {"t.id","t.telephone","t1.name_type_telephone"};
         String select = "t.id, t.telephone, t1.name_type_telephone";
         String where = "t.id_patient = '"+this.id_patient+"' and ";
         String tablasJoin = ""+this.NombreTabla+" as t left join type_of_telephone as t1 on "
-                + "t.id_type_of_telephone = t1.id";
-        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"t.");
+                + "t.id_type_of_telephone = t1.id";*/
+     String[] datos = {"poh.id","poh.price","h.name_hospital","tos.name_of_type_sonography"};
+        String select = " poh.id,poh.price,h.name_hospital,tos.name_of_type_sonography ";
+        String where = " ";
+        String tablasJoin = ""+this.NombreTabla+" AS poh " +
+                             "INNER JOIN hospital AS h " +
+                             "ON poh.id_hospital = h.id " +
+                             "INNER JOIN type_of_sonography AS tos " +
+                             "ON poh.id_type_of_sonography = tos.id ";
+        Object[][] resultado = (Object[][]) this.mysql.generarSelectMultipleTabla(tablasJoin, datos,select,where,"poh.");
         //Object[][] resultado = (Object[][]) this.mysql.generarSelect("type_of_blood", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);

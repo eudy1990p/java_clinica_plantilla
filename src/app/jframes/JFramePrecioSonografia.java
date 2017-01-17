@@ -43,11 +43,11 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
        initComponents();
        this.id_patient = id_patient;
         this.mysql = mysql;
-        user = new ClassPrecioSonografia(this.mysql); 
+        this.user = new ClassPrecioSonografia(this.mysql); 
         this.user.llenarComboBoxHospital(this.jComboBoxSangre);
         this.user.llenarComboBoxTipoDeSonografia(this.jComboBoxTiposDeSonografias);
-        this.user.setId_patient(id_patient);
-       this.user.mostrarDatosTabla(jTable1,this.jLabel6);
+        ///this.user.setId_patient(id_patient);
+        this.user.mostrarDatosTabla(jTable1,this.jLabel6);
        this.usuarioID = usuarioID;
         this.nombreUsuario = nombreUsuario;
         this.nombreTituloUsuario = nombreTituloUsuario;
@@ -69,7 +69,7 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
         jPopupMenu1 = new javax.swing.JPopupMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
         jLabel1 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        jButtonAgregarEditarPrecioSonografia = new javax.swing.JButton();
         jComboBoxSangre = new javax.swing.JComboBox<>();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
@@ -99,11 +99,11 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Administrar Precio Sonografia");
 
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        jButton1.setText("Agregar");
-        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+        jButtonAgregarEditarPrecioSonografia.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jButtonAgregarEditarPrecioSonografia.setText("Agregar");
+        jButtonAgregarEditarPrecioSonografia.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jButton1MouseClicked(evt);
+                jButtonAgregarEditarPrecioSonografiaMouseClicked(evt);
             }
         });
 
@@ -138,13 +138,13 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
         });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel5.setText("Total de teléfono");
+        jLabel5.setText("Total de precio");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabel6.setText("4000");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
-        jLabel7.setText("Buscar teléfono");
+        jLabel7.setText("Buscar precio");
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel8.setText("Hospital");
@@ -179,7 +179,7 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
                         .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(59, 59, 59))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAgregarEditarPrecioSonografia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(38, 38, 38))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -245,41 +245,45 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(28, 28, 28)
-                        .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonAgregarEditarPrecioSonografia, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(97, 97, 97))))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+    private void jButtonAgregarEditarPrecioSonografiaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButtonAgregarEditarPrecioSonografiaMouseClicked
         // TODO add your handling code here:
       // this.jtable();
+      
+     //JOptionPane.showMessageDialog(null, "me diste clic agregar");
       if(this.user.getAgregar()){
+         // JOptionPane.showMessageDialog(null, this.user.getAgregar());
         //String p1 = new String(this.jPasswordField1.getPassword());
         //String p2 = new String(this.jPasswordField2.getPassword());
        // String type_user = (String) this.jComboBox1.getSelectedItem();
         //JOptionPane.showMessageDialog(null, type_user);
-        boolean respuesta = this.user.insert(this.user.getIdTipoSangre(this.jComboBoxSangre.getSelectedIndex()),this.jTextField3.getText());
+        boolean respuesta = this.user.procesarInsert(this.user.getIdHospital(this.jComboBoxSangre.getSelectedIndex()),this.user.getIdTipoSonografia(this.jComboBoxTiposDeSonografias.getSelectedIndex()), this.jTextField3.getText());
         if(respuesta){
             this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
             //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);
-            this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
+            this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3,this.jComboBoxTiposDeSonografias);
         }
       }else{
-           //JOptionPane.showMessageDialog(null, type_user);
-            boolean respuesta = this.user.update(this.user.getIdTipoSangre(this.jComboBoxSangre.getSelectedIndex()),this.jTextField3.getText(),this.id);
+           //JOptionPane.showMessageDialog(null, "update");
+            //boolean respuesta = this.user.update(this.user.getIdTipoSangre(this.jComboBoxSangre.getSelectedIndex()),this.jTextField3.getText(),this.id);
+            boolean respuesta = this.user.procesarUpdate(this.jTextField3.getText(),this.user.getIdHospital(this.jComboBoxSangre.getSelectedIndex()),this.user.getIdTipoSonografia(this.jComboBoxTiposDeSonografias.getSelectedIndex()), this.id);
             if(respuesta){
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField3);
-                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
+                this.user.cambiarTestoParaEditar(this.jButtonAgregarEditarPrecioSonografia, this.jLabel9,this.jTextField3);
+                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3,this.jComboBoxTiposDeSonografias);
                 //this.user.mostrarNuevoDatoTabla(this.jTable1, this.jLabel6);           
             }
-          
+         
       }
       
-    }//GEN-LAST:event_jButton1MouseClicked
+    }//GEN-LAST:event_jButtonAgregarEditarPrecioSonografiaMouseClicked
 
     private void jTextField2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField2KeyTyped
         // TODO add your handling code here:
@@ -302,8 +306,9 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
         this.id = id;
         System.out.println(id);
         String[] respuesta = this.user.mostrarEditarUsuario(id);
-        this.user.cambiarTestoParaEditar(this.jButton1,this.jLabel9,this.jTextField3);
-        this.jComboBoxSangre.setSelectedItem(respuesta[2]);
+        this.user.cambiarTestoParaEditar(this.jButtonAgregarEditarPrecioSonografia,this.jLabel9,this.jTextField3);
+        this.jComboBoxSangre.setSelectedItem(respuesta[2]+" ("+respuesta[4]+")");
+        this.jComboBoxTiposDeSonografias.setSelectedItem(respuesta[3]);
         this.jTextField3.setText(respuesta[1]);
         
     }//GEN-LAST:event_jTable1MouseClicked
@@ -324,8 +329,8 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, "Se elimino correctamente el registro.");
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
-                this.user.cambiarTestoParaEditar(this.jButton1, this.jLabel9,this.jTextField3);
-                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3);
+                this.user.cambiarTestoParaEditar(this.jButtonAgregarEditarPrecioSonografia, this.jLabel9,this.jTextField3);
+                this.user.limpiarTexto(this.jComboBoxSangre,this.jTextField3,this.jComboBoxTiposDeSonografias);
             }else{
                  JOptionPane.showMessageDialog(null, "No se pudo eliminar correctamente el registro.");           
             }
@@ -343,7 +348,7 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
 
     private void jTextField3FocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField3FocusLost
         // TODO add your handling code here:
-        this.user.validarUsuario(this.jTextField3.getText());
+       // this.user.validarUsuario(this.jTextField3.getText());
     }//GEN-LAST:event_jTextField3FocusLost
 
     
@@ -352,7 +357,7 @@ public class JFramePrecioSonografia extends javax.swing.JFrame {
      */
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAgregarEditarPrecioSonografia;
     private javax.swing.JComboBox<String> jComboBoxSangre;
     private javax.swing.JComboBox<String> jComboBoxTiposDeSonografias;
     private javax.swing.JLabel jLabel1;

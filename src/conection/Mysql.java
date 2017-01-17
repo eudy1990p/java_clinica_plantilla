@@ -64,6 +64,8 @@ public class Mysql {
     public boolean generarInsert(String[] key, String[] value,String tableName) {
         String values = "";
         String keys = "";
+        //JOptionPane.showMessageDialog(null,String.join(",", value));
+        //JOptionPane.showMessageDialog(null,String.join(",", key));
         try {
             for(int i = 0 ; i < value.length ; i++){
                 System.out.println(i +" "+value.length);
@@ -90,7 +92,7 @@ public class Mysql {
             String Query = "INSERT INTO " + tableName + " "
                     + "("+keys+")"
                     + "values ("+values+")";
-            System.out.println("Query "+Query);
+            System.out.println("insert "+Query);
           /*  String Query = "INSERT INTO " + table_name + " VALUES("
                     + "\"" + ID + "\", "
                     + "\"" + name + "\", "
@@ -185,7 +187,7 @@ public class Mysql {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelectLastRow");
         }
     }
     
@@ -227,7 +229,7 @@ public class Mysql {
             Object[][] fila = new Object[1][2];
             resultado[0][0]=fila;
             resultado[0][1]=0;
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect");
             return resultado;
         }
             
@@ -271,13 +273,15 @@ public class Mysql {
             Object[][] fila = new Object[1][2];
             resultado[0][0]=fila;
             resultado[0][1]=0;
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect");
             return resultado;
         }
             
     }
     
     public Object generarSelectMultipleTabla(String table_name,String[] campos,String select, String where,String prefijo) {
+        System.out.println(String.join(",", campos));
+
         try {
             String Query = "SELECT "+select+" FROM " + table_name+" where "+where+" "+prefijo+"display = '1' ";
             System.out.println("QUERY "+Query);
@@ -293,14 +297,25 @@ public class Mysql {
            int f = 0 ;
             resultSet.beforeFirst();
             Object[][] fila = new Object[totalFilas][campos.length];
+             System.out.println(" ok estamos por mostrar ");
             while (resultSet.next()) {
+                    
                     //System.out.println("ID: " + resultSet.getString("id"));
                     for(int i = 0 ; i < campos.length ;i++){
-                      System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
-                        fila[f][i] = resultSet.getString(campos[i]);
+                        if(campos[i].equalsIgnoreCase("poh.price")){
+                            System.out.println(" dato que no se muestra "+resultSet.getBigDecimal("poh.price")+" | "+campos[1]);
+                            String da = new String(resultSet.getBigDecimal(campos[i]).toPlainString()); 
+                            fila[f][i] = da;
+                        }else{
+                            System.out.println(" ok ya estamos ");
+                            
+                            System.out.println("i " + i+" valor campo "+resultSet.getString(campos[i])+" campo "+campos[i]);
+                            fila[f][i] = resultSet.getString(campos[i]).toString();
+                        }
                     }
                     f++;
             }
+            this.mostrarElementoArreglo(fila);
             System.out.print(" fin while" );
             Object[][] resultado = new Object[1][2];
             System.out.print(" objecto" );
@@ -315,12 +330,20 @@ public class Mysql {
             Object[][] fila = new Object[1][2];
             resultado[0][0]=fila;
             resultado[0][1]=0;
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelectMultipleTabla(String table_name,String[] campos,String select, String where,String prefijo)");
             return resultado;
         }
             
     }
     
+    public void mostrarElementoArreglo(Object[][] p){
+        for(int i = 0 ; i < p.length ; i++){
+            for(int c = 0 ; c < p[i].length ; c++){
+                System.out.println(i+"Resultado "+p[i][c]);
+           }   
+        }
+        
+    }
     public Object generarSelect(String table_name,String[] campos,String CampoOrdenar,String tipoOrden,String otros) {
         try {
             String Query = "SELECT * FROM " + table_name+" where display = '1' order by "+CampoOrdenar+" "+tipoOrden+" "+otros+" ";
@@ -358,7 +381,7 @@ public class Mysql {
             Object[][] resultado = new Object[1][2];
             resultado[0][0]=0;
             resultado[0][1]=0;
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect(String table_name,String[] campos,String CampoOrdenar,String tipoOrden,String otros)");
             return resultado;
         }
             
@@ -402,7 +425,7 @@ public class Mysql {
             Object[][] fila = new Object[1][2];
             resultado[0][0]=fila;
             resultado[0][1]=0;
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect(String table_name,String[] campos,String palabra,String campo)");
             return resultado;
         }
             
@@ -430,7 +453,7 @@ public class Mysql {
             return fila;
         } catch (SQLException ex) {
             String[] fila = {"no"};
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect(String table_name,String id,String[] campos)");
             return fila;
         }
     }
@@ -450,14 +473,23 @@ public class Mysql {
            String[] fila = new String[campos.length];
             if (resultSet.next()) {
                     for(int i = 0 ; i < campos.length ; i++){
-                        fila[i]=resultSet.getString(campos[i]);
-                        System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                         if(campos[i].equalsIgnoreCase("poh.price")){
+                            System.out.println(" dato que no se muestra "+resultSet.getBigDecimal("poh.price")+" | "+campos[1]);
+                            //fila[i]=resultSet.getString(campos[i]);
+                            String da = new String(resultSet.getBigDecimal(campos[i]).toPlainString()); 
+                            fila[i] = da;
+                        }else{
+                            fila[i]=resultSet.getString(campos[i]);
+                            System.out.println(" Probando "+fila[i]+" ID: " + resultSet.getString("id"));
+                        }
+                        
+                        
                     }       
             }
             return fila;
         } catch (SQLException ex) {
             String[] fila = {"no"};
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelectWithJoin(String table_name,String mostrarCampos,String id,String[] campos,String prefijo)");
             return fila;
         }
     }
@@ -485,7 +517,7 @@ public class Mysql {
             return fila;
         } catch (SQLException ex) {
             String[] fila = {"no"};
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect(String table_name,String columnas,String id,String[] campos)");
             return fila;
         }
     }
@@ -513,7 +545,7 @@ public class Mysql {
             return fila;
         } catch (SQLException ex) {
             String[] fila = {"no"};
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos generarSelect(String table_name,String nameId,String id,String[] campos,String CampoOrder,String order)");
             return fila;
         }
     }
@@ -582,7 +614,7 @@ public class Mysql {
            return totalFilas;
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos getValues(String table_name, String where)");
             return 0;
         }
     }
@@ -605,7 +637,7 @@ public class Mysql {
            return datos;
             
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos getValues(String table_name, String where, String[] campos)");
             return datos;
         }
     }
@@ -625,7 +657,7 @@ public class Mysql {
             }
 
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos");
+            JOptionPane.showMessageDialog(null, "Error en la adquisición de datos getValues(String table_name)");
         }
     }
 
@@ -672,7 +704,7 @@ public class Mysql {
             return true;
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            JOptionPane.showMessageDialog(null, "Error borrando el registro especificado");
+            JOptionPane.showMessageDialog(null, "Error actualizando el registro especificado");
             return false;
         }
     }
