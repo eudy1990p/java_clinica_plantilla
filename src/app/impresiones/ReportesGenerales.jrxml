@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="59c6db32-2f92-4162-9522-29137aa2435a">
+	<property name="ireport.zoom" value="2.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="246"/>
+	<parameter name="reporte_de" class="java.lang.String"/>
+	<parameter name="fecha_hora" class="java.lang.String"/>
+	<parameter name="nombre_hospital" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="118" y="8" width="102" height="20" uuid="5e0eb600-3c88-48ad-bdaf-3bd0948c8149"/>
+				<textElement textAlignment="Center">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Reporte De]]></text>
+			</staticText>
+			<image>
+				<reportElement x="16" y="25" width="45" height="38" uuid="e1d90909-7f4b-495a-b860-96bc6d96e585"/>
+				<imageExpression><![CDATA[]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="220" y="8" width="163" height="20" uuid="2170accf-c888-460b-b57e-bdea4f57758c"/>
+				<textElement textAlignment="Left">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{reporte_de}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="446" y="3" width="109" height="9" uuid="c9f3d34c-b475-45af-a841-561d6c1e8295"/>
+				<textElement textAlignment="Right">
+					<font size="7"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha_hora}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="499" y="28" width="43" height="35" uuid="9ef8c5c1-7122-4d28-9c7a-b514233ec4c3"/>
+			</image>
+			<textField>
+				<reportElement x="78" y="31" width="355" height="20" uuid="1d553c98-6c4a-4b08-9120-0c52ee4e8a87"/>
+				<textElement textAlignment="Center">
+					<font size="13"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_hospital}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="52" splitType="Stretch">
+			<textField>
+				<reportElement x="433" y="0" width="80" height="14" uuid="275f002c-7b16-48f3-9ca0-cb7e51cc2920"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="0" width="40" height="14" uuid="3e2b5b82-dd8b-4e9a-a609-dd60c4e9c5fc"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="125" splitType="Stretch"/>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="45" width="555" height="9" uuid="2b1c14a6-cdd9-4603-90dc-b3565813c588"/>
+				<textElement textAlignment="Center">
+					<font size="6"/>
+				</textElement>
+				<text><![CDATA[Este reporte ha fue creado desde la aplicación tu sonografia creado por eudy arias para contacto celular: (809) 608-5106 Email: eudy1990@gmail.com]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="135" y="37" width="170" height="9" uuid="87c93ffd-2c1a-4e49-acb9-c302e95e4c72"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email_empresa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="29" width="555" height="9" uuid="5c0f8fef-7d57-4287-9339-20646301d233"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccion_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="117" y="37" width="19" height="9" uuid="98de42de-20ac-4e6a-9fac-3e32c9048f1b"/>
+				<textElement textAlignment="Left">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="29" y="37" width="89" height="9" uuid="5aa3cf59-2706-441d-bf99-9059b084ecab"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telefono_empresa}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="324" y="37" width="231" height="9" uuid="0339495b-6299-4fb3-9f4e-64e3e016a990"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pagina_web_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="37" width="30" height="9" uuid="c53d6e0b-9bf6-427e-9471-2880052ea35c"/>
+				<textElement textAlignment="Left">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="305" y="37" width="20" height="9" uuid="8a6a449e-64a4-4319-8952-3e9a58df9a7b"/>
+				<textElement textAlignment="Left">
+					<font size="7" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[Web]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>
