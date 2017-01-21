@@ -120,14 +120,29 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem2.setText("About It");
+        jMenuItem2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem2MousePressed(evt);
+            }
+        });
         jMenu1.add(jMenuItem2);
 
         jMenuItem13.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem13.setText("Cambiar Clave");
+        jMenuItem13.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem13MousePressed(evt);
+            }
+        });
         jMenu1.add(jMenuItem13);
 
         jMenuItem12.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem12.setText("Salir");
+        jMenuItem12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem12MousePressed(evt);
+            }
+        });
         jMenu1.add(jMenuItem12);
 
         jMenuBar1.add(jMenu1);
@@ -146,6 +161,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem3.setText("Buscar");
+        jMenuItem3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem3MousePressed(evt);
+            }
+        });
         jMenu2.add(jMenuItem3);
 
         jMenuBar1.add(jMenu2);
@@ -173,6 +193,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem5.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem5.setText("Buscar");
+        jMenuItem5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem5MousePressed(evt);
+            }
+        });
         jMenu5.add(jMenuItem5);
 
         jMenuBar1.add(jMenu5);
@@ -366,6 +391,42 @@ public class Main extends javax.swing.JFrame {
         JFramePrecioSonografia precioSonografia =  new JFramePrecioSonografia(this.mysql,this.session[0], this.session[1], this.session[3]);
         precioSonografia.setVisible(true);
     }//GEN-LAST:event_jMenuItem14MousePressed
+
+    private void jMenuItem12MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem12MousePressed
+        // TODO add your handling code here:
+        System.exit(0);
+    }//GEN-LAST:event_jMenuItem12MousePressed
+
+    private void jMenuItem13MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem13MousePressed
+        // TODO add your handling code here:
+         JFrameCambiarClave usuario =  new JFrameCambiarClave(this.mysql);
+         usuario.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+         usuario.setVisible(true);
+    }//GEN-LAST:event_jMenuItem13MousePressed
+
+    private void jMenuItem2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem2MousePressed
+        // TODO add your handling code here:
+        new AboutCreator().setVisible(true);
+    }//GEN-LAST:event_jMenuItem2MousePressed
+
+    private void jMenuItem5MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem5MousePressed
+        // TODO add your handling code here:
+        if(this.validador.getBtBuscarPaciente()){
+          JFrameBuscarPaciente crearPaciente=  new JFrameBuscarPaciente(this.mysql);
+          crearPaciente.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+          crearPaciente.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem5MousePressed
+
+    private void jMenuItem3MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem3MousePressed
+        // TODO add your handling code here:
+        //JFrameBuscarSonografia
+        if(this.validador.getBtBuscarSonografia()){
+          JFrameBuscarSonografia buscarSonografia=  new JFrameBuscarSonografia(this.mysql);
+          buscarSonografia.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+          buscarSonografia.setVisible(true);
+        }
+    }//GEN-LAST:event_jMenuItem3MousePressed
 
     /**
      * @param args the command line arguments

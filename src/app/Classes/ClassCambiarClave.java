@@ -19,21 +19,21 @@ import java.util.ArrayList;
  *
  * @author Eudy
  */
-public class ClassUser{
+public class ClassCambiarClave{
     private conection.Mysql mysql;
     private ValidData valid = new ValidData();
-    private String usuario,clave,type_user,id,tituloMostrar;
-    private String[] key = {"name_user","password_user","when_it","id_user","type_of_user","nombre_titulo"};
+    private String usuario,clave,type_user,id;
+    private String[] key = {"name_user","password_user","when_it","id_user","type_of_user"};
     private int lineas=10;
     private boolean agregar=true;
     private ArrayList<String> camposEdit = new ArrayList<String>();
     private ArrayList<String> valorEdit = new ArrayList<String>();
     private String usuarioID,nombreUsuario,nombreTituloUsuario;
             
-    public ClassUser(){
+    public ClassCambiarClave(){
         mysql = new Mysql();
     }
-    public ClassUser(conection.Mysql mysql){
+    public ClassCambiarClave(conection.Mysql mysql){
        this.mysql =mysql;
     }
     public boolean getAgregar(){
@@ -54,7 +54,7 @@ public class ClassUser{
         this.nombreTituloUsuario = nombreTituloUsuario;
         //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);    
     }
-    public boolean insert(String usuario,String clave,String RepetidaClave,String type_user,String tituloMostrar){
+    public boolean insert(String usuario,String clave,String RepetidaClave,String type_user){
         if(valid.validEmpty(usuario, "Nombre de usuario")){
            return false; 
         }else if(valid.validEmpty(clave, "Clave de usuario")){
@@ -69,7 +69,6 @@ public class ClassUser{
                     this.usuario = usuario;
                     this.clave = clave;
                     this.type_user = type_user;
-                    this.tituloMostrar =tituloMostrar;
                     boolean respuesta = this.procesarInsert();
                     return respuesta;
                 }else{
@@ -87,32 +86,31 @@ public class ClassUser{
             return false;
           }
     }
-    public void limpiarTexto(javax.swing.JPasswordField p1,javax.swing.JPasswordField p2,javax.swing.JTextField texto,javax.swing.JComboBox combo){
-        p1.setText("");p2.setText("");texto.setText("");combo.setSelectedIndex(0);
+    public void limpiarTexto(javax.swing.JPasswordField p1,javax.swing.JPasswordField p2){
+        p1.setText("");p2.setText("");
     
     }
-    public boolean update( String usuario,String clave,String RepetidaClave,String type_user,String id,String titulo){
+    public boolean update( String clave,String RepetidaClave,String id){
         
-        if(valid.validEmpty(type_user)){
+       /* if(valid.validEmpty(type_user)){
           this.valorEdit.add(type_user);
           this.camposEdit.add("type_of_user");
-        }
+        }*/
         if(valid.validEmpty(clave)){
           this.valorEdit.add(clave);
           this.camposEdit.add("password_user");
         }
-            this.usuario = usuario;
+            //this.usuario = usuario;
             this.clave = clave;
-            this.type_user = type_user;            
-            this.id = id;
-            this.tituloMostrar = titulo;
+            //this.type_user = type_user;            
+            this.id = this.usuarioID;
 
             boolean respuesta = this.procesarUpdate();
             return respuesta;
        // }
     }
     public boolean procesarInsert(){
-        String[] values = {this.usuario,this.clave,"now()",this.usuarioID,this.type_user,this.tituloMostrar};
+        String[] values = {this.usuario,this.clave,"now()",this.usuarioID,this.type_user};
         System.out.println(" key "+this.key+" Values "+values+" total index "+values.length);
         boolean respuesta = mysql.generarInsert(this.key, values, "users");
         return respuesta;
@@ -133,7 +131,7 @@ public class ClassUser{
     }
     
     public void mostrarDatosTabla(JTable table,JLabel JLabelTotal,String palabraBuscar){
-        String[] datos = {"id","name_user","type_of_user","nombre_titulo"};
+        String[] datos = {"id","name_user","type_of_user"};
         String campo = "name_user";
         System.out.println(palabraBuscar);
         Object[][] resultado = (Object[][]) this.mysql.generarSelect("users", datos,palabraBuscar,campo);
@@ -143,7 +141,7 @@ public class ClassUser{
         table.setModel(modelo); 
     }
     public String[] mostrarEditarUsuario(String id){
-        String[] campos = {"id","name_user","type_of_user","nombre_titulo"};
+        String[] campos = {"id","name_user","type_of_user"};
         String[] respuesta = this.mysql.generarSelect("users", id,campos);
         this.setAgregar(false);
         return respuesta;
@@ -186,7 +184,7 @@ public class ClassUser{
         
         //Object[] columnas = new Object[modal.getColumnCount()];
         //{"name_user","password_user","when_it","id_user","type_of_user"}
-        String[] datos = {"id","name_user","type_of_user","nombre_titulo"};
+        String[] datos = {"id","name_user","type_of_user"};
         
         Object[][] resultado = (Object[][]) this.mysql.generarSelect("users", datos);
         Object[][] infoTabla= (Object[][]) resultado[0][0];

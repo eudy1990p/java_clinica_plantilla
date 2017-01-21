@@ -23,7 +23,8 @@ public class Mysql {
 
      private static Connection Conexion;
      private String user="root",pass="",db_name="java_hospital_theme_db";
-     
+     private String orden = "";
+             
      public Mysql(){
          this.MySQLConnection(user, pass, db_name);
      }
@@ -283,7 +284,7 @@ public class Mysql {
         System.out.println(String.join(",", campos));
 
         try {
-            String Query = "SELECT "+select+" FROM " + table_name+" where "+where+" "+prefijo+"display = '1' ";
+            String Query = "SELECT "+select+" FROM " + table_name+" where "+where+" "+prefijo+"display = '1' "+this.orden;
             System.out.println("QUERY "+Query);
 
             Statement st = Conexion.createStatement();
@@ -335,6 +336,10 @@ public class Mysql {
         }
             
     }
+
+    public void setOrden(String orden) {
+        this.orden = orden;
+    }
     
     public void mostrarElementoArreglo(Object[][] p){
         for(int i = 0 ; i < p.length ; i++){
@@ -346,8 +351,8 @@ public class Mysql {
     }
     public Object generarSelect(String table_name,String[] campos,String CampoOrdenar,String tipoOrden,String otros) {
         try {
-            String Query = "SELECT * FROM " + table_name+" where display = '1' order by "+CampoOrdenar+" "+tipoOrden+" "+otros+" ";
-            System.out.println("QUERY "+Query);
+            String Query = "SELECT * FROM " + table_name+" where display = '1' "+otros+"  order by "+CampoOrdenar+" "+tipoOrden+" ";
+            System.out.println("Generar Select QUERY "+Query);
 
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
@@ -618,11 +623,11 @@ public class Mysql {
             return 0;
         }
     }
-    
+    private String selectCompos = "*";
     public String[] getValues(String table_name, String where, String[] campos) {
         String[] datos = new String[campos.length];
         try {
-            String Query = "SELECT * FROM " + table_name+" "+where;
+            String Query = "SELECT "+this.selectCompos+" FROM " + table_name+" "+where;
             Statement st = Conexion.createStatement();
             java.sql.ResultSet resultSet;
             resultSet = st.executeQuery(Query);
@@ -640,6 +645,10 @@ public class Mysql {
             JOptionPane.showMessageDialog(null, "Error en la adquisición de datos getValues(String table_name, String where, String[] campos)");
             return datos;
         }
+    }
+
+    public void setSelectCompos(String selectCompos) {
+        this.selectCompos = selectCompos;
     }
     
     public void getValues(String table_name) {

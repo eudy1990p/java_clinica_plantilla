@@ -103,7 +103,7 @@ public class JFrameCrearSonografia extends javax.swing.JFrame {
         //Calendar c2 = new GregorianCalendar();
         //fecha = new java.util.Date();
         //this.FechaActual = fecha.getYear()+"-"+fecha.getMonth()+"-"+fecha.getDay();
-        this.FechaActual = Integer.toString(c1.get(Calendar.DATE))+"/"+(Integer.toString(c1.get(Calendar.MONTH))+1)+"/"+Integer.toString(c1.get(Calendar.YEAR));
+        this.FechaActual = Integer.toString(c1.get(Calendar.DATE))+"-"+(Integer.toString(c1.get(Calendar.MONTH))+1)+"-"+Integer.toString(c1.get(Calendar.YEAR));
         //JOptionPane.showMessageDialog(null, Integer.toString(c1.get(Calendar.YEAR))+"-"+Integer.toString(c1.get(Calendar.MONTH))+"-"+Integer.toString(c1.get(Calendar.DATE))+" - "+c1.get(Calendar.MONTH)+" / "+c1.get(Calendar.MONDAY)+" / "+Calendar.MONTH);
        return this.FechaActual;
    }

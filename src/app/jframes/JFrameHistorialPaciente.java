@@ -33,7 +33,9 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
         this.mysql = mysql;
         user = new ClassHistorialPaciente(this.mysql,this.id_patient); 
         this.user.cargarDatoPaciente(this.jLabelNombreCompleto, this.jLabelCedula,this.jLabelFechaNacimiento, this.jLabelSexo, this.jLabelTipoSangre, this.jLabelEdad);
-       // this.user.setId_patient(id_patient);
+        this.user.mostrarDatosTablaSonografia(this.jTableSonografia);
+        //jTableSonografia
+        // this.user.setId_patient(id_patient);
       // this.user.mostrarDatosTabla(jTable1,this.jLabel6);
       // this.jtable();
     }
@@ -97,6 +99,11 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
                 "ID", "CONDICION", "TIPO", "HOSPITAL", "ESTADO"
             }
         ));
+        jTableSonografia.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTableSonografiaMousePressed(evt);
+            }
+        });
         jScrollPane5.setViewportView(jTableSonografia);
 
         jToolBar1.add(jScrollPane5);
@@ -178,6 +185,7 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
         jLabel2.setText("NOMBRE COMPLETO");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("CEDULLA");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
@@ -193,15 +201,18 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
         jLabelNombreCompleto.setText("NOMBRE COMPLETO");
 
         jLabelCedula.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelCedula.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelCedula.setText("CEDULLA");
 
         jLabelEdad.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jLabelEdad.setText("EDAD");
 
         jLabelFechaNacimiento.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
+        jLabelFechaNacimiento.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabelFechaNacimiento.setText("EDAD");
 
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("FECHA NACIMIENTO");
 
         jLabelSexo.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
@@ -230,12 +241,13 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
                     .addComponent(jLabelTipoSangre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabelFechaNacimiento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabelFechaNacimiento, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(jLabelEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -316,6 +328,13 @@ public class JFrameHistorialPaciente extends javax.swing.JFrame {
     private void jToolBar2MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jToolBar2MousePressed
         // TODO add your handling code here:
     }//GEN-LAST:event_jToolBar2MousePressed
+
+    private void jTableSonografiaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableSonografiaMousePressed
+        // TODO add your handling code here:
+        int select = this.jTableSonografia.rowAtPoint(evt.getPoint());
+        String id = this.jTableSonografia.getValueAt(select, 0).toString();
+        this.user.mostrarSonografiaPDF(id);
+    }//GEN-LAST:event_jTableSonografiaMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,29 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE jasperReport PUBLIC "-//JasperReports//DTD JasperReport//EN" "http://jasperreports.sourceforge.net/dtds/jasperreport.dtd">
-
-<jasperReport name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
-    <background>
-        <band/>
-    </background>
-    <title>
-        <band height="79"/>
-    </title>
-    <pageHeader>
-        <band height="35"/>
-    </pageHeader>
-    <columnHeader>
-        <band height="61"/>
-    </columnHeader>
-    <detail>
-        <band height="125"/>
-    </detail>
-    <columnFooter>
-        <band height="45"/>
-    </columnFooter>
-    <pageFooter>
-        <band height="54"/>
-    </pageFooter>
-    <summary>
-        <band height="42"/>
-    </summary>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d4a63f99-a5bf-4bf2-8352-2b77d92738fc">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="cuerpo" class="java.lang.String"/>
+	<parameter name="icono_hospital" class="java.lang.String"/>
+	<parameter name="nombre_empresa" class="java.lang.String"/>
+	<parameter name="eslogan_empresa" class="java.lang.String"/>
+	<parameter name="rnc_empresa" class="java.lang.String"/>
+	<parameter name="nombre_paciente" class="java.lang.String"/>
+	<parameter name="edad_paciente" class="java.lang.String"/>
+	<parameter name="fecha_actual" class="java.lang.String"/>
+	<parameter name="tipo_sonografia" class="java.lang.String"/>
+	<parameter name="referido_por" class="java.lang.String"/>
+	<parameter name="nombre_medico" class="java.lang.String"/>
+	<parameter name="telefono_empresa" class="java.lang.String"/>
+	<parameter name="email_empresa" class="java.lang.String"/>
+	<parameter name="pagina_web_empresa" class="java.lang.String"/>
+	<parameter name="direccion_empresa" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="79" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="118" y="22" width="425" height="23" uuid="b8721b53-acee-4227-9f58-e559c0a9d616"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_empresa}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="23" y="6" width="81" height="68" uuid="3fe90460-d6a4-4115-bf79-0235b40ff0a0"/>
+				<imageExpression><![CDATA[$P{icono_hospital}]]></imageExpression>
+			</image>
+			<textField isBlankWhenNull="true">
+				<reportElement x="118" y="45" width="425" height="23" uuid="81255662-237a-4e08-b670-effe066d9672"/>
+				<textElement textAlignment="Left" markup="none">
+					<font size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{eslogan_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="437" y="0" width="39" height="22" uuid="6991f2a5-92ee-416d-bb39-e8714c8d6f47"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[RNC]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="476" y="0" width="78" height="22" uuid="a7c720a2-a488-46e5-a7db-d83f9e88a304"/>
+				<textElement markup="none">
+					<font size="11"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{rnc_empresa}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="84" splitType="Stretch">
+			<staticText>
+				<reportElement x="189" y="0" width="161" height="19" uuid="e8891617-47c9-40ee-9732-b46438e9d7e7"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[UNIDAD DE SONOGRAFIA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="38" width="128" height="17" uuid="182d61bc-646b-4de9-9bd8-b67d5a6dc394"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre Del Paciente]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="132" y="38" width="202" height="17" uuid="d77a49d8-1db5-4690-a4f1-e73e9763e484"/>
+				<textElement markup="none">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_paciente}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="368" y="38" width="69" height="17" uuid="7a5050f0-edc0-4f91-b5ee-5be8f443238b"/>
+				<textElement markup="none">
+					<font size="12" isBold="false" isItalic="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{edad_paciente}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="38" width="31" height="17" uuid="192f63d9-ebfe-46f5-8e3a-0cd146547add"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Edad]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="485" y="38" width="67" height="17" uuid="291ae196-f660-451d-a7f2-085be9997a68"/>
+				<textElement markup="none">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{fecha_actual}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="441" y="38" width="44" height="17" uuid="e3659ea7-ae91-407d-9f9b-3cb2188f4e2e"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="131" y="62" width="203" height="17" uuid="33357ee5-77c5-4bf3-8ca5-37aa22530b04"/>
+				<textElement markup="none">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{tipo_sonografia}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="2" y="62" width="128" height="17" uuid="c8c138be-cea1-4451-80bf-46b1beafcc46"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tipo De Sonografia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="335" y="62" width="75" height="17" uuid="4b3a62ac-98ef-4980-b18e-1c7ea2ee6c1c"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referido Por]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="410" y="62" width="142" height="17" uuid="6ecb1aa7-25f2-474b-9694-9728f4aed0ad"/>
+				<textElement markup="none">
+					<font size="12" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{referido_por}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<detail>
+		<band height="135" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="" isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="553" height="135" uuid="10db394f-ef90-4f6b-ac84-372020f48815"/>
+				<textFieldExpression><![CDATA[$P{cuerpo}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="73" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="0" y="42" width="554" height="14" uuid="227fd8e0-5964-4fe7-aa84-c6de0002647c"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{direccion_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="1" y="58" width="50" height="14" uuid="e2cca19d-a29a-49b7-8a38-94c756db396c"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Teléfono]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="51" y="58" width="79" height="14" uuid="4c630918-dfeb-4506-acf1-6bf474f25f28"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{telefono_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="131" y="58" width="34" height="14" uuid="c3fc5e73-33bc-43a9-93e1-e51a999a6bc5"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Email]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="164" y="58" width="170" height="14" uuid="41d898d6-2714-4bc3-b0e9-44560d90fdfb"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{email_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="336" y="58" width="32" height="14" uuid="01d600b1-dde9-41f8-82b1-b760d15040ec"/>
+				<textElement textAlignment="Center">
+					<font size="9"/>
+				</textElement>
+				<text><![CDATA[Web]]></text>
+			</staticText>
+			<textField isBlankWhenNull="true">
+				<reportElement x="367" y="58" width="187" height="14" uuid="07a72bfb-7fc3-404e-b215-a77cd470736b"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{pagina_web_empresa}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="198" y="22" width="153" height="20" uuid="93f7b611-7f4e-4e3b-8a94-f6e8e5447fb8"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Medico Sonografista]]></text>
+			</staticText>
+			<line>
+				<reportElement x="169" y="22" width="215" height="1" uuid="0fd31060-b06b-44e3-a49f-374d57f021f3"/>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement x="197" y="6" width="153" height="16" uuid="79fc1ada-5e4f-4c3f-af49-36d8f6f00f49"/>
+				<textElement textAlignment="Center" markup="none">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{nombre_medico}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="433" y="3" width="80" height="20" uuid="6d635fe6-7b33-411e-8b18-b26fc66c32b4"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="513" y="3" width="40" height="20" uuid="ae7a08c7-af15-43e0-9426-e14f323baf10"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
 </jasperReport>
