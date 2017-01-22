@@ -16,6 +16,8 @@ import javax.swing.table.TableModel;
 import java.lang.Object;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import javax.swing.JTabbedPane;
 import net.sf.jasperreports.engine.JREmptyDataSource;
@@ -24,6 +26,7 @@ import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperPrintManager;
 import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.util.JRLoader;
 import net.sf.jasperreports.view.JasperViewer;
 
@@ -42,6 +45,12 @@ public class ClassGenerarReporte{
     private ArrayList<String> camposEdit;
     private ArrayList<String> valorEdit;
     private String[] idTipoSangre,idTipoSOnografia,idMedico,idHospital,Montos = {"","","",""};
+    
+    private String HospitalID,totaRegistro;
+    
+    private String tituloSubTotal="",tituloDescuento="",tituloImpuesto="",tituloTotal="";
+    
+    private List<modelo10Columna> CuerpoReporte = new LinkedList();
 
     public String[] getMontos() {
         return Montos;
@@ -746,9 +755,10 @@ public class ClassGenerarReporte{
 
 
 
-    public void crearBusqueda(String idPaciente,String nombre,String apellido,String cedula,String fechaNacimientoDesde,String fechaNacimientoHasta,String sexo,String email,String telefono,String provincia,String sector,String direccion,String numeroSeguro,String nombreSeguro,String idTipoSangre,String idSonografia,String referidoPor,String QueContenga,String condicionSonografia,String fechaSonografiaDesde,String fechaSonografiaHasta,String estadoSonografia,String tipoSonografia,String Medico,String Hospital,String impuesto,String descuento){
+    public void crearBusqueda(String idPaciente,String nombre,String apellido,String cedula,String fechaNacimientoDesde,String fechaNacimientoHasta,String sexo,String email,String telefono,String provincia,String sector,String direccion,String numeroSeguro,String nombreSeguro,String idTipoSangre,String idSonografia,String referidoPor,String QueContenga,String condicionSonografia,String fechaSonografiaDesde,String fechaSonografiaHasta,String estadoSonografia,String tipoSonografia,String Medico,String Hospital,String impuesto,String descuento,int hacer){
         this.impuesto = impuesto;
         this.descuento = descuento;
+        this.HospitalID = Hospital;
         String where = " ";
         boolean primer = true;
         if(!idPaciente.isEmpty()){
@@ -950,7 +960,9 @@ public class ClassGenerarReporte{
             }
         }
         this.mostrarDatosTablaPorTodosCampos(where);
-        
+        if(hacer == 1){
+            this.mostrarReportePDF();
+        }
     }
 
      public void mostrarDatosTablaPorTodosCampos(String where){
@@ -1019,6 +1031,7 @@ public class ClassGenerarReporte{
         Object[][] infoTabla= (Object[][]) resultado[0][0];
         int tresult = (int)resultado[0][1];
         this.setTotalRegistro(tresult);
+        this.totaRegistro = tresult+"";
         DefaultTableModel modelo = new DefaultTableModel(infoTabla,datos);
         this.jTable1.setModel(modelo);
         this.mysql.setOrden("");
@@ -1028,7 +1041,11 @@ public class ClassGenerarReporte{
     }
      public void getCalculos(Object[][] o){
          double subTotal = 0.00;String aux;
+         this.tituloTotal = "Monto Total Con Descuentos ";
+         this.tituloSubTotal = "Monto Sub Total";
+         for(int c = 0 ; c < 30 ; c++){
          for(int i = 0 ; i < o.length ; i++){
+            this.CuerpoReporte.add( new modelo10Columna( o[i][0].toString(),o[i][1].toString(),o[i][2].toString(),o[i][3].toString(),o[i][4].toString(),o[i][5].toString(),o[i][6].toString(),o[i][7].toString(),o[i][8].toString(),o[i][9].toString() ) );
             aux = o[i][9].toString();
             subTotal += Double.parseDouble(aux);
             //subTotal = String.valueOf(o[i][9].toString());
@@ -1036,28 +1053,32 @@ public class ClassGenerarReporte{
                 System.out.println("i "+i+" c "+c+" "+o[i][c]);
                 }*/
             }
+         }
          if(subTotal > 0){
-             JOptionPane.showMessageDialog(null, "Entramos");
+            // JOptionPane.showMessageDialog(null, "Entramos");
             this.Montos[0] = String.valueOf(subTotal);
             double montoDescuento = 0.00;
             if(!this.descuento.isEmpty()){
-                             JOptionPane.showMessageDialog(null, "hay descuento");
+              //               JOptionPane.showMessageDialog(null, "hay descuento");
 
                 int auxI = Integer.parseInt(this.descuento);
                 double auxD = subTotal * this.getMontoPorcentaje( auxI );
                 montoDescuento = auxD;
                this.Montos[1] =  auxD+"";
+               this.tituloDescuento = "Monto Del "+this.descuento+"% Descuento ";
             }
             double montoImpuesto = 0.00;
             if(!this.impuesto.isEmpty()){
-                 JOptionPane.showMessageDialog(null, "impuesto");
+                // JOptionPane.showMessageDialog(null, "impuesto");
                 int auxI = Integer.parseInt(this.impuesto);
                 double auxD = subTotal * this.getMontoPorcentaje( auxI );
                 montoImpuesto = auxD;
                this.Montos[2] =  auxD+"";
+               this.tituloImpuesto = "Monto Del "+this.impuesto+"% Impuesto ";
             }
             double montoTotal = ((subTotal - montoDescuento) - montoImpuesto);
             this.Montos[3] =  montoTotal+"";
+            
          }else{
              this.Montos[0]= "0.00";this.Montos[1]= "0.00";this.Montos[2]= "0.00";
              this.Montos[3]= "0.00";
@@ -1225,7 +1246,21 @@ public class ClassGenerarReporte{
            JOptionPane.showMessageDialog(null, ex);
         }
     }
-    
+    public String[] optenerDatosHospital(String idHospital){
+         
+         
+         this.mysql.setSelectCompos("h.address,h.email, h.eslogan, h.icono_url,h.name_hospital, h.rnc, h.telephone,h.web_page, (DATE_FORMAT(NOW(),'%d / %m / %Y %h:%i %p')) as fecha_actual");
+        
+         String[] campos = {"h.address","h.email", "h.eslogan", "h.icono_url",
+                            "h.name_hospital", "h.rnc", "h.telephone","h.web_page","fecha_actual"};
+        
+        String where = "where h.id = "+idHospital+" and h.display = '1' ";
+        String tablas = " hospital AS h ";
+        
+        String[] datos = this.mysql.getValues(tablas,where , campos);
+        this.mysql.setSelectCompos("*");
+        return datos;
+    }
      public void mostrarDatosTablaSonografia(JTable table,JLabel JLabelTotal){
         String[] datos = {"s.id","nombre_completo","edad","tipo_sonografia","hospital","medico","s.condition_sonography","s.status",
             "fecha_creado"};
@@ -1380,5 +1415,70 @@ public class ClassGenerarReporte{
         this.jTable1.setModel(modelo);
         //this.crearNuevoPaciente();
     }
+    
      
+    public void mostrarReportePDF(){
+         //String[] datos = this.optenerDatosSonografia(idHospital);
+        String[] datosHospital = this.optenerDatosHospital(this.HospitalID);
+        String imprimir = "1";
+        try {
+            // TODO add your handling code here:
+            JasperReport loadObject = (JasperReport) JRLoader.loadObject(JFrameCrearSonografia.class.getResource("/app/impresiones/ReportesGenerales.jasper"));
+            
+            Map parameters = new HashMap<String, Object>();
+            //{"h.address","h.email", "h.eslogan", "h.icono_url","h.name_hospital", "h.rnc", "h.telephone","h.web_page"}
+            parameters.put("nombre_hospital",datosHospital[4]);
+            parameters.put("direccion_empresa",datosHospital[0]);
+            parameters.put("telefono_empresa",datosHospital[6]);
+            parameters.put("email_empresa",datosHospital[1]);            
+            parameters.put("pagina_web_empresa",datosHospital[7]);
+            parameters.put("icono_hospital",datosHospital[3]);
+            parameters.put("fecha_hora",datosHospital[8]);
+            
+            
+            parameters.put("reporte_de","Sonografia");
+            
+            JRBeanCollectionDataSource ds = new JRBeanCollectionDataSource(this.CuerpoReporte);
+           
+            String urlImagenCreador = getClass().getResource("../../icono/eudyicono.png").getPath();
+            parameters.put("icono_creador",urlImagenCreador);
+            
+            parameters.put("total_registro",this.totaRegistro);
+            
+            parameters.put("sub_total",this.tituloSubTotal);
+            parameters.put("porciento",this.tituloDescuento);
+            parameters.put("itbis",this.tituloImpuesto);
+            parameters.put("total",this.tituloTotal);
+            
+            parameters.put("sub_total_monto",this.Montos[0]);
+            parameters.put("porciento_monto",this.Montos[1]);
+            parameters.put("itbis_monto",this.Montos[2]);
+            parameters.put("total_monto",this.Montos[3]);
+            //this.nombreTituloUsuario 
+            tituloSubTotal="";tituloDescuento="";tituloImpuesto="";tituloTotal="";            
+            //parameters.put("ptitulo", "hola eudy ya estoy cerca");
+            //parameters.put("rutaParametro", "C:\\Users\\Eudy\\Documents\\NetBeansProjects\\pruebaClase\\reportes\\src\\reportes\\images.png");
+            
+            JasperPrint jp = JasperFillManager.fillReport(loadObject, parameters,ds/*new JREmptyDataSource()*/);
+            
+            switch (imprimir){
+                case "1":
+                    JasperViewer jv = new JasperViewer(jp,false);
+                    jv.setDefaultCloseOperation(JasperViewer.DISPOSE_ON_CLOSE);
+                    jv.setVisible(true);
+                   break;
+                case "2":
+                    //sin el dialogo
+                    JasperPrintManager.printReport(jp, false);
+                    break;
+                case "3":
+                    //con el dialogo
+                    JasperPrintManager.printReport(jp, true);
+                    break;
+            }
+           
+        } catch (JRException ex) {
+           JOptionPane.showMessageDialog(null, ex);
+        }
+    }
 }

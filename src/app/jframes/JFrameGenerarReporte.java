@@ -60,6 +60,35 @@ public class JFrameGenerarReporte extends javax.swing.JFrame {
         //JOptionPane.showMessageDialog(null, "Usuario "+this.usuarioID+" "+this.nombreUsuario+" "+this.nombreTituloUsuario);
         this.user.setDatosUsuario(usuarioID, nombreUsuario, nombreTituloUsuario);
     }
+    public void procesarConsulta(int i){
+         // TODO add your handling code here:
+        String sexo = this.jComboBoxBuscarSexo.getSelectedItem().toString().toLowerCase();
+        String tipo_sangre = "",tipo_sonografia ="",idMedico="",idHospital="";
+        System.out.println(this.jComboBoxBuscarTipoSangre.getSelectedIndex());
+        if(this.jComboBoxBuscarTipoSangre.getSelectedIndex() != 0){
+            tipo_sangre = this.user.getIdTipoSangre(this.jComboBoxBuscarTipoSangre.getSelectedIndex()-1);
+        }
+        tipo_sonografia = this.getSeleted();
+        /*if(this.jComboBoxBuscarTipoSonografia.getSelectedIndex() != 0){
+            tipo_sonografia = this.user.getIdTipoSonografia(this.jComboBoxBuscarTipoSonografia.getSelectedIndex()-1);
+        }*/
+        if(this.jComboBoxBuscarMedico.getSelectedIndex() != 0){
+            idMedico = this.user.getIdMedico(this.jComboBoxBuscarMedico.getSelectedIndex()-1);
+        }
+        if(this.jComboBoxBuscarHospital.getSelectedIndex() != 0){
+            idHospital = this.user.getIdHospital(this.jComboBoxBuscarHospital.getSelectedIndex()-1);
+        }
+        String fecha_nacimientoDesde = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaNacimientoDesde.getDateEditor().getUiComponent()).getText();
+        String fecha_nacimientoHasta = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaNacimientoHasta.getDateEditor().getUiComponent()).getText();
+        String fecha_sonografiaDesde = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaSonografiaDesde.getDateEditor().getUiComponent()).getText();
+        String fecha_sonografiaHasta = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaSonografiaHasta.getDateEditor().getUiComponent()).getText();
+
+        this.user.crearBusqueda(this.jTextFieldIDPaciente.getText(),this.jTextFieldBuscarNombre.getText(),this.jTextFieldBuscarApellido.getText(),this.jTextFieldBuscarCedula.getText(),fecha_nacimientoDesde,fecha_nacimientoHasta,sexo,this.jTextFieldBuscarEmail.getText(),this.jTextFieldBuscarTelefono.getText(),this.jTextFieldBuscarDireccionProvincia.getText(),this.jTextFieldBuscarSectorDireccion.getText(),this.jTextFieldBuscarAdressDireccion.getText(),this.jTextFieldBuscarNoSeguro.getText(),this.jTextFieldBuscarNombreSeguro.getText(),tipo_sangre,this.jTextFieldIDSonografia.getText(),this.jTextFieldReferidoPor.getText(),this.jTextFieldBuscarQueContenga.getText(),this.jComboBoxBuscarCondicionSonografia.getSelectedItem().toString(),fecha_sonografiaDesde,fecha_sonografiaHasta,this.jComboBoxBuscarEstadoSonografia.getSelectedItem().toString(),tipo_sonografia,idMedico,idHospital,this.jTextFieldRegistrarImpuesto.getText(),this.jTextFieldRegistrarPorcentaje.getText(),i);
+        String[] totales = this.user.getMontos();
+        this.jLabelDescuento.setText(totales[1]);
+        this.jLabelImpuesto.setText(totales[2]);
+        this.jLabelSubTotal.setText(totales[0]);
+    }
     public String getSeleted(){
         int[] l = this.jListTipoSonografia.getSelectedIndices();
         String lista="";
@@ -1081,33 +1110,7 @@ public class JFrameGenerarReporte extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldBuscarNombreSeguroKeyPressed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
-        // TODO add your handling code here:
-        String sexo = this.jComboBoxBuscarSexo.getSelectedItem().toString().toLowerCase();
-        String tipo_sangre = "",tipo_sonografia ="",idMedico="",idHospital="";
-        System.out.println(this.jComboBoxBuscarTipoSangre.getSelectedIndex());
-        if(this.jComboBoxBuscarTipoSangre.getSelectedIndex() != 0){
-            tipo_sangre = this.user.getIdTipoSangre(this.jComboBoxBuscarTipoSangre.getSelectedIndex()-1);
-        }
-        tipo_sonografia = this.getSeleted();
-        /*if(this.jComboBoxBuscarTipoSonografia.getSelectedIndex() != 0){
-            tipo_sonografia = this.user.getIdTipoSonografia(this.jComboBoxBuscarTipoSonografia.getSelectedIndex()-1);
-        }*/
-        if(this.jComboBoxBuscarMedico.getSelectedIndex() != 0){
-            idMedico = this.user.getIdMedico(this.jComboBoxBuscarMedico.getSelectedIndex()-1);
-        }
-        if(this.jComboBoxBuscarHospital.getSelectedIndex() != 0){
-            idHospital = this.user.getIdHospital(this.jComboBoxBuscarHospital.getSelectedIndex()-1);
-        }
-        String fecha_nacimientoDesde = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaNacimientoDesde.getDateEditor().getUiComponent()).getText();
-        String fecha_nacimientoHasta = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaNacimientoHasta.getDateEditor().getUiComponent()).getText();
-        String fecha_sonografiaDesde = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaSonografiaDesde.getDateEditor().getUiComponent()).getText();
-        String fecha_sonografiaHasta = ((javax.swing.JTextField)this.jDateChooseBuscarrFechaSonografiaHasta.getDateEditor().getUiComponent()).getText();
-
-        this.user.crearBusqueda(this.jTextFieldIDPaciente.getText(),this.jTextFieldBuscarNombre.getText(),this.jTextFieldBuscarApellido.getText(),this.jTextFieldBuscarCedula.getText(),fecha_nacimientoDesde,fecha_nacimientoHasta,sexo,this.jTextFieldBuscarEmail.getText(),this.jTextFieldBuscarTelefono.getText(),this.jTextFieldBuscarDireccionProvincia.getText(),this.jTextFieldBuscarSectorDireccion.getText(),this.jTextFieldBuscarAdressDireccion.getText(),this.jTextFieldBuscarNoSeguro.getText(),this.jTextFieldBuscarNombreSeguro.getText(),tipo_sangre,this.jTextFieldIDSonografia.getText(),this.jTextFieldReferidoPor.getText(),this.jTextFieldBuscarQueContenga.getText(),this.jComboBoxBuscarCondicionSonografia.getSelectedItem().toString(),fecha_sonografiaDesde,fecha_sonografiaHasta,this.jComboBoxBuscarEstadoSonografia.getSelectedItem().toString(),tipo_sonografia,idMedico,idHospital,this.jTextFieldRegistrarImpuesto.getText(),this.jTextFieldRegistrarPorcentaje.getText());
-        String[] totales = this.user.getMontos();
-        this.jLabelDescuento.setText(totales[1]);
-        this.jLabelImpuesto.setText(totales[2]);
-        this.jLabelSubTotal.setText(totales[0]);
+       this.procesarConsulta(0);
     }//GEN-LAST:event_jButton2MouseClicked
 
     private void jTextFieldReferidoPorKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldReferidoPorKeyPressed
@@ -1167,6 +1170,7 @@ public class JFrameGenerarReporte extends javax.swing.JFrame {
 
     private void jButton3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton3MouseClicked
         // TODO add your handling code here:
+        this.procesarConsulta(1);
     }//GEN-LAST:event_jButton3MouseClicked
 
     

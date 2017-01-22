@@ -197,7 +197,7 @@ public class ClassHospital{
         table.setModel(modelo); 
     }
     public String[] mostrarEditarUsuario(String id){
-        String[] campos = {"id","name_hospital","rnc","telephone","email","web_page","address","icono_url"};
+        String[] campos = {"id","name_hospital","rnc","telephone","email","web_page","address","icono_url","eslogan"};
         String[] respuesta = this.mysql.generarSelect("hospital", id,campos);
         this.setAgregar(false);
         return respuesta;

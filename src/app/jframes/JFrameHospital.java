@@ -402,7 +402,7 @@ public class JFrameHospital extends javax.swing.JFrame {
         }
       }else{
             //JOptionPane.showMessageDialog(null, type_user);
-           boolean respuesta = this.user.update(this.jTextFieldNombreHospital.getText(), this.jTextFieldTelefonoHospital.getText(),this.jTextFieldEsloganHospital.getText(),this.jTextFieldRNCHospital.getText(),this.jTextFieldWebPageHospital.getText(),this.jTextAreaDireccionHospital.getText(),this.id,this.RutaIcono,this.jTextFieldEsloganHospital.getText());
+           boolean respuesta = this.user.update(this.jTextFieldNombreHospital.getText(), this.jTextFieldTelefonoHospital.getText(),this.jTextFieldEmailHospital.getText(),this.jTextFieldRNCHospital.getText(),this.jTextFieldWebPageHospital.getText(),this.jTextAreaDireccionHospital.getText(),this.id,this.RutaIcono,this.jTextFieldEsloganHospital.getText());
             if(respuesta){
                 this.user.mostrarDatosTabla(this.jTable1, this.jLabel6);
                 this.user.setAgregar(true);
@@ -440,10 +440,12 @@ public class JFrameHospital extends javax.swing.JFrame {
         //"id","name_hospital","rnc","telephone","email","web_page","address"
         this.jTextFieldNombreHospital.setText(respuesta[1]);
         this.jTextFieldTelefonoHospital.setText(respuesta[3]);
-        this.jTextFieldEsloganHospital.setText(respuesta[4]);
+        this.jTextFieldEmailHospital.setText(respuesta[4]);
         this.jTextFieldRNCHospital.setText(respuesta[2]);
         this.jTextFieldWebPageHospital.setText(respuesta[5]);
         this.jTextAreaDireccionHospital.setText(respuesta[6]);
+        this.jTextFieldEsloganHospital.setText(respuesta[8]);
+        
         this.user.setYo(user);
         this.user.setPadre(this.yo);
         this.user.setImage(respuesta[7],this.jLabelIconoHospitalAdmin);
