@@ -175,6 +175,11 @@ public class Main extends javax.swing.JFrame {
 
         jMenuItem8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jMenuItem8.setText("Generar");
+        jMenuItem8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenuItem8MousePressed(evt);
+            }
+        });
         jMenu3.add(jMenuItem8);
 
         jMenuBar1.add(jMenu3);
@@ -427,6 +432,16 @@ public class Main extends javax.swing.JFrame {
           buscarSonografia.setVisible(true);
         }
     }//GEN-LAST:event_jMenuItem3MousePressed
+
+    private void jMenuItem8MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem8MousePressed
+        // TODO add your handling code here:
+        if(this.validador.getBtGenerarReporte()){
+          JFrameGenerarReporte generarReporte=  new JFrameGenerarReporte(this.mysql);
+          generarReporte.setDatosUsuario(this.session[0], this.session[1], this.session[3]);
+          generarReporte.setVisible(true);
+        }
+        
+    }//GEN-LAST:event_jMenuItem8MousePressed
 
     /**
      * @param args the command line arguments
